@@ -67,6 +67,11 @@ import {
   loanNoteFormSchema,
   type LoanNoteFormData
 } from "./forms/loan-note/LoanNoteForm";
+import {
+  DividendPolicyAgreementForm,
+  dividendPolicyFormSchema,
+  type DividendPolicyFormData
+} from "./forms/dividend-policy/DividendPolicyAgreementForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -79,6 +84,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isInvestmentAgreement = templateTitle === "Investment Agreement";
   const isLoanAgreement = templateTitle === "Loan Agreement";
   const isLoanNote = templateTitle === "Loan Note";
+  const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -295,10 +301,32 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData) => {
+  const dividendPolicyForm = useForm<DividendPolicyFormData>({
+    resolver: zodResolver(dividendPolicyFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      state: "",
+      shareholderNames: "",
+      paymentPeriod: "",
+      paymentDays: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData) => {
     let content = templateContent;
     
-    if (isLoanNote) {
+    if (isDividendPolicy) {
+      const dividendPolicyData = data as DividendPolicyFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Company Name]", dividendPolicyData.companyName)
+        .replace("[Company Address]", dividendPolicyData.companyAddress)
+        .replace("[State]", dividendPolicyData.state)
+        .replace("[Shareholder Names]", dividendPolicyData.shareholderNames)
+        .replace("[quarterly/semi-annually/annually]", dividendPolicyData.paymentPeriod)
+        .replace("[X]", dividendPolicyData.paymentDays);
+    } else if (isLoanNote) {
       const loanNoteData = data as LoanNoteFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -502,7 +530,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -523,7 +551,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isLoanNote ? (
+        {isDividendPolicy ? (
+          <Form {...dividendPolicyForm}>
+            <form onSubmit={dividendPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
+              <DividendPolicyAgreementForm form={dividendPolicyForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isLoanNote ? (
           <Form {...loanNoteForm}>
             <form onSubmit={loanNoteForm.handleSubmit(onSubmit)} className="space-y-4">
               <LoanNoteForm form={loanNoteForm} />
