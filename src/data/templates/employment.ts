@@ -170,7 +170,71 @@ Date: __________________________`
     description: "Prevents competition from former employees or business partners.",
     category: "Employment",
     slug: "non-compete",
-    content: "Template content for Non-Compete Agreement"
+    content: `**NON-COMPETE AGREEMENT**
+
+This Non-Compete Agreement ("Agreement") is entered into as of [Date], by and between:
+
+**Company:** [Company Name], a [Type of Entity, e.g., corporation, LLC], with its principal place of business at [Address] ("Company").
+
+**Employee/Contractor:** [Full Name], an individual residing at [Address] ("Employee/Contractor").
+
+Collectively referred to as the "Parties" or individually as a "Party."
+
+**1. Purpose**
+The purpose of this Agreement is to protect the Company's legitimate business interests, including but not limited to its confidential information, trade secrets, customer relationships, and goodwill.
+
+**2. Consideration**
+The Employee/Contractor acknowledges that their employment or engagement with the Company, access to confidential information, and/or other valuable consideration provided by the Company constitutes sufficient consideration for entering into this Agreement.
+
+**3. Geographic Scope**
+The restrictions in this Agreement shall apply to [Geographic Area], which represents the area where the Company conducts business and has legitimate business interests.
+
+**4. Duration**
+The restrictions under this Agreement shall be effective for a period of [X] years following the termination of the Employee/Contractor's relationship with the Company, regardless of the reason for termination (whether voluntary or involuntary). The Parties acknowledge that the length of the non-compete period is reasonable in relation to the legitimate business interests the Company seeks to protect.
+
+**5. Non-Solicitation**
+In addition to the non-compete obligations, the Employee/Contractor agrees that for a period of [X] years after the termination of their relationship with the Company, they will not solicit or attempt to solicit the Company's clients, customers, or employees to either:
+
+- Leave the Company for any purpose.
+- Engage in any business that competes with the Company.
+
+**6. Reasonableness of Restrictions**
+The Employee/Contractor acknowledges and agrees that the restrictions in this Agreement are reasonable in light of the Company's legitimate business interests, including the protection of its confidential information, trade secrets, and client relationships. If any provision of this Agreement is deemed to be overly broad or unenforceable by a court, the Parties agree that the court may modify the provision to make it reasonable and enforceable.
+
+**7. Enforcement**
+If the Employee/Contractor violates any of the terms of this Agreement, the Company shall be entitled to seek an injunction or other equitable relief, in addition to any other available remedies, including damages. The Employee/Contractor agrees to pay all reasonable legal costs and attorney's fees incurred by the Company in enforcing the terms of this Agreement.
+
+**8. Confidentiality**
+The Employee/Contractor agrees that the terms and conditions of this Agreement, as well as any proprietary information disclosed during the course of their employment or relationship with the Company, shall remain confidential.
+
+**9. Severability**
+If any provision of this Agreement is found to be invalid or unenforceable, the remainder of the Agreement shall remain in full force and effect. The invalid or unenforceable provision shall be modified to the extent necessary to make it enforceable while reflecting the intent of the original provision.
+
+**10. Entire Agreement**
+This Agreement constitutes the entire understanding between the Parties with respect to the subject matter hereof and supersedes any prior agreements or understandings, whether written or oral, regarding the same.
+
+**11. Governing Law**
+This Agreement shall be governed by and construed in accordance with the laws of the State of [State], without regard to its conflict of laws principles.
+
+**12. Amendment**
+This Agreement may be amended or modified only in writing and signed by both Parties.
+
+**13. Acknowledgment**
+The Employee/Contractor acknowledges that they have read, understood, and voluntarily entered into this Agreement. They further acknowledge that they have had the opportunity to seek independent legal advice before signing.
+
+**14. Signatures**
+IN WITNESS WHEREOF, the Parties hereto have executed this Non-Compete Agreement as of the date first written above.
+
+Company:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________
+
+Employee/Contractor:
+By: ____________________________
+Name: _________________________
+Date: __________________________`
   },
   {
     title: "Stock Option Agreement",
