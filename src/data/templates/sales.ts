@@ -1,14 +1,115 @@
-export const salesTemplates = [
-  {
-    title: "Sales Agreement",
-    description: "Defines terms of sale or service between business and customers.",
-    category: "Sales",
-    slug: "sales-agreement",
-  },
-  {
-    title: "Purchase Order Agreement",
-    description: "Used for purchasing goods or services, detailing specifications and terms.",
-    category: "Sales",
-    slug: "purchase-order",
-  }
+import { Template } from "@/types/template";
+
+const salesAgreementTemplate: Template = {
+  title: "Sales Agreement",
+  description: "Defines terms of sale or service between business and customers.",
+  category: "Sales",
+  slug: "sales-agreement",
+  content: `SALE AGREEMENT
+
+This Sale Agreement (the "Agreement") is made and entered into as of [Date], by and between:
+
+Seller: [Seller Name], a [State] [corporation/LLC], with its principal place of business at [Seller Address] (the "Seller").
+Buyer: [Buyer Name], a [State] [corporation/LLC/individual], with its principal place of business at [Buyer Address] (the "Buyer").
+
+The Seller and Buyer are collectively referred to as the "Parties" and individually as a "Party."
+
+1. Sale of Goods/Assets
+1.1 Sale of Goods/Assets
+Subject to the terms and conditions of this Agreement, the Seller agrees to sell, transfer, and deliver to the Buyer, and the Buyer agrees to purchase from the Seller, the following goods/assets (the "Goods/Assets"):
+
+Description of Goods/Assets: [Description]
+Quantity/Amount: [Quantity]
+Condition: [Condition]
+
+2. Purchase Price and Payment Terms
+2.1 Purchase Price
+The total purchase price for the Goods/Assets is $[Total Purchase Price] (the "Purchase Price").
+
+2.2 Payment Terms
+The Buyer agrees to pay the Purchase Price as follows:
+
+Deposit Amount: The Buyer shall pay a deposit of $[Deposit Amount] upon execution of this Agreement.
+Balance Payment: The remaining balance of $[Balance Amount] shall be paid on or before the delivery date or in accordance with the payment schedule specified below:
+[Payment Schedule]
+
+2.3 Method of Payment
+All payments shall be made by [Payment Method] to the Seller's designated account.
+
+3. Delivery and Transfer of Goods/Assets
+3.1 Delivery Date
+The Seller shall deliver the Goods/Assets to the Buyer on or before [Delivery Date], unless otherwise agreed upon by the Parties.
+
+3.2 Delivery Location
+The Goods/Assets shall be delivered to the following location:
+[Delivery Address]
+
+3.3 Shipping and Handling
+The [Responsible Party] shall bear the costs of shipping and handling unless otherwise agreed.
+
+3.4 Risk of Loss
+Risk of loss or damage to the Goods/Assets shall transfer from the Seller to the Buyer upon delivery, as described above.
+
+4. Title and Ownership
+4.1 Transfer of Title
+Title to the Goods/Assets shall transfer to the Buyer upon full payment of the Purchase Price and delivery of the Goods/Assets to the Buyer.
+
+4.2 Retention of Title (if applicable)
+In the event that the Buyer fails to make full payment, the Seller retains the right to reclaim the Goods/Assets until the Purchase Price is paid in full.
+
+5. Representations and Warranties
+5.1 Seller's Warranties
+The Seller warrants that:
+- The Seller has good title to the Goods/Assets and the right to sell them.
+- The Goods/Assets are free from any liens, claims, or encumbrances.
+- The Goods/Assets conform to the specifications described in this Agreement.
+
+5.2 Buyer's Warranties
+The Buyer warrants that:
+- The Buyer has the authority to enter into this Agreement and perform its obligations.
+- The Buyer has examined the Goods/Assets or has had an opportunity to do so and accepts them in their current condition (unless otherwise specified).
+
+6. Inspection and Acceptance
+6.1 Inspection Period
+The Buyer shall have [X] days after delivery to inspect the Goods/Assets and notify the Seller of any defects or discrepancies.
+
+7. Default and Remedies
+7.1 Default
+If either Party breaches any material term of this Agreement, the non-breaching Party may terminate this Agreement and pursue available legal remedies.
+
+8. Governing Law and Dispute Resolution
+8.1 Governing Law
+This Agreement shall be governed by and construed in accordance with the laws of the state of [State].
+
+8.2 Dispute Resolution
+Any disputes shall be resolved through [Dispute Resolution Method] in [Location].
+
+9. Signatures
+
+IN WITNESS WHEREOF, the Parties have executed this Sale Agreement as of the date first written above.
+
+Seller:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________
+
+Buyer:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________`
+};
+
+const purchaseOrderTemplate: Template = {
+  title: "Purchase Order Agreement",
+  description: "Used for purchasing goods or services, detailing specifications and terms.",
+  category: "Sales",
+  slug: "purchase-order",
+  content: "// Template content here"
+};
+
+export const salesTemplates: Template[] = [
+  salesAgreementTemplate,
+  purchaseOrderTemplate
 ];
