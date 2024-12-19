@@ -17,10 +17,35 @@ import { IpAssignmentFormData } from "./forms/ip-assignment/types";
 import { PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 import { TermsConditionsFormData } from "./forms/terms-conditions/types";
 import { PurchaseOrderFormData } from "./forms/purchase-order/types";
+import { SalesFormData } from "./forms/sales-agreement/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData) => {
     let content = templateContent;
+
+    if (templateTitle === "Sales Agreement") {
+      const salesData = data as SalesFormData;
+      content = content
+        .replace("[Seller Name]", salesData.sellerName)
+        .replace("[Seller Address]", salesData.sellerAddress)
+        .replace("[Buyer Name]", salesData.buyerName)
+        .replace("[Buyer Address]", salesData.buyerAddress)
+        .replace(/\[State\]/g, salesData.state)
+        .replace("[describe the goods or assets being sold, including any identifying features such as model numbers, serial numbers, etc.]", salesData.description)
+        .replace("[Quantity or value of goods/assets being sold]", salesData.quantity)
+        .replace("[New, used, or refurbished condition, as applicable]", salesData.condition)
+        .replace(/\[Total Purchase Price\]/g, salesData.totalPrice)
+        .replace("[Deposit Amount]", salesData.depositAmount)
+        .replace("[Balance Amount]", salesData.balanceAmount)
+        .replace("[Payment schedule, e.g., \"50% upon execution of the Agreement and 50% upon delivery.\"]", salesData.paymentSchedule)
+        .replace("[method of payment, e.g., wire transfer, check, credit card, etc.]", salesData.paymentMethod)
+        .replace("[Date]", new Date(salesData.deliveryDate).toLocaleDateString())
+        .replace("[Delivery Address]", salesData.deliveryAddress)
+        .replace("[Buyer/Seller]", salesData.responsibleParty)
+        .replace("[X]", salesData.inspectionPeriod)
+        .replace("[arbitration/mediation]", salesData.disputeResolution)
+        .replace("[Location]", salesData.location);
+    }
 
     if (templateTitle === "Purchase Order Agreement") {
       const purchaseOrderData = data as PurchaseOrderFormData;
@@ -163,7 +188,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);

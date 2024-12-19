@@ -9,6 +9,3 @@ interface SalesAgreementFormProps {
 export function SalesAgreementForm({ form }: SalesAgreementFormProps) {
   return <SalesFormFields form={form} />;
 }
-
-export { salesFormSchema } from "./types";
-export type { SalesFormData } from "./types";

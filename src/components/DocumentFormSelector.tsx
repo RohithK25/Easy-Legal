@@ -20,6 +20,8 @@ import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsFor
 import { termsConditionsFormSchema, type TermsConditionsFormData } from "./forms/terms-conditions/types";
 import { PurchaseOrderForm } from "./forms/purchase-order/PurchaseOrderForm";
 import { purchaseOrderFormSchema, type PurchaseOrderFormData } from "./forms/purchase-order/types";
+import { SalesAgreementForm } from "./forms/sales-agreement/SalesAgreementForm";
+import { salesFormSchema, type SalesFormData } from "./forms/sales-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -34,6 +36,32 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isPrivacyPolicy = templateTitle === "Privacy Policy";
   const isTermsConditions = templateTitle === "Terms and Conditions";
   const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
+  const isSalesAgreement = templateTitle === "Sales Agreement";
+
+  const salesForm = useForm<SalesFormData>({
+    resolver: zodResolver(salesFormSchema),
+    defaultValues: {
+      sellerName: "",
+      sellerAddress: "",
+      buyerName: "",
+      buyerAddress: "",
+      state: "",
+      description: "",
+      quantity: "",
+      condition: "",
+      totalPrice: "",
+      depositAmount: "",
+      balanceAmount: "",
+      paymentSchedule: "",
+      paymentMethod: "",
+      deliveryDate: "",
+      deliveryAddress: "",
+      responsibleParty: "",
+      inspectionPeriod: "",
+      disputeResolution: "",
+      location: "",
+    }
+  });
 
   const purchaseOrderForm = useForm<PurchaseOrderFormData>({
     resolver: zodResolver(purchaseOrderFormSchema),
@@ -176,6 +204,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       location: "",
     }
   });
+
+  if (isSalesAgreement) {
+    return (
+      <Form {...salesForm}>
+        <form onSubmit={salesForm.handleSubmit(onSubmit)} className="space-y-4">
+          <SalesAgreementForm form={salesForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
 
   if (isPurchaseOrder) {
     return (
