@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { generateWordDocument } from "@/utils/documentGenerator";
 
 const formSchema = z.object({
   partyAName: z.string().min(1, "Party A name is required"),
@@ -80,20 +81,27 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     return content;
   };
 
-  const downloadDocument = (content: string) => {
-    const element = document.createElement("a");
-    const file = new Blob([content], { type: "text/plain" });
-    element.href = URL.createObjectURL(file);
-    element.download = `${templateTitle.toLowerCase().replace(/\s+/g, "-")}.txt`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  const downloadDocument = async (content: string) => {
+    try {
+      const blob = await generateWordDocument(content);
+      const url = URL.createObjectURL(blob);
+      const element = document.createElement("a");
+      element.href = url;
+      element.download = `${templateTitle.toLowerCase().replace(/\s+/g, "-")}.docx`;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating Word document:", error);
+      toast.error("Failed to generate document");
+    }
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     try {
       const documentContent = generateDocument(data);
-      downloadDocument(documentContent);
+      await downloadDocument(documentContent);
       toast.success("Document generated successfully!");
       onOpenChange(false);
     } catch (error) {
