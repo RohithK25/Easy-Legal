@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { TemplateCard } from "@/components/TemplateCard";
+import { useState } from "react";
 
 const templates = [
   {
@@ -11,9 +12,20 @@ const templates = [
 ];
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTemplates = templates.filter((template) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return (
+      template.title.toLowerCase().includes(searchTerm) ||
+      template.description.toLowerCase().includes(searchTerm) ||
+      template.category.toLowerCase().includes(searchTerm)
+    );
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header onSearch={(value) => setSearchQuery(value)} />
       <main className="flex-1 py-12">
         <div className="container">
           <div className="max-w-2xl">
@@ -24,10 +36,16 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {templates.map((template) => (
+            {filteredTemplates.map((template) => (
               <TemplateCard key={template.slug} {...template} />
             ))}
           </div>
+
+          {filteredTemplates.length === 0 && (
+            <div className="text-center text-gray-500 mt-8">
+              No templates found matching your search.
+            </div>
+          )}
         </div>
       </main>
       

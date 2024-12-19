@@ -3,7 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-export const Header = () => {
+interface HeaderProps {
+  onSearch: (value: string) => void;
+}
+
+export const Header = ({ onSearch }: HeaderProps) => {
   return (
     <header className="border-b">
       <div className="container mx-auto py-4">
@@ -25,6 +29,7 @@ export const Header = () => {
                 className="pl-10 w-[300px]"
                 placeholder="Search templates..."
                 type="search"
+                onChange={(e) => onSearch(e.target.value)}
               />
             </div>
           </div>
