@@ -6,27 +6,100 @@ import { Header } from "@/components/Header";
 import { DocumentForm } from "@/components/DocumentForm";
 import { useState } from "react";
 
+const templates = {
+  nda: {
+    title: "Non-Disclosure Agreement (NDA)",
+    description: "Protect confidential information shared between two or more parties. Essential for business discussions, product development, and negotiations.",
+    category: "Confidentiality",
+    content: `NON-DISCLOSURE AGREEMENT (NDA)
+This Non-Disclosure Agreement ("Agreement") is entered into as of [Date], by and between:
+
+Disclosing Party: [Full Legal Name of Disclosing Party], a [Type of Entity, e.g., corporation, LLC] with its principal place of business at [Address] ("Disclosing Party").
+
+Receiving Party: [Full Legal Name of Receiving Party], a [Type of Entity, e.g., corporation, LLC, individual] with its principal place of business at [Address] ("Receiving Party").
+
+Collectively referred to as the "Parties" or individually as a "Party."
+
+1. Confidential Information
+For the purposes of this Agreement, "Confidential Information" includes, but is not limited to:
+
+Business plans, strategies, and forecasts.
+Proprietary software, code, or technology.
+Trade secrets, formulas, algorithms, data, and know-how.
+Customer lists, supplier details, and vendor contracts.
+Marketing and sales strategies, financial projections, and other non-public information.
+Confidential Information does not include information that:
+
+Was already in the public domain at the time of disclosure.
+Becomes publicly available through no fault of the Receiving Party.
+Was already known to the Receiving Party prior to disclosure.
+Was disclosed with the written consent of the Disclosing Party.
+Was independently developed by the Receiving Party without reference to the Disclosing Party's Confidential Information.
+
+2. Obligations of the Receiving Party
+The Receiving Party agrees to:
+
+Maintain the Confidential Information in strict confidence.
+Not disclose the Confidential Information to any third party without prior written consent from the Disclosing Party.
+Use the Confidential Information solely for the purpose of [Purpose of disclosure, e.g., evaluating a potential business partnership, investment, etc.].
+Take reasonable measures to protect the Confidential Information from unauthorized use or disclosure, at least equivalent to the measures taken to protect its own proprietary information.
+
+3. Exclusions from Confidentiality
+The Receiving Party shall not be in breach of this Agreement if the Confidential Information is disclosed in response to a subpoena, court order, or as otherwise required by law, provided that the Receiving Party promptly notifies the Disclosing Party of such requirement and cooperates to seek protective measures.
+
+4. Term
+This Agreement shall commence on the date first written above and continue in effect until the Confidential Information no longer qualifies as confidential under the terms of this Agreement, or until terminated by either Party with thirty (30) days written notice. However, the Receiving Party's obligation to keep the Confidential Information confidential will survive termination of this Agreement for a period of [number of years, e.g., two (2)] years.
+
+5. Return or Destruction of Confidential Information
+Upon termination of this Agreement or upon request of the Disclosing Party, the Receiving Party agrees to return or destroy all Confidential Information, including any copies, notes, or records made thereof, within [X] days.
+
+6. No License
+Nothing in this Agreement grants the Receiving Party any rights, title, or interest in or to any of the Confidential Information, except as expressly set forth herein for the purpose of evaluating the disclosed information.
+
+7. No Obligation to Enter into Business Relationship
+This Agreement does not obligate either Party to enter into any business transaction or relationship. The Parties acknowledge that no obligation exists to proceed with any further discussions or agreements following the exchange of Confidential Information.
+
+8. Indemnity
+The Receiving Party agrees to indemnify and hold harmless the Disclosing Party from any damages, losses, or expenses arising from the Receiving Party's unauthorized use or disclosure of Confidential Information.
+
+9. Governing Law
+This Agreement shall be governed by and construed in accordance with the laws of the State of [State], without regard to its conflict of laws principles.
+
+10. Dispute Resolution
+Any disputes arising under this Agreement shall be resolved through [arbitration/mediation] in [Location], and the Parties agree to bear their respective costs in connection with such proceedings.
+
+11. Entire Agreement
+This Agreement constitutes the entire understanding between the Parties concerning Confidential Information. Any amendments or modifications to this Agreement must be made in writing and executed by both Parties.
+
+12. No Waiver
+No failure or delay in exercising any right, power, or remedy under this Agreement shall operate as a waiver thereof, nor shall any single or partial exercise of any right, power, or remedy preclude further exercise of that or any other right, power, or remedy.
+
+IN WITNESS WHEREOF, the Parties hereto have executed this Non-Disclosure Agreement as of the date first above written.
+
+Disclosing Party:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________
+
+Receiving Party:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________`
+  }
+};
+
 const Template = () => {
   const { slug } = useParams();
   const [showForm, setShowForm] = useState(false);
 
   // Find the template data based on the slug
-  const template = {
-    title: "Non-Disclosure Agreement (NDA)",
-    description: "Protect your confidential information when sharing with other parties.",
-    category: "Confidentiality",
-    content: `
-      THIS NON-DISCLOSURE AGREEMENT (this "Agreement") is made as of [DATE] by and between:
-
-      [PARTY A NAME], a company organized under the laws of [STATE], with its principal place of business at [ADDRESS] ("Disclosing Party")
-
-      and
-
-      [PARTY B NAME], a company organized under the laws of [STATE], with its principal place of business at [ADDRESS] ("Receiving Party")
-
-      1. Definition of Confidential Information
-      "Confidential Information" means any and all non-public, confidential or proprietary information disclosed by the Disclosing Party to the Receiving Party...
-    `
+  const template = templates[slug as keyof typeof templates] || {
+    title: "Template Not Found",
+    description: "The requested template could not be found.",
+    category: "Unknown",
+    content: "Template content not available."
   };
 
   return (
