@@ -32,6 +32,8 @@ import { InvestmentAgreementForm } from "./forms/investment-agreement/Investment
 import { investmentFormSchema, type InvestmentFormData } from "./forms/investment-agreement/types";
 import { ShareholderAgreementForm } from "./forms/shareholder-agreement/ShareholderAgreementForm";
 import { shareholderFormSchema, type ShareholderFormData } from "./forms/shareholder-agreement/types";
+import { OperatingAgreementForm } from "./forms/operating-agreement/OperatingAgreementForm";
+import { operatingFormSchema, type OperatingFormData } from "./forms/operating-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -52,6 +54,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isLoanAgreement = templateTitle === "Loan Agreement";
   const isInvestmentAgreement = templateTitle === "Investment Agreement";
   const isShareholderAgreement = templateTitle === "Shareholder Agreement";
+  const isOperatingAgreement = templateTitle === "Operating Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -325,6 +328,27 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const operatingForm = useForm<OperatingFormData>({
+    resolver: zodResolver(operatingFormSchema),
+    defaultValues: {
+      llcName: "",
+      member1Name: "",
+      member1Address: "",
+      member2Name: "",
+      member2Address: "",
+      state: "",
+      filingDate: "",
+      businessAddress: "",
+      businessActivity: "",
+      member1Contribution: "",
+      member2Contribution: "",
+      member1Ownership: "",
+      member2Ownership: "",
+      managementType: "",
+      taxStatus: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -499,6 +523,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...shareholderForm}>
         <form onSubmit={shareholderForm.handleSubmit(onSubmit)} className="space-y-4">
           <ShareholderAgreementForm form={shareholderForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isOperatingAgreement) {
+    return (
+      <Form {...operatingForm}>
+        <form onSubmit={operatingForm.handleSubmit(onSubmit)} className="space-y-4">
+          <OperatingAgreementForm form={operatingForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
