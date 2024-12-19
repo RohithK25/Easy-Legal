@@ -42,6 +42,11 @@ import {
   partnershipFormSchema,
   type PartnershipFormData
 } from "./forms/PartnershipAgreementForm";
+import {
+  OperatingAgreementForm,
+  operatingFormSchema,
+  type OperatingFormData
+} from "./forms/OperatingAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -56,7 +61,8 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
   const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
   const isPartnershipAgreement = templateTitle === "Partnership Agreement";
-  
+  const isOperatingAgreement = templateTitle === "Operating Agreement";
+
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
     defaultValues: {
@@ -166,10 +172,49 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData) => {
+  const operatingForm = useForm<OperatingFormData>({
+    resolver: zodResolver(operatingFormSchema),
+    defaultValues: {
+      llcName: "",
+      member1Name: "",
+      member1Address: "",
+      member2Name: "",
+      member2Address: "",
+      state: "",
+      filingDate: "",
+      businessAddress: "",
+      businessActivity: "",
+      member1Contribution: "",
+      member2Contribution: "",
+      member1Ownership: "",
+      member2Ownership: "",
+      managementType: "",
+      taxStatus: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData) => {
     let content = templateContent;
     
-    if (isPartnershipAgreement) {
+    if (isOperatingAgreement) {
+      const operatingData = data as OperatingFormData;
+      content = content
+        .replace("[LLC Name]", operatingData.llcName)
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Member 1 Full Name]", operatingData.member1Name)
+        .replace(/\[Address\]/, operatingData.member1Address)
+        .replace("[Member 2 Full Name]", operatingData.member2Name)
+        .replace(/\[Address\]/, operatingData.member2Address)
+        .replace("[State]", operatingData.state)
+        .replace("[Filing Date]", new Date(operatingData.filingDate).toLocaleDateString())
+        .replace("[brief description of the business activity]", operatingData.businessActivity)
+        .replace(/\$\[Amount\]/g, `$${operatingData.member1Contribution}`)
+        .replace(/\$\[Amount\]/g, `$${operatingData.member2Contribution}`)
+        .replace(/\[X\]%/g, `${operatingData.member1Ownership}%`)
+        .replace(/\[X\]%/g, `${operatingData.member2Ownership}%`)
+        .replace("[Management Type]", operatingData.managementType)
+        .replace("[Tax Status]", operatingData.taxStatus);
+    } else if (isPartnershipAgreement) {
       const partnershipData = data as PartnershipFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -287,7 +332,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -308,7 +353,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isEmploymentAgreement ? (
+        {isOperatingAgreement ? (
+          <Form {...operatingForm}>
+            <form onSubmit={operatingForm.handleSubmit(onSubmit)} className="space-y-4">
+              <OperatingAgreementForm form={operatingForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isEmploymentAgreement ? (
           <Form {...employmentForm}>
             <form onSubmit={employmentForm.handleSubmit(onSubmit)} className="space-y-4">
               <EmploymentAgreementForm form={employmentForm} />
