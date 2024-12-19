@@ -21,6 +21,3 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
     </ScrollArea>
   );
 };
-
-export type { OperatingFormData };
-export { operatingFormSchema };
