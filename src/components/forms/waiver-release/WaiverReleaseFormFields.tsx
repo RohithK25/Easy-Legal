@@ -10,7 +10,7 @@ interface WaiverReleaseFormFieldsProps {
 
 export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-4">
       <FormField
         control={form.control}
         name="effectiveDate"
@@ -30,9 +30,9 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
         name="releasorName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Releasor's Full Name</FormLabel>
+            <FormLabel>Releasor&apos;s Full Name</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter releasor's full name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -44,9 +44,9 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
         name="releasorAddress"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Releasor's Address</FormLabel>
+            <FormLabel>Releasor&apos;s Address</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter releasor's complete address" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -58,9 +58,9 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
         name="releaseeName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Releasee's Full Name or Company Name</FormLabel>
+            <FormLabel>Releasee&apos;s Name or Company Name</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter releasee's name or company name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -72,9 +72,9 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
         name="releaseeAddress"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Releasee's Address</FormLabel>
+            <FormLabel>Releasee&apos;s Address</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter releasee's complete address" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -88,7 +88,11 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
           <FormItem>
             <FormLabel>Activity Description</FormLabel>
             <FormControl>
-              <Textarea {...field} placeholder="Describe the activity or event (e.g., workshops, training, exercise)" />
+              <Textarea 
+                placeholder="Describe the activity or event (e.g., workshops, training sessions, exercise programs)" 
+                className="min-h-[100px]"
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -102,7 +106,11 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
           <FormItem>
             <FormLabel>Risks Description</FormLabel>
             <FormControl>
-              <Textarea {...field} placeholder="Describe the potential risks (e.g., physical injury, property damage)" />
+              <Textarea 
+                placeholder="Describe potential risks (e.g., physical injury, property damage, health risks)"
+                className="min-h-[100px]"
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -116,7 +124,7 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
           <FormItem>
             <FormLabel>State</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter state name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -130,7 +138,7 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
           <FormItem>
             <FormLabel>County</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter county name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -144,7 +152,7 @@ export function WaiverReleaseFormFields({ form }: WaiverReleaseFormFieldsProps) 
           <FormItem>
             <FormLabel>Notary Name (Optional)</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input placeholder="Enter notary name (if applicable)" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
