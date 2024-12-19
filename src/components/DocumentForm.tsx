@@ -62,14 +62,13 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const form = isEmploymentAgreement ? employmentForm : confidentialityForm;
-
   const generateDocument = (data: EmploymentFormData | ConfidentialityFormData) => {
     let content = templateContent;
     
     if (isEmploymentAgreement) {
       const employmentData = data as EmploymentFormData;
       content = content
+        .replace("[Date]", new Date(employmentData.startDate).toLocaleDateString())
         .replace("[Company Name]", employmentData.employerName)
         .replace("[Address]", employmentData.employerAddress)
         .replace("[Employee's Full Name]", employmentData.employeeName)
@@ -134,18 +133,25 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {isEmploymentAgreement ? (
+        {isEmploymentAgreement ? (
+          <Form {...employmentForm}>
+            <form onSubmit={employmentForm.handleSubmit(onSubmit)} className="space-y-4">
               <EmploymentAgreementForm form={employmentForm} />
-            ) : (
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : (
+          <Form {...confidentialityForm}>
+            <form onSubmit={confidentialityForm.handleSubmit(onSubmit)} className="space-y-4">
               <ConfidentialityAgreementForm form={confidentialityForm} />
-            )}
-            <DialogFooter>
-              <Button type="submit">Generate Document</Button>
-            </DialogFooter>
-          </form>
-        </Form>
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        )}
       </DialogContent>
     </Dialog>
   );
