@@ -16,6 +16,8 @@ import { IpAssignmentForm } from "./forms/ip-assignment/IpAssignmentForm";
 import { ipAssignmentFormSchema, type IpAssignmentFormData } from "./forms/ip-assignment/types";
 import { PrivacyPolicyForm } from "./forms/privacy-policy/PrivacyPolicyForm";
 import { privacyPolicyFormSchema, type PrivacyPolicyFormData } from "./forms/privacy-policy/types";
+import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsForm";
+import { termsConditionsFormSchema, type TermsConditionsFormData } from "./forms/terms-conditions/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -28,6 +30,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isConfidentiality = templateTitle === "Confidentiality Agreement";
   const isIpAssignment = templateTitle === "Intellectual Property Assignment";
   const isPrivacyPolicy = templateTitle === "Privacy Policy";
+  const isTermsConditions = templateTitle === "Terms and Conditions";
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -140,6 +143,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const termsConditionsForm = useForm<TermsConditionsFormData>({
+    resolver: zodResolver(termsConditionsFormSchema),
+    defaultValues: {
+      companyName: "",
+      websiteUrl: "",
+      contactEmail: "",
+      contactPhone: "",
+      businessAddress: "",
+      state: "",
+      location: "",
+    }
+  });
+
   if (isWaiverRelease) {
     return (
       <Form {...waiverReleaseForm}>
@@ -210,6 +226,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...privacyPolicyForm}>
         <form onSubmit={privacyPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
           <PrivacyPolicyForm form={privacyPolicyForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isTermsConditions) {
+    return (
+      <Form {...termsConditionsForm}>
+        <form onSubmit={termsConditionsForm.handleSubmit(onSubmit)} className="space-y-4">
+          <TermsConditionsForm form={termsConditionsForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

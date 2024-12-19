@@ -15,9 +15,10 @@ import { ExitStrategyFormData } from "./forms/exit-strategy/types";
 import { ConfidentialityFormData } from "./forms/confidentiality/types";
 import { IpAssignmentFormData } from "./forms/ip-assignment/types";
 import { PrivacyPolicyFormData } from "./forms/privacy-policy/types";
+import { TermsConditionsFormData } from "./forms/terms-conditions/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData) => {
     let content = templateContent;
 
     if (templateTitle === "Privacy Policy") {
@@ -113,6 +114,15 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Return Period]", confidentialityData.returnPeriod)
         .replace(/\[State\]/g, confidentialityData.state)
         .replace("[Location]", confidentialityData.location);
+    } else if (templateTitle === "Terms and Conditions") {
+      const termsData = data as TermsConditionsFormData;
+      content = content
+        .replace("[Your Company Name]", termsData.companyName)
+        .replace("[Your website URL]", termsData.websiteUrl)
+        .replace("[Contact Information]", `Email: ${termsData.contactEmail}, Phone: ${termsData.contactPhone}`)
+        .replace("[Your physical business address]", termsData.businessAddress)
+        .replace(/\[State\]/g, termsData.state)
+        .replace("[Location]", termsData.location);
     }
 
     return content;
@@ -135,7 +145,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
