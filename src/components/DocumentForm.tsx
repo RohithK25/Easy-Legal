@@ -125,6 +125,14 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       accountNumber: "",
       maturityDate: "",
       state: "",
+      interestRate: "",
+      yearBasis: "",
+      startDate: "",
+      paymentSchedule: "",
+      installmentAmount: "",
+      paymentDay: "",
+      lateFee: "",
+      defaultPeriod: "",
     }
   });
 

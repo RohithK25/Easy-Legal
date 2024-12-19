@@ -1,5 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
 import { LoanNoteFormData } from "./types";
 
@@ -64,12 +65,25 @@ export function LoanNoteFormFields({ form }: LoanNoteFormFieldsProps) {
       />
       <FormField
         control={form.control}
+        name="state"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>State</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter state" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="loanAmount"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Loan Amount</FormLabel>
+            <FormLabel>Loan Amount ($)</FormLabel>
             <FormControl>
-              <Input placeholder="Enter loan amount" {...field} />
+              <Input type="number" placeholder="Enter loan amount" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -103,6 +117,53 @@ export function LoanNoteFormFields({ form }: LoanNoteFormFieldsProps) {
       />
       <FormField
         control={form.control}
+        name="interestRate"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Interest Rate (%)</FormLabel>
+            <FormControl>
+              <Input type="number" step="0.01" placeholder="Enter interest rate" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="yearBasis"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Year Basis</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select year basis" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="360">360-day year</SelectItem>
+                <SelectItem value="365">365-day year</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="startDate"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Start Date</FormLabel>
+            <FormControl>
+              <Input type="date" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="maturityDate"
         render={({ field }) => (
           <FormItem>
@@ -116,12 +177,73 @@ export function LoanNoteFormFields({ form }: LoanNoteFormFieldsProps) {
       />
       <FormField
         control={form.control}
-        name="state"
+        name="paymentSchedule"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>State</FormLabel>
+            <FormLabel>Payment Schedule</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select payment schedule" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="quarterly">Quarterly</SelectItem>
+                <SelectItem value="annually">Annually</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="installmentAmount"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Installment Amount ($)</FormLabel>
             <FormControl>
-              <Input placeholder="Enter state" {...field} />
+              <Input type="number" step="0.01" placeholder="Enter installment amount" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="paymentDay"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Payment Day</FormLabel>
+            <FormControl>
+              <Input type="number" min="1" max="31" placeholder="Enter payment day" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="lateFee"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Late Fee ($)</FormLabel>
+            <FormControl>
+              <Input type="number" step="0.01" placeholder="Enter late fee amount" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="defaultPeriod"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Default Period (days)</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="Enter default period in days" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
