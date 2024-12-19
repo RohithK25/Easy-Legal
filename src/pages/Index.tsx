@@ -15,6 +15,83 @@ const templates = [
     description: "Protects confidential information, used for employees or partners.",
     category: "Essential Agreements",
     slug: "confidentiality-agreement",
+    content: `
+      **CONFIDENTIALITY AGREEMENT**
+
+      This Confidentiality Agreement ("Agreement") is entered into as of [Date], by and between:
+
+      **Disclosing Party:** [Full Legal Name of Disclosing Party], a [Type of Entity, e.g., corporation, LLC] with its principal place of business at [Address] ("Disclosing Party").
+
+      **Receiving Party:** [Full Legal Name of Receiving Party], a [Type of Entity, e.g., employee, independent contractor, partner] with its principal place of business at [Address] ("Receiving Party").
+
+      Collectively referred to as the "Parties" or individually as a "Party."
+
+      **1. Confidential Information**
+      For the purposes of this Agreement, "Confidential Information" includes, but is not limited to:
+
+      • Business plans, strategies, and projections.
+      • Trade secrets, technical data, formulas, software code, algorithms, and inventions.
+      • Customer lists, supplier information, and vendor contracts.
+      • Marketing strategies, pricing models, and sales techniques.
+      • Financial data, including projections, budgets, and accounting records.
+      • Any other proprietary or sensitive information disclosed to the Receiving Party in any form (oral, written, or electronic).
+
+      Confidential Information does not include:
+
+      • Information that is publicly available or becomes publicly available through no fault of the Receiving Party.
+      • Information that was already in the possession of the Receiving Party prior to the disclosure, as evidenced by written records.
+      • Information that is independently developed by the Receiving Party without reference to or reliance upon the Disclosing Party's Confidential Information.
+      • Information disclosed with the prior written consent of the Disclosing Party.
+
+      **2. Obligations of the Receiving Party**
+      The Receiving Party agrees to:
+
+      • Maintain the Confidential Information in strict confidence and take all reasonable precautions to protect it.
+      • Not disclose the Confidential Information to any third parties without the prior written consent of the Disclosing Party, except as required by law or as necessary to fulfill the purpose of this Agreement.
+      • Use the Confidential Information only for the specific purpose outlined in this Agreement, such as performing duties related to employment, partnership, or a specific project.
+      • Limit access to Confidential Information to employees, contractors, or agents who need to know the information to carry out the purpose of this Agreement, provided that such individuals are bound by confidentiality obligations at least as strict as those set forth in this Agreement.
+
+      **3. Exclusions from Confidentiality**
+      The Receiving Party shall not be in breach of this Agreement if Confidential Information is disclosed in accordance with a court order, subpoena, or other legal requirement. In such cases, the Receiving Party must promptly notify the Disclosing Party in writing to allow the Disclosing Party to seek a protective order or other appropriate remedy.
+
+      **4. Return or Destruction of Confidential Information**
+      Upon termination of this Agreement or at the request of the Disclosing Party, the Receiving Party agrees to immediately return or destroy all Confidential Information in any form (including copies, notes, or documents) within [X] days, and certify in writing that such return or destruction has occurred.
+
+      **5. Term of Agreement**
+      This Agreement shall remain in effect for [number of years, e.g., two (2)] years after the date of disclosure of the Confidential Information, or until the Confidential Information no longer qualifies as confidential under the terms of this Agreement. The confidentiality obligations of the Receiving Party shall survive termination of this Agreement.
+
+      **6. No License**
+      Nothing in this Agreement grants the Receiving Party any rights, title, or interest in the Confidential Information. The Receiving Party acknowledges that the Confidential Information remains the exclusive property of the Disclosing Party and that no license or rights are granted under any patent, trademark, copyright, or other intellectual property rights.
+
+      **7. Indemnification**
+      The Receiving Party agrees to indemnify, defend, and hold harmless the Disclosing Party from and against any losses, damages, or expenses (including reasonable attorney's fees) arising from any breach of this Agreement by the Receiving Party, including unauthorized use or disclosure of Confidential Information.
+
+      **8. Governing Law**
+      This Agreement shall be governed by and construed in accordance with the laws of the State of [State], without regard to its conflict of laws principles.
+
+      **9. Dispute Resolution**
+      Any disputes arising out of or in connection with this Agreement shall be resolved through [arbitration/mediation] in [Location], and the Parties agree to bear their respective costs in connection with such proceedings.
+
+      **10. Entire Agreement**
+      This Agreement constitutes the entire understanding between the Parties regarding the subject matter hereof and supersedes all prior discussions, negotiations, or agreements, whether written or oral, related to the confidentiality of the information. Any amendments to this Agreement must be in writing and executed by both Parties.
+
+      **11. No Waiver**
+      No failure or delay in exercising any right, power, or remedy under this Agreement shall operate as a waiver thereof, nor shall any single or partial exercise of any right, power, or remedy preclude further exercise of that or any other right, power, or remedy.
+
+      **IN WITNESS WHEREOF**, the Parties hereto have executed this Confidentiality Agreement as of the date first above written.
+
+      **Disclosing Party:**
+      By: ____________________________
+      Name: _________________________
+      Title: __________________________
+      Date: __________________________
+
+      **Receiving Party:**
+      By: ____________________________
+      Name: _________________________
+      Title: __________________________
+      Date: __________________________
+    `
   },
 
   // Employment & HR
