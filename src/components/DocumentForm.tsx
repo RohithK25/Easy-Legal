@@ -363,25 +363,12 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const purchaseOrderForm = useForm<PurchaseOrderFormData>({
     resolver: zodResolver(purchaseOrderFormSchema),
     defaultValues: {
-      buyerName: "",
-      buyerAddress: "",
-      sellerName: "",
-      sellerAddress: "",
+      companyName: "",
+      websiteUrl: "",
+      contactEmail: "",
+      contactPhone: "",
+      businessAddress: "",
       state: "",
-      purchaseOrderNumber: "",
-      description: "",
-      quantity: "",
-      unitPrice: "",
-      totalPrice: "",
-      deliveryAddress: "",
-      deliveryDate: "",
-      paymentMethod: "",
-      paymentSchedule: "",
-      paymentDueDate: "",
-      shippingTerms: "",
-      responsibleParty: "",
-      inspectionPeriod: "",
-      disputeResolution: "",
       location: "",
     }
   });
@@ -595,26 +582,13 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       const purchaseOrderData = data as PurchaseOrderFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
-        .replace("[Buyer Name]", purchaseOrderData.buyerName)
-        .replace("[Buyer Address]", purchaseOrderData.buyerAddress)
-        .replace("[Seller Name]", purchaseOrderData.sellerName)
-        .replace("[Seller Address]", purchaseOrderData.sellerAddress)
+        .replace(/\[Your Company Name\]/g, purchaseOrderData.companyName)
+        .replace(/\[your website URL\]/g, purchaseOrderData.websiteUrl)
+        .replace(/\[Your contact email\]/g, purchaseOrderData.contactEmail)
+        .replace(/\[Your contact number\]/g, purchaseOrderData.contactPhone)
+        .replace(/\[Your physical business address\]/g, purchaseOrderData.businessAddress)
         .replace(/\[State\]/g, purchaseOrderData.state)
-        .replace("[Purchase Order Number]", purchaseOrderData.purchaseOrderNumber)
-        .replace("[Detailed description of the goods or services being purchased, including item numbers, quantities, specifications, and any applicable features or requirements.]", purchaseOrderData.description)
-        .replace("[Quantity of goods/services]", purchaseOrderData.quantity)
-        .replace(/\$\[Unit Price\]/g, `$${purchaseOrderData.unitPrice}`)
-        .replace(/\$\[Total Price\]/g, `$${purchaseOrderData.totalPrice}`)
-        .replace("[Delivery Address]", purchaseOrderData.deliveryAddress)
-        .replace("[Delivery Date]", new Date(purchaseOrderData.deliveryDate).toLocaleDateString())
-        .replace("[Payment Method: Bank transfer, check, credit card, etc.]", purchaseOrderData.paymentMethod)
-        .replace("[Payment Schedule: e.g., 50% deposit upon order, 50% upon delivery, or 100% upon delivery.]", purchaseOrderData.paymentSchedule)
-        .replace("[Payment Due Date]", new Date(purchaseOrderData.paymentDueDate).toLocaleDateString())
-        .replace("[specify shipping terms, e.g., FOB Destination, FOB Origin, DDP (Delivered Duty Paid), etc.]", purchaseOrderData.shippingTerms)
-        .replace("[Buyer/Seller]", purchaseOrderData.responsibleParty)
-        .replace(/\[X\]/g, purchaseOrderData.inspectionPeriod)
-        .replace("[mediation/arbitration]", purchaseOrderData.disputeResolution)
-        .replace("[Location]", purchaseOrderData.location);
+        .replace(/\[Location\]/g, purchaseOrderData.location);
     } else {
       const confidentialityData = data as ConfidentialityFormData;
       content = content
@@ -802,4 +776,3 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     </Dialog>
   );
 };
-
