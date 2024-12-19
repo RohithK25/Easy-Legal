@@ -18,37 +18,88 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  partyAName: z.string().min(1, "Party A name is required"),
+  partyAAddress: z.string().min(1, "Party A address is required"),
+  partyBName: z.string().min(1, "Party B name is required"),
+  partyBAddress: z.string().min(1, "Party B address is required"),
+  effectiveDate: z.string().min(1, "Effective date is required"),
+  purposeOfDisclosure: z.string().min(1, "Purpose of disclosure is required"),
+  state: z.string().min(1, "State is required"),
+  location: z.string().min(1, "Location is required"),
+  confidentialityPeriod: z.string().min(1, "Confidentiality period is required"),
+  returnPeriod: z.string().min(1, "Return period is required"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 interface DocumentFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   templateTitle: string;
+  templateContent: string;
 }
 
-interface FormData {
-  partyAName: string;
-  partyAAddress: string;
-  partyBName: string;
-  partyBAddress: string;
-  effectiveDate: string;
-}
-
-export const DocumentForm = ({ open, onOpenChange, templateTitle }: DocumentFormProps) => {
+export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       partyAName: "",
       partyAAddress: "",
       partyBName: "",
       partyBAddress: "",
       effectiveDate: "",
+      purposeOfDisclosure: "",
+      state: "",
+      location: "",
+      confidentialityPeriod: "",
+      returnPeriod: "",
     },
   });
 
+  const generateDocument = (data: FormData) => {
+    let content = templateContent;
+    
+    // Replace placeholders with form data
+    content = content
+      .replace("[Date]", new Date(data.effectiveDate).toLocaleDateString())
+      .replace("[Full Legal Name of Disclosing Party]", data.partyAName)
+      .replace("[Address]", data.partyAAddress)
+      .replace("[Full Legal Name of Receiving Party]", data.partyBName)
+      .replace(/\[Address\]/, data.partyBAddress)
+      .replace("[Purpose of disclosure, e.g., evaluating a potential business partnership, investment, etc.]", data.purposeOfDisclosure)
+      .replace("[number of years, e.g., two (2)]", data.confidentialityPeriod)
+      .replace("[X]", data.returnPeriod)
+      .replace("[State]", data.state)
+      .replace("[Location]", data.location)
+      .replace("[arbitration/mediation]", "arbitration");
+
+    return content;
+  };
+
+  const downloadDocument = (content: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([content], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = `${templateTitle.toLowerCase().replace(/\s+/g, "-")}.txt`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   const onSubmit = (data: FormData) => {
-    console.log("Form submitted:", data);
-    toast.success("Document generated successfully!");
-    onOpenChange(false);
-    // Here you would typically generate the document with the form data
+    try {
+      const documentContent = generateDocument(data);
+      downloadDocument(documentContent);
+      toast.success("Document generated successfully!");
+      onOpenChange(false);
+    } catch (error) {
+      toast.error("Failed to generate document");
+      console.error("Error generating document:", error);
+    }
   };
 
   return (
@@ -122,6 +173,71 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle }: DocumentForm
                   <FormLabel>Effective Date</FormLabel>
                   <FormControl>
                     <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="purposeOfDisclosure"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Purpose of Disclosure</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter the purpose of disclosure" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Governing Law State</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter the state" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Dispute Resolution Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter the location" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confidentialityPeriod"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confidentiality Period (years)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter the confidentiality period in years" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="returnPeriod"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Return Period (days)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter the return period in days" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

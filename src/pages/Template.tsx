@@ -104,7 +104,6 @@ const Template = () => {
     content: "Template content not available."
   };
 
-  // Add empty search handler since we don't need search functionality on this page
   const handleSearch = (value: string) => {
     // Search is not needed on the template detail page
   };
@@ -157,6 +156,7 @@ const Template = () => {
         open={showForm} 
         onOpenChange={setShowForm}
         templateTitle={template.title}
+        templateContent={template.content}
       />
     </div>
   );
