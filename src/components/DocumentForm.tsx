@@ -22,6 +22,11 @@ import {
   employmentFormSchema,
   type EmploymentFormData
 } from "./forms/EmploymentAgreementForm";
+import {
+  ContractorAgreementForm,
+  contractorFormSchema,
+  type ContractorFormData
+} from "./forms/ContractorAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -32,6 +37,7 @@ interface DocumentFormProps {
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
+  const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
   
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -52,6 +58,25 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
+  const contractorForm = useForm<ContractorFormData>({
+    resolver: zodResolver(contractorFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      contractorName: "",
+      contractorAddress: "",
+      startDate: "",
+      endDate: "",
+      amount: "",
+      paymentSchedule: "",
+      invoicePeriod: "",
+      noticePeriod: "",
+      nonSolicitPeriod: "",
+      state: "",
+      location: "",
+    }
+  });
+
   const confidentialityForm = useForm<ConfidentialityFormData>({
     resolver: zodResolver(confidentialityFormSchema),
     defaultValues: {
@@ -67,7 +92,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData) => {
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData) => {
     let content = templateContent;
     
     if (isEmploymentAgreement) {
@@ -87,6 +112,24 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[geographic area]", employmentData.geographicArea)
         .replace("[X] weeks", employmentData.noticePeriod)
         .replace(/\[State\]/g, employmentData.state);
+    } else if (isContractorAgreement) {
+      const contractorData = data as ContractorFormData;
+      content = content
+        .replace("[Date]", new Date(contractorData.startDate).toLocaleDateString())
+        .replace("[Company Name]", contractorData.companyName)
+        .replace("[Address]", contractorData.companyAddress)
+        .replace("[Contractor's Full Name]", contractorData.contractorName)
+        .replace(/\[Address\]/, contractorData.contractorAddress)
+        .replace("[Start Date]", new Date(contractorData.startDate).toLocaleDateString())
+        .replace("[End Date]", new Date(contractorData.endDate).toLocaleDateString())
+        .replace("[Amount]", contractorData.amount)
+        .replace("[weekly/monthly/upon completion of project, etc.]", contractorData.paymentSchedule)
+        .replace("[X] days", contractorData.invoicePeriod)
+        .replace(/\[X\] days'/, `${contractorData.noticePeriod} days'`)
+        .replace("[X] years", contractorData.nonSolicitPeriod)
+        .replace(/\[State\]/g, contractorData.state)
+        .replace("[Location]", contractorData.location)
+        .replace("[arbitration/mediation]", "arbitration");
     } else {
       const confidentialityData = data as ConfidentialityFormData;
       content = content
@@ -122,7 +165,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -147,6 +190,15 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
           <Form {...employmentForm}>
             <form onSubmit={employmentForm.handleSubmit(onSubmit)} className="space-y-4">
               <EmploymentAgreementForm form={employmentForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isContractorAgreement ? (
+          <Form {...contractorForm}>
+            <form onSubmit={contractorForm.handleSubmit(onSubmit)} className="space-y-4">
+              <ContractorAgreementForm form={contractorForm} />
               <DialogFooter>
                 <Button type="submit">Generate Document</Button>
               </DialogFooter>

@@ -89,7 +89,81 @@ Date: __________________________`
     description: "Defines relationship between business and contractors, including work terms and deliverables.",
     category: "Employment",
     slug: "contractor-agreement",
-    content: "Template content for Independent Contractor Agreement"
+    content: `**INDEPENDENT CONTRACTOR AGREEMENT**
+
+This Independent Contractor Agreement ("Agreement") is made and entered into as of [Date], by and between:
+
+**Company:** [Company Name], a [Type of Entity, e.g., corporation, LLC], with its principal place of business at [Address] ("Company").
+
+**Contractor:** [Contractor's Full Name], an individual with a principal place of business at [Address] ("Contractor").
+
+Collectively referred to as the "Parties" or individually as a "Party."
+
+**1. Engagement of Services**
+The Company hereby engages the Contractor, and the Contractor agrees to perform the services described in Exhibit A ("Services"). The Contractor shall provide the Services in a professional and timely manner, in accordance with the terms of this Agreement.
+
+**2. Independent Contractor Relationship**
+The Parties agree that the Contractor is an independent contractor and not an employee of the Company. The Contractor shall have no authority to bind the Company, nor shall the Contractor be entitled to any employee benefits, including, but not limited to, health insurance, retirement benefits, or paid time off.
+
+**3. Term of Agreement**
+This Agreement shall commence on [Start Date] and continue until [End Date] or until terminated by either Party as provided herein. Either Party may terminate this Agreement at any time with [X] days' written notice to the other Party.
+
+**4. Compensation**
+Payment: The Company agrees to pay the Contractor [Amount] for the Services rendered. Payment will be made according to the following schedule: [weekly/monthly/upon completion of project, etc.].
+
+Invoicing: The Contractor shall submit invoices to the Company for the Services performed. The Company shall pay all undisputed invoices within [X] days of receipt.
+
+Expenses: The Company agrees to reimburse the Contractor for reasonable expenses incurred in the course of performing the Services, provided that such expenses are pre-approved in writing by the Company.
+
+**5. Confidentiality**
+The Contractor agrees to keep all information related to the Company's business, including but not limited to, financial records, customer lists, marketing strategies, and intellectual property, strictly confidential. The Contractor shall not disclose or use such information for any purpose other than the performance of the Services under this Agreement.
+
+Non-Disclosure: This confidentiality obligation shall survive the termination of this Agreement.
+
+**6. Intellectual Property**
+Any work product or materials developed by the Contractor in the course of performing the Services, including but not limited to inventions, designs, documents, reports, and other materials, shall be the exclusive property of the Company. The Contractor agrees to assign all rights, titles, and interest in such work product to the Company.
+
+**7. Compliance with Laws**
+The Contractor agrees to comply with all applicable federal, state, and local laws and regulations in the performance of the Services. The Contractor shall obtain any licenses or permits required to perform the Services.
+
+**8. Indemnification**
+The Contractor agrees to indemnify and hold harmless the Company from any claims, damages, or liabilities arising out of the Contractor's actions, omissions, or breach of this Agreement.
+
+**9. No Conflict of Interest**
+The Contractor warrants that their performance of Services for the Company does not and will not conflict with any other contractual obligation or legal duty the Contractor may have.
+
+**10. Termination**
+By the Company: The Company may terminate this Agreement at any time with or without cause by providing [X] days' written notice to the Contractor.
+
+By the Contractor: The Contractor may terminate this Agreement by providing [X] days' written notice to the Company.
+
+Effect of Termination: Upon termination, the Contractor shall cease all work under this Agreement, return any Company property, and submit a final invoice for any Services performed.
+
+**11. Non-Solicitation**
+For a period of [X] years following the termination of this Agreement, the Contractor agrees not to solicit or attempt to solicit any of the Company's employees, clients, or customers for the purpose of providing competing services.
+
+**12. Dispute Resolution**
+Any disputes arising under or in connection with this Agreement shall be resolved through [arbitration/mediation] in [Location]. The Parties agree that any legal action or proceeding shall be conducted in the state of [State], and the Parties consent to the jurisdiction of the courts located therein.
+
+**13. Miscellaneous**
+Entire Agreement: This Agreement constitutes the entire understanding between the Parties and supersedes all prior agreements, whether written or oral, regarding the subject matter hereof.
+Amendments: This Agreement may be amended only in writing and signed by both Parties.
+Severability: If any provision of this Agreement is found to be invalid or unenforceable, the remainder of the Agreement shall remain in effect.
+Governing Law: This Agreement shall be governed by the laws of the State of [State], without regard to its conflict of laws principles.
+
+**14. Signatures**
+IN WITNESS WHEREOF, the Parties hereto have executed this Independent Contractor Agreement as of the date first written above.
+
+Company:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________
+
+Contractor:
+By: ____________________________
+Name: _________________________
+Date: __________________________`
   },
   {
     title: "Non-Compete Agreement",
