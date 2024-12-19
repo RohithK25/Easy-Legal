@@ -149,7 +149,7 @@ Any disputes arising under or in connection with this Agreement shall be resolve
 **13. Miscellaneous**
 Entire Agreement: This Agreement constitutes the entire understanding between the Parties and supersedes all prior agreements, whether written or oral, regarding the subject matter hereof.
 Amendments: This Agreement may be amended only in writing and signed by both Parties.
-Severability: If any provision of this Agreement is found to be invalid or unenforceable, the remainder of the Agreement shall remain in effect.
+Severability: If any provision of this Agreement is found to be invalid or unenforceable, the remainder of this Agreement shall remain in effect.
 Governing Law: This Agreement shall be governed by the laws of the State of [State], without regard to its conflict of laws principles.
 
 **14. Signatures**
@@ -172,6 +172,90 @@ Date: __________________________`
     description: "Allows purchase of company stock at discounted price as incentive.",
     category: "Employment",
     slug: "stock-option",
-    content: "Template content for Stock Option Agreement"
+    content: `**STOCK OPTION AGREEMENT**
+
+This Stock Option Agreement (the "Agreement") is made and entered into as of [Date], by and between:
+
+Company Name: [Company Name], a [Type of Entity, e.g., corporation, LLC], with its principal place of business at [Address] (the "Company").
+
+Option Holder: [Option Holder's Full Name], an individual with a principal place of residence at [Address] (the "Option Holder").
+
+Collectively referred to as the "Parties" or individually as a "Party."
+
+1. Grant of Option
+The Company hereby grants to the Option Holder the option to purchase shares of the Company's common stock (the "Option Shares"), as described in this Agreement, on the terms and conditions set forth below.
+
+Number of Shares: [Number of Shares]
+Exercise Price: $[Exercise Price] per share
+Date of Grant: [Date]
+Vesting Schedule: The Option shall vest according to the following schedule: [e.g., 25% annually over 4 years, or specific vesting milestones].
+
+2. Option Term
+The Option granted under this Agreement shall have a term of [X] years, beginning on the Date of Grant, unless earlier terminated as provided in this Agreement.
+
+Expiration Date: The Option shall expire on [Expiration Date], unless it is terminated earlier pursuant to the terms of this Agreement.
+
+3. Vesting
+Vesting Schedule: The Option shall vest according to the following schedule:
+
+[X]% of the Option Shares shall vest on [Vesting Date 1].
+[X]% of the Option Shares shall vest on [Vesting Date 2], and so on.
+Vesting is subject to the Option Holder continuing to be employed by or providing services to the Company on the applicable vesting date.
+
+Acceleration of Vesting: In the event of a Change of Control (as defined below), the remaining unvested Option Shares shall immediately vest. "Change of Control" means [define Change of Control, e.g., the sale of the Company or a merger].
+
+4. Exercise of Option
+The Option Holder may exercise the Option, in whole or in part, by delivering written notice to the Company at any time during the term of the Option, provided that the Option Holder has vested in the shares they wish to purchase and the Option has not expired or been terminated.
+
+Exercise Price: The Option Holder must pay the Exercise Price of $[Exercise Price] per share for the number of Option Shares the Option Holder wishes to purchase.
+Payment Method: The Exercise Price may be paid by [check, wire transfer, or other method] or by other methods permitted by the Company, including cashless exercise, if applicable.
+
+5. Termination of Employment or Service
+The Option shall terminate upon the earliest to occur of the following:
+
+Termination for Cause: If the Option Holder’s employment or service with the Company is terminated for Cause (as defined below), the Option shall immediately terminate. "Cause" means [define cause, e.g., gross misconduct, violation of company policies, etc.].
+Voluntary Termination or Termination Without Cause: If the Option Holder’s employment or service is terminated voluntarily or without Cause, the Option shall remain exercisable for [X] days after such termination, but in no event later than the expiration date of the Option.
+Death or Disability: If the Option Holder’s employment or service is terminated due to death or disability, the Option shall remain exercisable for [X] months after such termination.
+
+6. Rights as a Shareholder
+The Option Holder shall have no rights as a shareholder of the Company with respect to the Option Shares until the Option Holder has exercised the Option and purchased the Option Shares. No dividends or other shareholder rights shall accrue to the Option Holder unless and until the Option Shares are issued to the Option Holder upon exercise of the Option.
+
+7. Transferability
+The Option granted under this Agreement is personal to the Option Holder and may not be transferred, assigned, pledged, or otherwise disposed of, except by will or by the laws of descent and distribution, unless otherwise permitted by the Company in writing.
+
+8. Tax Matters
+The Option Holder acknowledges and understands that the exercise of the Option may have tax consequences, including but not limited to income tax, employment tax, and/or capital gains tax. The Option Holder agrees to consult with a tax advisor to fully understand the tax implications of exercising the Option and agrees to be solely responsible for any taxes due as a result of the exercise.
+
+9. Stockholder Agreement
+The Option Holder agrees to be bound by the terms of the Company’s Stockholder Agreement, if any, as it may be amended from time to time, and acknowledges that the Option Holder’s shares, if any, will be subject to the restrictions set forth therein.
+
+10. Adjustment for Stock Splits, Dividends, and Reorganizations
+In the event of any stock split, stock dividend, recapitalization, or other corporate event affecting the Company's stock, the number of Option Shares and the Exercise Price shall be adjusted in accordance with the Company’s equity incentive plan, if applicable, to maintain the value of the Option.
+
+11. Governing Law
+This Agreement shall be governed by and construed in accordance with the laws of the State of [State], without regard to its conflict of laws principles.
+
+12. Miscellaneous
+Entire Agreement: This Agreement constitutes the entire understanding between the Parties with respect to the stock option granted and supersedes all prior agreements or understandings related to the subject matter hereof.
+Amendments: This Agreement may be amended only in writing and signed by both Parties.
+Severability: If any provision of this Agreement is found to be invalid or unenforceable, the remainder of the Agreement shall remain in full force and effect.
+No Rights to Future Grants: This Agreement does not grant the Option Holder any rights to receive future stock options or other equity awards from the Company.
+
+13. Acknowledgments
+The Option Holder acknowledges that they have read and understood the terms and conditions of this Agreement, and that they have had the opportunity to seek independent legal and financial advice before entering into this Agreement.
+
+14. Signatures
+IN WITNESS WHEREOF, the Parties hereto have executed this Stock Option Agreement as of the date first written above.
+
+Company:
+By: ____________________________
+Name: _________________________
+Title: __________________________
+Date: __________________________
+
+Option Holder:
+By: ____________________________
+Name: _________________________
+Date: __________________________`
   }
 ];
