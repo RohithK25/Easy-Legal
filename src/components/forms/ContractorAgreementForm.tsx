@@ -27,163 +27,181 @@ interface ContractorAgreementFormProps {
 
 export const ContractorAgreementForm = ({ form }: ContractorAgreementFormProps) => {
   return (
-    <>
-      <FormField
-        control={form.control}
-        name="companyName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter company name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="companyAddress"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Address</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter company address" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="contractorName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Contractor Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter contractor name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="contractorAddress"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Contractor Address</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter contractor address" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="startDate"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Start Date</FormLabel>
-            <FormControl>
-              <Input type="date" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="endDate"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>End Date</FormLabel>
-            <FormControl>
-              <Input type="date" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="amount"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Payment Amount</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter payment amount" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="paymentSchedule"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Payment Schedule</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter payment schedule (e.g., weekly, monthly)" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="invoicePeriod"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Invoice Payment Period (days)</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter number of days" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="noticePeriod"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Notice Period (days)</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter notice period in days" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="nonSolicitPeriod"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Non-Solicitation Period (years)</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter period in years" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="state"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Governing Law State</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter state" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="companyName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter company name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="companyAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Address</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter company address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="contractorName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Contractor Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter contractor name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="contractorAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Contractor Address</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter contractor address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="startDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Start Date</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="endDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>End Date</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Payment Amount</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter payment amount" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="paymentSchedule"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Payment Schedule</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g., weekly, monthly, upon completion" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="invoicePeriod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Invoice Payment Period (days)</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter number of days" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="noticePeriod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notice Period (days)</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter notice period in days" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="nonSolicitPeriod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Non-Solicitation Period (years)</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter period in years" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="state"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Governing Law State</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter state" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
       <FormField
         control={form.control}
         name="location"
@@ -197,6 +215,6 @@ export const ContractorAgreementForm = ({ form }: ContractorAgreementFormProps) 
           </FormItem>
         )}
       />
-    </>
+    </div>
   );
 };
