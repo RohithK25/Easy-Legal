@@ -1,4 +1,4 @@
-import * as z from "zod";
+import { z } from "zod";
 
 export const leaseFormSchema = z.object({
   effectiveDate: z.string().min(1, "Effective date is required"),

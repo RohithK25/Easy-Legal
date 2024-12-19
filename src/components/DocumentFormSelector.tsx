@@ -10,6 +10,8 @@ import { LeaseAgreementForm } from "./forms/lease-agreement/LeaseAgreementForm";
 import { leaseFormSchema, type LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
 import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
+import { ConfidentialityAgreementForm } from "./forms/confidentiality/ConfidentialityAgreementForm";
+import { confidentialityFormSchema, type ConfidentialityFormData } from "./forms/confidentiality/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -19,6 +21,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isWaiverRelease = templateTitle === "Waiver and Release";
   const isLeaseAgreement = templateTitle === "Commercial Lease Agreement";
   const isExitStrategy = templateTitle === "Exit Strategy Agreement";
+  const isConfidentiality = templateTitle === "Confidentiality Agreement";
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -89,6 +92,21 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const confidentialityForm = useForm<ConfidentialityFormData>({
+    resolver: zodResolver(confidentialityFormSchema),
+    defaultValues: {
+      effectiveDate: "",
+      partyAName: "",
+      partyAAddress: "",
+      partyBName: "",
+      partyBAddress: "",
+      confidentialityPeriod: "",
+      returnPeriod: "",
+      state: "",
+      location: "",
+    }
+  });
+
   if (isWaiverRelease) {
     return (
       <Form {...waiverReleaseForm}>
@@ -120,6 +138,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...exitStrategyForm}>
         <form onSubmit={exitStrategyForm.handleSubmit(onSubmit)} className="space-y-4">
           <ExitStrategyForm form={exitStrategyForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isConfidentiality) {
+    return (
+      <Form {...confidentialityForm}>
+        <form onSubmit={confidentialityForm.handleSubmit(onSubmit)} className="space-y-4">
+          <ConfidentialityAgreementForm form={confidentialityForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

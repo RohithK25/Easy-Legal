@@ -12,9 +12,10 @@ import { DocumentFormSelector } from "./DocumentFormSelector";
 import { WaiverReleaseFormData } from "./forms/waiver-release/types";
 import { LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyFormData } from "./forms/exit-strategy/types";
+import { ConfidentialityFormData } from "./forms/confidentiality/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData) => {
     let content = templateContent;
 
     if (templateTitle === "Waiver and Release") {
@@ -76,6 +77,18 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[specified time period, e.g., one year]", exitData.nonSolicitationPeriod)
         .replace("[number of years]", exitData.confidentialityPeriod)
         .replace("[American Arbitration Association or other arbitration body]", exitData.arbitrationBody);
+    } else if (templateTitle === "Confidentiality Agreement") {
+      const confidentialityData = data as ConfidentialityFormData;
+      content = content
+        .replace("[Effective Date]", new Date(confidentialityData.effectiveDate).toLocaleDateString())
+        .replace(/\[Party A Name\]/g, confidentialityData.partyAName)
+        .replace(/\[Party A Address\]/g, confidentialityData.partyAAddress)
+        .replace(/\[Party B Name\]/g, confidentialityData.partyBName)
+        .replace(/\[Party B Address\]/g, confidentialityData.partyBAddress)
+        .replace("[Confidentiality Period]", confidentialityData.confidentialityPeriod)
+        .replace("[Return Period]", confidentialityData.returnPeriod)
+        .replace(/\[State\]/g, confidentialityData.state)
+        .replace("[Location]", confidentialityData.location);
     }
 
     return content;
@@ -98,7 +111,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
