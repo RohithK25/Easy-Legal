@@ -12,7 +12,16 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateWordDocument } from "@/utils/documentGenerator";
-import { ConfidentialityAgreementForm, confidentialityFormSchema, type ConfidentialityFormData } from "./forms/ConfidentialityAgreementForm";
+import { 
+  ConfidentialityAgreementForm, 
+  confidentialityFormSchema, 
+  type ConfidentialityFormData 
+} from "./forms/ConfidentialityAgreementForm";
+import {
+  EmploymentAgreementForm,
+  employmentFormSchema,
+  type EmploymentFormData
+} from "./forms/EmploymentAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -22,9 +31,20 @@ interface DocumentFormProps {
 }
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const form = useForm<ConfidentialityFormData>({
-    resolver: zodResolver(confidentialityFormSchema),
-    defaultValues: {
+  const isEmploymentAgreement = templateTitle === "Employment Agreement";
+  
+  const form = useForm({
+    resolver: zodResolver(isEmploymentAgreement ? employmentFormSchema : confidentialityFormSchema),
+    defaultValues: isEmploymentAgreement ? {
+      employerName: "",
+      employerAddress: "",
+      employeeName: "",
+      employeeAddress: "",
+      startDate: "",
+      jobTitle: "",
+      salary: "",
+      supervisorName: "",
+    } : {
       partyAName: "",
       partyAAddress: "",
       partyBName: "",
@@ -37,21 +57,34 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     },
   });
 
-  const generateDocument = (data: ConfidentialityFormData) => {
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData) => {
     let content = templateContent;
     
-    // Replace placeholders with form data
-    content = content
-      .replace("[Date]", new Date(data.effectiveDate).toLocaleDateString())
-      .replace("[Full Legal Name of Disclosing Party]", data.partyAName)
-      .replace("[Address]", data.partyAAddress)
-      .replace("[Full Legal Name of Receiving Party]", data.partyBName)
-      .replace(/\[Address\]/, data.partyBAddress)
-      .replace("[number of years, e.g., two (2)]", data.confidentialityPeriod)
-      .replace("[X]", data.returnPeriod)
-      .replace("[State]", data.state)
-      .replace("[Location]", data.location)
-      .replace("[arbitration/mediation]", "arbitration");
+    if (isEmploymentAgreement) {
+      const employmentData = data as EmploymentFormData;
+      content = content
+        .replace("[Company Name]", employmentData.employerName)
+        .replace("[Address]", employmentData.employerAddress)
+        .replace("[Employee's Full Name]", employmentData.employeeName)
+        .replace(/\[Address\]/, employmentData.employeeAddress)
+        .replace("[Start Date]", new Date(employmentData.startDate).toLocaleDateString())
+        .replace("[Job Title]", employmentData.jobTitle)
+        .replace("[Amount]", employmentData.salary)
+        .replace("[Supervisor's Name or Position]", employmentData.supervisorName);
+    } else {
+      const confidentialityData = data as ConfidentialityFormData;
+      content = content
+        .replace("[Date]", new Date(confidentialityData.effectiveDate).toLocaleDateString())
+        .replace("[Full Legal Name of Disclosing Party]", confidentialityData.partyAName)
+        .replace("[Address]", confidentialityData.partyAAddress)
+        .replace("[Full Legal Name of Receiving Party]", confidentialityData.partyBName)
+        .replace(/\[Address\]/, confidentialityData.partyBAddress)
+        .replace("[number of years, e.g., two (2)]", confidentialityData.confidentialityPeriod)
+        .replace("[X]", confidentialityData.returnPeriod)
+        .replace("[State]", confidentialityData.state)
+        .replace("[Location]", confidentialityData.location)
+        .replace("[arbitration/mediation]", "arbitration");
+    }
 
     return content;
   };
@@ -73,7 +106,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: ConfidentialityFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -96,7 +129,11 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <ConfidentialityAgreementForm form={form} />
+            {isEmploymentAgreement ? (
+              <EmploymentAgreementForm />
+            ) : (
+              <ConfidentialityAgreementForm form={form} />
+            )}
             <DialogFooter>
               <Button type="submit">Generate Document</Button>
             </DialogFooter>
