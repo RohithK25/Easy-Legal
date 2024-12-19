@@ -1,5 +1,5 @@
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { FileText } from "lucide-react";
 
 interface TemplateCardProps {
   title: string;
@@ -8,18 +8,22 @@ interface TemplateCardProps {
   slug: string;
 }
 
-export const TemplateCard = ({ title, description, category, slug }: TemplateCardProps) => {
+export function TemplateCard({ title, description, category, slug }: TemplateCardProps) {
   return (
     <Link to={`/template/${slug}`} className="template-card group">
-      <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-primary-accent">{category}</span>
-        <h3 className="text-xl font-serif font-bold">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-        <div className="mt-4 flex items-center text-primary">
-          <span className="font-medium">Use template</span>
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+      <div className="flex items-start gap-4">
+        <div className="p-2 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+          <FileText className="w-6 h-6" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="font-medium leading-none group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-gray-500 line-clamp-2">
+            {description}
+          </p>
         </div>
       </div>
     </Link>
   );
-};
+}

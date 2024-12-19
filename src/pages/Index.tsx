@@ -125,6 +125,15 @@ const templates = [
 ];
 
 const Index = () => {
+  // Group templates by category
+  const groupedTemplates = templates.reduce((acc, template) => {
+    if (!acc[template.category]) {
+      acc[template.category] = [];
+    }
+    acc[template.category].push(template);
+    return acc;
+  }, {} as Record<string, typeof templates>);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -137,20 +146,27 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">Popular Templates</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {templates.map((template) => (
-                <TemplateCard key={template.slug} {...template} />
-              ))}
+          {Object.entries(groupedTemplates).map(([category, categoryTemplates]) => (
+            <div key={category} className="mt-12">
+              <h2 className="text-2xl font-bold mb-6 text-primary flex items-center">
+                {category}
+                <span className="text-sm font-normal text-gray-500 ml-3">
+                  ({categoryTemplates.length} templates)
+                </span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categoryTemplates.map((template) => (
+                  <TemplateCard key={template.slug} {...template} />
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </main>
       
-      <footer className="border-t py-8 mt-12">
+      <footer className="border-t py-8 mt-12 bg-gray-50">
         <div className="container">
-          <p className="text-center text-gray-600">
+          <p className="text-center text-gray-600 max-w-2xl mx-auto">
             Disclaimer: These templates are provided for informational purposes only and should not be considered as legal advice.
             Please consult with a legal professional before using any templates for your business.
           </p>
