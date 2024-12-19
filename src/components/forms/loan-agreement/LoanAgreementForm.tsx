@@ -1,6 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
-import { LoanFormData } from "./types";
 import { LoanFormFields } from "./LoanFormFields";
+import { LoanFormData, loanFormSchema } from "./types";
 
 interface LoanAgreementFormProps {
   form: UseFormReturn<LoanFormData>;
@@ -9,3 +9,6 @@ interface LoanAgreementFormProps {
 export const LoanAgreementForm = ({ form }: LoanAgreementFormProps) => {
   return <LoanFormFields form={form} />;
 };
+
+export type { LoanFormData };
+export { loanFormSchema };
