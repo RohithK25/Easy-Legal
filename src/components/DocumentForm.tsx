@@ -52,6 +52,11 @@ import {
   shareholderFormSchema,
   type ShareholderFormData
 } from "./forms/ShareholderAgreementForm";
+import {
+  InvestmentAgreementForm,
+  investmentFormSchema,
+  type InvestmentFormData
+} from "./forms/InvestmentAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -68,6 +73,25 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isPartnershipAgreement = templateTitle === "Partnership Agreement";
   const isOperatingAgreement = templateTitle === "Operating Agreement";
   const isShareholderAgreement = templateTitle === "Shareholder Agreement";
+  const isInvestmentAgreement = templateTitle === "Investment Agreement";
+
+  const investmentForm = useForm<InvestmentFormData>({
+    resolver: zodResolver(investmentFormSchema),
+    defaultValues: {
+      investorName: "",
+      investorAddress: "",
+      companyName: "",
+      companyAddress: "",
+      state: "",
+      investmentAmount: "",
+      numberOfShares: "",
+      pricePerShare: "",
+      closingDate: "",
+      boardRepresentationThreshold: "",
+      nonCompetePeriod: "",
+      geographicRegion: "",
+    }
+  });
 
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -224,10 +248,26 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData) => {
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData) => {
     let content = templateContent;
     
-    if (isShareholderAgreement) {
+    if (isInvestmentAgreement) {
+      const investmentData = data as InvestmentFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Investor Name]", investmentData.investorName)
+        .replace("[Investor Address]", investmentData.investorAddress)
+        .replace("[Company Name]", investmentData.companyName)
+        .replace("[Company Address]", investmentData.companyAddress)
+        .replace(/\[State\]/g, investmentData.state)
+        .replace("[Investment Amount]", investmentData.investmentAmount)
+        .replace("[Number]", investmentData.numberOfShares)
+        .replace("[Price per Share]", investmentData.pricePerShare)
+        .replace("[Closing Date]", new Date(investmentData.closingDate).toLocaleDateString())
+        .replace("[X]%", `${investmentData.boardRepresentationThreshold}%`)
+        .replace("[X] years", `${investmentData.nonCompetePeriod} years`)
+        .replace("[geographic region]", investmentData.geographicRegion);
+    } else if (isShareholderAgreement) {
       const shareholderData = data as ShareholderFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -386,7 +426,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -407,7 +447,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isShareholderAgreement ? (
+        {isInvestmentAgreement ? (
+          <Form {...investmentForm}>
+            <form onSubmit={investmentForm.handleSubmit(onSubmit)} className="space-y-4">
+              <InvestmentAgreementForm form={investmentForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isShareholderAgreement ? (
           <Form {...shareholderForm}>
             <form onSubmit={shareholderForm.handleSubmit(onSubmit)} className="space-y-4">
               <ShareholderAgreementForm form={shareholderForm} />
