@@ -107,6 +107,8 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       employeeAddress: "",
       effectiveDate: "",
       nonCompetePeriod: "",
+      geographicArea: "",
+      industry: "",
       nonSolicitPeriod: "",
       state: "",
     }
@@ -159,6 +161,8 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Employee/Contractor's Full Name]", nonCompeteData.employeeName)
         .replace(/\[Address\]/, nonCompeteData.employeeAddress)
         .replace(/\[X\] years/g, `${nonCompeteData.nonCompetePeriod} years`)
+        .replace("[define area, e.g., specific states, cities, or nationwide]", nonCompeteData.geographicArea)
+        .replace("[describe the industry, e.g., technology, software development, etc.]", nonCompeteData.industry)
         .replace(/\[State\]/g, nonCompeteData.state);
     } else {
       const confidentialityData = data as ConfidentialityFormData;
