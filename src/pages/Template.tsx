@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FileDown } from "lucide-react";
+import { Header } from "@/components/Header";
 
 const Template = () => {
   const { slug } = useParams();
@@ -27,6 +28,7 @@ const Template = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <main className="flex-1 py-12">
         <div className="container max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
