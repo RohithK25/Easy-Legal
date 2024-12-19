@@ -43,7 +43,12 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       startDate: "",
       jobTitle: "",
       salary: "",
+      salaryPeriod: "month",
       supervisorName: "",
+      nonCompetePeriod: "",
+      geographicArea: "",
+      noticePeriod: "",
+      state: "",
     }
   });
 
@@ -76,7 +81,12 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Start Date]", new Date(employmentData.startDate).toLocaleDateString())
         .replace("[Job Title]", employmentData.jobTitle)
         .replace("[Amount]", employmentData.salary)
-        .replace("[Supervisor's Name or Position]", employmentData.supervisorName);
+        .replace("[hour/week/month/year]", employmentData.salaryPeriod)
+        .replace("[Supervisor's Name or Position]", employmentData.supervisorName)
+        .replace("[X] years", employmentData.nonCompetePeriod)
+        .replace("[geographic area]", employmentData.geographicArea)
+        .replace("[X] weeks", employmentData.noticePeriod)
+        .replace(/\[State\]/g, employmentData.state);
     } else {
       const confidentialityData = data as ConfidentialityFormData;
       content = content
