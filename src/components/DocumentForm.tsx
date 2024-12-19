@@ -78,11 +78,12 @@ import {
   salesFormSchema,
   type SalesFormData
 } from "./forms/sales-agreement/SalesAgreementForm";
+
 import {
-  PurchaseOrderForm,
   purchaseOrderFormSchema,
   type PurchaseOrderFormData
 } from "./forms/purchase-order/types";
+import { PurchaseOrderForm } from "./forms/purchase-order/PurchaseOrderForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -801,3 +802,4 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     </Dialog>
   );
 };
+
