@@ -10,10 +10,12 @@ import { LeaseAgreementForm } from "./forms/lease-agreement/LeaseAgreementForm";
 import { leaseFormSchema, type LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
 import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
-import { ConfidentialityAgreementForm } from "@/components/forms/confidentiality/ConfidentialityAgreementForm";
+import { ConfidentialityAgreementForm } from "./forms/confidentiality/ConfidentialityAgreementForm";
 import { confidentialityFormSchema, type ConfidentialityFormData } from "./forms/confidentiality/types";
 import { IpAssignmentForm } from "./forms/ip-assignment/IpAssignmentForm";
 import { ipAssignmentFormSchema, type IpAssignmentFormData } from "./forms/ip-assignment/types";
+import { PrivacyPolicyForm } from "./forms/privacy-policy/PrivacyPolicyForm";
+import { privacyPolicyFormSchema, type PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -25,6 +27,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isExitStrategy = templateTitle === "Exit Strategy Agreement";
   const isConfidentiality = templateTitle === "Confidentiality Agreement";
   const isIpAssignment = templateTitle === "Intellectual Property Assignment";
+  const isPrivacyPolicy = templateTitle === "Privacy Policy";
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -124,6 +127,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const privacyPolicyForm = useForm<PrivacyPolicyFormData>({
+    resolver: zodResolver(privacyPolicyFormSchema),
+    defaultValues: {
+      companyName: "",
+      websiteUrl: "",
+      contactEmail: "",
+      contactPhone: "",
+      businessAddress: "",
+      state: "",
+      location: "",
+    }
+  });
+
   if (isWaiverRelease) {
     return (
       <Form {...waiverReleaseForm}>
@@ -181,6 +197,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...ipAssignmentForm}>
         <form onSubmit={ipAssignmentForm.handleSubmit(onSubmit)} className="space-y-4">
           <IpAssignmentForm form={ipAssignmentForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isPrivacyPolicy) {
+    return (
+      <Form {...privacyPolicyForm}>
+        <form onSubmit={privacyPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
+          <PrivacyPolicyForm form={privacyPolicyForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

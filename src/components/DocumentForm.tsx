@@ -14,11 +14,23 @@ import { LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyFormData } from "./forms/exit-strategy/types";
 import { ConfidentialityFormData } from "./forms/confidentiality/types";
 import { IpAssignmentFormData } from "./forms/ip-assignment/types";
+import { PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData) => {
     let content = templateContent;
 
+    if (templateTitle === "Privacy Policy") {
+      const privacyData = data as PrivacyPolicyFormData;
+      content = content
+        .replace("[Your Company Name]", privacyData.companyName)
+        .replace("[Your website URL]", privacyData.websiteUrl)
+        .replace("[Contact Information]", `Email: ${privacyData.contactEmail}, Phone: ${privacyData.contactPhone}`)
+        .replace("[Your physical business address]", privacyData.businessAddress)
+        .replace(/\[State\]/g, privacyData.state)
+        .replace("[Location]", privacyData.location);
+    }
+    
     if (templateTitle === "Intellectual Property Assignment") {
       const ipData = data as IpAssignmentFormData;
       content = content
