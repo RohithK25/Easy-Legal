@@ -37,6 +37,11 @@ import {
   stockOptionFormSchema,
   type StockOptionFormData
 } from "./forms/StockOptionAgreementForm";
+import {
+  PartnershipAgreementForm,
+  partnershipFormSchema,
+  type PartnershipFormData
+} from "./forms/PartnershipAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -50,6 +55,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
   const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
   const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
+  const isPartnershipAgreement = templateTitle === "Partnership Agreement";
   
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -139,10 +145,51 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData) => {
+  const partnershipForm = useForm<PartnershipFormData>({
+    resolver: zodResolver(partnershipFormSchema),
+    defaultValues: {
+      partner1Name: "",
+      partner1Address: "",
+      partner2Name: "",
+      partner2Address: "",
+      partnershipName: "",
+      businessActivity: "",
+      businessAddress: "",
+      partner1Contribution: "",
+      partner2Contribution: "",
+      partner1Ownership: "",
+      partner2Ownership: "",
+      profitDistribution: "",
+      withdrawalNotice: "",
+      state: "",
+      location: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData) => {
     let content = templateContent;
     
-    if (isEmploymentAgreement) {
+    if (isPartnershipAgreement) {
+      const partnershipData = data as PartnershipFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Partner 1 Full Name]", partnershipData.partner1Name)
+        .replace(/\[Address\]/, partnershipData.partner1Address)
+        .replace("[Partner 2 Full Name]", partnershipData.partner2Name)
+        .replace(/\[Address\]/, partnershipData.partner2Address)
+        .replace("[Partnership Name]", partnershipData.partnershipName)
+        .replace("[describe the business activity]", partnershipData.businessActivity)
+        .replace("[Business Address]", partnershipData.businessAddress)
+        .replace(/\$\[Amount\]/g, `$${partnershipData.partner1Contribution}`)
+        .replace(/\$\[Amount\]/g, `$${partnershipData.partner2Contribution}`)
+        .replace(/\[X\]%/g, `${partnershipData.partner1Ownership}%`)
+        .replace(/\[X\]%/g, `${partnershipData.partner2Ownership}%`)
+        .replace("[quarterly/annual]", partnershipData.profitDistribution)
+        .replace("[X] days", partnershipData.withdrawalNotice)
+        .replace(/\[State\]/g, partnershipData.state)
+        .replace("[Location]", partnershipData.location)
+        .replace("[mediation/arbitration]", "arbitration");
+    } else if (isEmploymentAgreement) {
       const employmentData = data as EmploymentFormData;
       content = content
         .replace("[Date]", new Date(employmentData.startDate).toLocaleDateString())
@@ -240,7 +287,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -292,6 +339,15 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
           <Form {...stockOptionForm}>
             <form onSubmit={stockOptionForm.handleSubmit(onSubmit)} className="space-y-4">
               <StockOptionAgreementForm form={stockOptionForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isPartnershipAgreement ? (
+          <Form {...partnershipForm}>
+            <form onSubmit={partnershipForm.handleSubmit(onSubmit)} className="space-y-4">
+              <PartnershipAgreementForm form={partnershipForm} />
               <DialogFooter>
                 <Button type="submit">Generate Document</Button>
               </DialogFooter>
