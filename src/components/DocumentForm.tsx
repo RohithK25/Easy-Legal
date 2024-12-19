@@ -18,10 +18,22 @@ import { PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 import { TermsConditionsFormData } from "./forms/terms-conditions/types";
 import { PurchaseOrderFormData } from "./forms/purchase-order/types";
 import { SalesFormData } from "./forms/sales-agreement/types";
+import { DividendPolicyFormData } from "./forms/dividend-policy/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData) => {
     let content = templateContent;
+
+    if (templateTitle === "Dividend Policy Agreement") {
+      const dividendData = data as DividendPolicyFormData;
+      content = content
+        .replace("[Company Name]", dividendData.companyName)
+        .replace("[Company Address]", dividendData.companyAddress)
+        .replace(/\[State\]/g, dividendData.state)
+        .replace("[Shareholder(s) or Shareholder(s) Name(s)]", dividendData.shareholderNames)
+        .replace("[Frequency, e.g., quarterly]", dividendData.paymentPeriod)
+        .replace("[number of days]", dividendData.paymentDays);
+    }
 
     if (templateTitle === "Sales Agreement") {
       const salesData = data as SalesFormData;

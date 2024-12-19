@@ -22,6 +22,8 @@ import { PurchaseOrderForm } from "./forms/purchase-order/PurchaseOrderForm";
 import { purchaseOrderFormSchema, type PurchaseOrderFormData } from "./forms/purchase-order/types";
 import { SalesAgreementForm } from "./forms/sales-agreement/SalesAgreementForm";
 import { salesFormSchema, type SalesFormData } from "./forms/sales-agreement/types";
+import { DividendPolicyAgreementForm } from "./forms/dividend-policy/DividendPolicyAgreementForm";
+import { dividendPolicyFormSchema, type DividendPolicyFormData } from "./forms/dividend-policy/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -37,6 +39,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isTermsConditions = templateTitle === "Terms and Conditions";
   const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
   const isSalesAgreement = templateTitle === "Sales Agreement";
+  const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -205,6 +208,18 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const dividendPolicyForm = useForm<DividendPolicyFormData>({
+    resolver: zodResolver(dividendPolicyFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      state: "",
+      shareholderNames: "",
+      paymentPeriod: "",
+      paymentDays: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -314,6 +329,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...termsConditionsForm}>
         <form onSubmit={termsConditionsForm.handleSubmit(onSubmit)} className="space-y-4">
           <TermsConditionsForm form={termsConditionsForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isDividendPolicy) {
+    return (
+      <Form {...dividendPolicyForm}>
+        <form onSubmit={dividendPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
+          <DividendPolicyAgreementForm form={dividendPolicyForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
