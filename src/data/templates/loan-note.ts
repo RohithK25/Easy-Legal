@@ -5,43 +5,40 @@ export const loanNoteTemplate: Template = {
   description: "A simple promissory note for documenting loans.",
   category: "Financial",
   slug: "loan-note",
-  content: `LOAN NOTE
+  content: `**LOAN NOTE**
 
-Principal Amount: $[Loan Amount]
-Date: [Date]
-Maturity Date: [Maturity Date]
+This Loan Note ("Note") is made and entered into as of [Date], by and between:
 
-This Loan Note (the "Note") is made as of the date first written above by [Borrower Name], a [State] corporation, with its principal place of business at [Borrower Address] (the "Borrower"), in favor of [Lender Name], with a principal address at [Lender Address] (the "Lender").
+**Lender:** [Lender Name], with a principal address at [Lender Address] (the "Lender"),
 
-For value received, the Borrower promises to pay to the Lender, or to the Lender's assigns, the principal sum of $[Loan Amount], together with interest thereon as set forth in this Note.
+**Borrower:** [Borrower Name], with a principal address at [Borrower Address] (the "Borrower").
 
-1. Loan Amount and Disbursement
-1.1 Loan Amount
+The Lender and Borrower are collectively referred to as the "Parties" and individually as a "Party."
+
+**1. Principal Amount**
 The principal amount of this loan is $[Loan Amount] (the "Loan").
 
-1.2 Disbursement of Loan
-The Loan will be disbursed to the Borrower on or about [Date], to the Borrower's designated account at [Bank Name] with account number [Account Number], or by other means as agreed by the Parties.
+**2. Disbursement**
+2.1 The Loan will be disbursed to the Borrower's designated account at [Bank Name] with account number [Account Number].
 
-2. Interest Rate
-2.1 Interest Rate
-The outstanding principal balance of the Loan shall accrue interest at a rate of [X]% per annum.
+**3. Interest and Repayment**
+3.1 The Loan shall bear interest at a rate of [X]% per annum.
+3.2 The full outstanding principal balance of this Loan, together with all accrued and unpaid interest, is due and payable in full on [Maturity Date].
 
-3. Repayment Terms
-3.1 Late Payment
-If any payment is not made when due, the Borrower shall pay a late fee of $[Late Fee].
+**4. Late Payment**
+4.1 If any payment is not made when due, the Borrower shall pay a late fee as specified in the payment schedule.
 
-4. Maturity
-4.1 Maturity Date
-The full outstanding principal balance of this Loan, together with all accrued and unpaid interest, is due and payable in full on [Maturity Date].
+**5. Governing Law**
+5.1 This Note shall be governed by and construed in accordance with the laws of the state of [State].
 
-IN WITNESS WHEREOF, the Borrower and the Lender have executed this Loan Note as of the date first written above.
+IN WITNESS WHEREOF, the Parties have executed this Loan Note as of the date first written above.
 
-Lender:
+**Lender:**
 By: ____________________________
 Name: [Lender Name]
 Date: [Date]
 
-Borrower:
+**Borrower:**
 By: ____________________________
 Name: [Borrower Name]
 Date: [Date]`
