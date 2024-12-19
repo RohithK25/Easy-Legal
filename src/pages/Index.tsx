@@ -47,8 +47,11 @@ const Index = () => {
       
       <footer className="border-t py-8 mt-12 bg-gray-50">
         <div className="container">
-          <p className="text-center text-gray-600">
+          <p className="text-center text-gray-600 mb-2">
             These templates are provided for informational purposes only.
+          </p>
+          <p className="text-center text-gray-600 text-sm">
+            Please note that these are template documents and we strongly encourage you to consult with a qualified legal advisor before using or adapting any of these templates for your specific needs.
           </p>
         </div>
       </footer>
