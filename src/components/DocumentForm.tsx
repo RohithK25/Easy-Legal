@@ -98,6 +98,14 @@ import {
   type PrivacyPolicyFormData
 } from "./forms/privacy-policy/types";
 
+import {
+  IpAssignmentForm
+} from "./forms/ip-assignment/IpAssignmentForm";
+import {
+  ipAssignmentFormSchema,
+  type IpAssignmentFormData
+} from "./forms/ip-assignment/types";
+
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
@@ -114,6 +122,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
   const isTermsAndConditions = templateTitle === "Terms and Conditions";
   const isPrivacyPolicy = templateTitle === "Privacy Policy";
+  const isIpAssignment = templateTitle === "Intellectual Property Assignment";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -414,10 +423,36 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData) => {
+  const ipAssignmentForm = useForm<IpAssignmentFormData>({
+    resolver: zodResolver(ipAssignmentFormSchema),
+    defaultValues: {
+      assignorName: "",
+      assignorAddress: "",
+      assigneeName: "",
+      assigneeAddress: "",
+      workDescription: "",
+      relationshipType: "",
+      consideration: "",
+      state: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData) => {
     let content = templateContent;
     
-    if (isPrivacyPolicy) {
+    if (isIpAssignment) {
+      const ipData = data as IpAssignmentFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Assignor's Full Name]", ipData.assignorName)
+        .replace("[Assignor's Address]", ipData.assignorAddress)
+        .replace("[Assignee's Full Name or Company Name]", ipData.assigneeName)
+        .replace("[Assignee's Address]", ipData.assigneeAddress)
+        .replace("[describe the work, project, or area of work]", ipData.workDescription)
+        .replace("[employment, contractual agreement, partnership, etc.]", ipData.relationshipType)
+        .replace("[Insert Amount]", ipData.consideration)
+        .replace("[Insert State]", ipData.state);
+    } else if (isPrivacyPolicy) {
       const privacyData = data as PrivacyPolicyFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -687,7 +722,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -708,7 +743,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isPrivacyPolicy ? (
+        {isIpAssignment ? (
+          <Form {...ipAssignmentForm}>
+            <form onSubmit={ipAssignmentForm.handleSubmit(onSubmit)} className="space-y-4">
+              <IpAssignmentForm form={ipAssignmentForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isPrivacyPolicy ? (
           <Form {...privacyPolicyForm}>
             <form onSubmit={privacyPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
               <PrivacyPolicyForm form={privacyPolicyForm} />
@@ -857,4 +901,3 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     </Dialog>
   );
 };
-
