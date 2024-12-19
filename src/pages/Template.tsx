@@ -6,19 +6,22 @@ import { Header } from "@/components/Header";
 import { DocumentForm } from "@/components/DocumentForm";
 import { useState } from "react";
 import { templates } from "@/data/templates";
+import { Template as TemplateType } from "@/types/template";
 
 const Template = () => {
   const { slug } = useParams();
   const [showForm, setShowForm] = useState(false);
 
-  // Find the template data based on the slug
-  const template = templates.find(t => t.slug === slug) || {
+  const defaultTemplate: TemplateType = {
     title: "Template Not Found",
     description: "The requested template could not be found.",
     category: "Unknown",
     content: "Template content not available.",
     slug: "not-found"
   };
+
+  // Find the template data based on the slug
+  const template = templates.find(t => t.slug === slug) || defaultTemplate;
 
   const handleSearch = (value: string) => {
     // Search is not needed on the template detail page

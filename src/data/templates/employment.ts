@@ -1,12 +1,6 @@
-interface TemplateType {
-  title: string;
-  description: string;
-  category: string;
-  slug: string;
-  content: string;
-}
+import { Template } from "@/types/template";
 
-export const employmentTemplates: TemplateType[] = [
+export const employmentTemplates: Template[] = [
   {
     title: "Employment Agreement",
     description: "Outlines terms and conditions of employment, including salary, benefits, and responsibilities.",
