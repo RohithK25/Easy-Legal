@@ -26,6 +26,8 @@ import { DividendPolicyAgreementForm } from "./forms/dividend-policy/DividendPol
 import { dividendPolicyFormSchema, type DividendPolicyFormData } from "./forms/dividend-policy/types";
 import { LoanNoteForm } from "./forms/loan-note/LoanNoteForm";
 import { loanNoteFormSchema, type LoanNoteFormData } from "./forms/loan-note/types";
+import { LoanAgreementForm } from "./forms/loan-agreement/LoanAgreementForm";
+import { loanFormSchema, type LoanFormData } from "./forms/loan-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -43,6 +45,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isSalesAgreement = templateTitle === "Sales Agreement";
   const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
   const isLoanNote = templateTitle === "Loan Note";
+  const isLoanAgreement = templateTitle === "Loan Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -246,6 +249,33 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const loanAgreementForm = useForm<LoanFormData>({
+    resolver: zodResolver(loanFormSchema),
+    defaultValues: {
+      lenderName: "",
+      lenderAddress: "",
+      borrowerName: "",
+      borrowerAddress: "",
+      state: "",
+      loanAmount: "",
+      bankName: "",
+      accountNumber: "",
+      interestRate: "",
+      yearBasis: "",
+      paymentFrequency: "",
+      startDate: "",
+      maturityDate: "",
+      installmentAmount: "",
+      paymentDay: "",
+      paymentPeriod: "",
+      lateFee: "",
+      lateFeePercentage: "",
+      gracePeriod: "",
+      entityType: "",
+      defaultCurePeriod: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -380,9 +410,20 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     return (
       <Form {...loanNoteForm}>
         <form onSubmit={loanNoteForm.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="max-h-[60vh] overflow-y-auto pr-6">
-            <LoanNoteForm form={loanNoteForm} />
-          </div>
+          <LoanNoteForm form={loanNoteForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isLoanAgreement) {
+    return (
+      <Form {...loanAgreementForm}>
+        <form onSubmit={loanAgreementForm.handleSubmit(onSubmit)} className="space-y-4">
+          <LoanAgreementForm form={loanAgreementForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

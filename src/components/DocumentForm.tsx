@@ -20,10 +20,37 @@ import { PurchaseOrderFormData } from "./forms/purchase-order/types";
 import { SalesFormData } from "./forms/sales-agreement/types";
 import { DividendPolicyFormData } from "./forms/dividend-policy/types";
 import { LoanNoteFormData } from "./forms/loan-note/types";
+import { LoanFormData } from "./forms/loan-agreement/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData) => {
     let content = templateContent;
+
+    if (templateTitle === "Loan Agreement") {
+      const loanData = data as LoanFormData;
+      content = content
+        .replace("[Lender Name]", loanData.lenderName)
+        .replace("[Lender Address]", loanData.lenderAddress)
+        .replace("[Borrower Name]", loanData.borrowerName)
+        .replace("[Borrower Address]", loanData.borrowerAddress)
+        .replace(/\[State\]/g, loanData.state)
+        .replace(/\[Loan Amount\]/g, loanData.loanAmount)
+        .replace("[Bank Name]", loanData.bankName)
+        .replace("[Account Number]", loanData.accountNumber)
+        .replace("[Interest Rate]", loanData.interestRate)
+        .replace("[Year Basis]", loanData.yearBasis)
+        .replace("[Payment Frequency]", loanData.paymentFrequency)
+        .replace("[Start Date]", new Date(loanData.startDate).toLocaleDateString())
+        .replace("[Maturity Date]", new Date(loanData.maturityDate).toLocaleDateString())
+        .replace("[Installment Amount]", loanData.installmentAmount)
+        .replace("[Payment Day]", loanData.paymentDay)
+        .replace("[Payment Period]", loanData.paymentPeriod)
+        .replace("[Late Fee]", loanData.lateFee)
+        .replace("[Late Fee Percentage]", loanData.lateFeePercentage)
+        .replace("[Grace Period]", loanData.gracePeriod)
+        .replace("[Entity Type]", loanData.entityType)
+        .replace("[Default Cure Period]", loanData.defaultCurePeriod);
+    }
 
     if (templateTitle === "Loan Note") {
       const loanNoteData = data as LoanNoteFormData;
@@ -223,7 +250,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);

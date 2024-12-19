@@ -7,7 +7,11 @@ interface LoanAgreementFormProps {
 }
 
 export const LoanAgreementForm = ({ form }: LoanAgreementFormProps) => {
-  return <LoanFormFields form={form} />;
+  return (
+    <div className="max-h-[60vh] overflow-y-auto pr-6">
+      <LoanFormFields form={form} />
+    </div>
+  );
 };
 
 export type { LoanFormData };
