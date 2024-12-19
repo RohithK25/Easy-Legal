@@ -5,7 +5,6 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
@@ -48,280 +47,292 @@ interface ShareholderAgreementFormProps {
 export const ShareholderAgreementForm = ({ form }: ShareholderAgreementFormProps) => {
   return (
     <div className="space-y-4">
-      <FormField
-        control={form.control}
-        name="shareholder1Name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 1 Full Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter shareholder 1 name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="space-y-4 border-b pb-4">
+        <h3 className="font-medium">Company Information</h3>
+        <FormField
+          control={form.control}
+          name="companyName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter company name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder1Address"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 1 Address</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter shareholder 1 address" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="companyType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Type</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select company type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="corporation">Corporation</SelectItem>
+                    <SelectItem value="s-corporation">S-Corporation</SelectItem>
+                    <SelectItem value="c-corporation">C-Corporation</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder2Name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 2 Full Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter shareholder 2 name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="state"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>State of Incorporation</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter state" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder2Address"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 2 Address</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter shareholder 2 address" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="incorporationDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date of Incorporation</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="companyName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter company name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="companyAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Address</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter company address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
-      <FormField
-        control={form.control}
-        name="companyType"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Type</FormLabel>
-            <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select company type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="corporation">Corporation</SelectItem>
-                  <SelectItem value="s-corporation">S-Corporation</SelectItem>
-                  <SelectItem value="c-corporation">C-Corporation</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="space-y-4 border-b pb-4">
+        <h3 className="font-medium">Shareholder 1 Details</h3>
+        <FormField
+          control={form.control}
+          name="shareholder1Name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter shareholder 1 name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="state"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>State of Incorporation</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter state" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder1Address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter shareholder 1 address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="incorporationDate"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Date of Incorporation</FormLabel>
-            <FormControl>
-              <Input type="date" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder1Shares"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Number of Shares</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter number of shares" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="companyAddress"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Company Address</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter company address" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder1Ownership"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ownership Percentage (%)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter ownership percentage" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder1Shares"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 1 Number of Shares</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter number of shares" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder1Directors"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Number of Directors to Appoint</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter number of directors" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
-      <FormField
-        control={form.control}
-        name="shareholder1Ownership"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 1 Ownership Percentage (%)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter ownership percentage" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="space-y-4 border-b pb-4">
+        <h3 className="font-medium">Shareholder 2 Details</h3>
+        <FormField
+          control={form.control}
+          name="shareholder2Name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter shareholder 2 name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder2Shares"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 2 Number of Shares</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter number of shares" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder2Address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter shareholder 2 address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder2Ownership"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Shareholder 2 Ownership Percentage (%)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter ownership percentage" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder2Shares"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Number of Shares</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter number of shares" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder1Directors"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Number of Directors Appointed by Shareholder 1</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter number of directors" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder2Ownership"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ownership Percentage (%)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter ownership percentage" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="shareholder2Directors"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Number of Directors Appointed by Shareholder 2</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter number of directors" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="shareholder2Directors"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Number of Directors to Appoint</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter number of directors" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
-      <FormField
-        control={form.control}
-        name="supermajorityThreshold"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Supermajority Threshold (%)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter supermajority threshold" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="space-y-4">
+        <h3 className="font-medium">Agreement Details</h3>
+        <FormField
+          control={form.control}
+          name="supermajorityThreshold"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Supermajority Vote Threshold (%)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter supermajority threshold" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="dragAlongThreshold"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Drag-Along Rights Threshold (%)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter drag-along threshold" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="dragAlongThreshold"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Drag-Along Rights Threshold (%)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter drag-along threshold" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="confidentialityPeriod"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Confidentiality Period (years)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter confidentiality period" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="confidentialityPeriod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confidentiality Period (years)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter confidentiality period" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="amendmentThreshold"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Amendment Threshold (%)</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter amendment threshold" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="amendmentThreshold"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amendment Threshold (%)</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Enter amendment threshold" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   );
 };
