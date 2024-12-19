@@ -8,6 +8,8 @@ import { WaiverReleaseForm } from "./forms/waiver-release/WaiverReleaseForm";
 import { waiverReleaseFormSchema, type WaiverReleaseFormData } from "./forms/waiver-release/types";
 import { LeaseAgreementForm } from "./forms/lease-agreement/LeaseAgreementForm";
 import { leaseFormSchema, type LeaseFormData } from "./forms/lease-agreement/types";
+import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
+import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -16,6 +18,7 @@ interface DocumentFormSelectorProps extends DocumentFormProps {
 export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSelectorProps) {
   const isWaiverRelease = templateTitle === "Waiver and Release";
   const isLeaseAgreement = templateTitle === "Commercial Lease Agreement";
+  const isExitStrategy = templateTitle === "Exit Strategy Agreement";
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -62,6 +65,30 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const exitStrategyForm = useForm<ExitStrategyFormData>({
+    resolver: zodResolver(exitStrategyFormSchema),
+    defaultValues: {
+      effectiveDate: "",
+      companyName: "",
+      companyAddress: "",
+      founderNames: "",
+      founderAddresses: "",
+      businessType: "",
+      state: "",
+      reviewFrequency: "",
+      exitTriggerEvent: "",
+      revenueTarget: "",
+      profitTarget: "",
+      shareholderApprovalPercentage: "",
+      valuationMethod: "",
+      nonCompetePeriod: "",
+      geographicalScope: "",
+      nonSolicitationPeriod: "",
+      confidentialityPeriod: "",
+      arbitrationBody: "",
+    }
+  });
+
   if (isWaiverRelease) {
     return (
       <Form {...waiverReleaseForm}>
@@ -80,6 +107,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...leaseForm}>
         <form onSubmit={leaseForm.handleSubmit(onSubmit)} className="space-y-4">
           <LeaseAgreementForm form={leaseForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isExitStrategy) {
+    return (
+      <Form {...exitStrategyForm}>
+        <form onSubmit={exitStrategyForm.handleSubmit(onSubmit)} className="space-y-4">
+          <ExitStrategyForm form={exitStrategyForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

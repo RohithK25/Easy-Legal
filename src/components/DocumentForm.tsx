@@ -11,9 +11,10 @@ import { generateWordDocument } from "@/utils/documentGenerator";
 import { DocumentFormSelector } from "./DocumentFormSelector";
 import { WaiverReleaseFormData } from "./forms/waiver-release/types";
 import { LeaseFormData } from "./forms/lease-agreement/types";
+import { ExitStrategyFormData } from "./forms/exit-strategy/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData) => {
     let content = templateContent;
 
     if (templateTitle === "Waiver and Release") {
@@ -55,6 +56,26 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Termination Notice Period]", leaseData.terminationNoticePeriod)
         .replace("[Termination Fee Amount]", leaseData.terminationFee)
         .replace(/\[State\]/g, leaseData.state);
+    } else if (templateTitle === "Exit Strategy Agreement") {
+      const exitData = data as ExitStrategyFormData;
+      content = content
+        .replace("[Effective Date]", new Date(exitData.effectiveDate).toLocaleDateString())
+        .replace("[Company Name]", exitData.companyName)
+        .replace("[Company Address]", exitData.companyAddress)
+        .replace("[Founder(s) or Shareholder(s) Name(s)]", exitData.founderNames)
+        .replace("[Founder(s) or Shareholder(s) Address(es)]", exitData.founderAddresses)
+        .replace("[type of business, e.g., technology startup, e-commerce, etc.]", exitData.businessType)
+        .replace(/\[State\]/g, exitData.state)
+        .replace("[Frequency, e.g., annually]", exitData.reviewFrequency)
+        .replace("[specific event, e.g., reaching certain financial milestones, changes in market conditions, etc.]", exitData.exitTriggerEvent)
+        .replace(/\[Dollar Amount\]/g, exitData.revenueTarget)
+        .replace("[Specify Percentage, e.g., 75%]", exitData.shareholderApprovalPercentage)
+        .replace("[Valuation Method, e.g., an independent third-party appraiser, a multiple of earnings before interest, taxes, depreciation, and amortization (EBITDA), etc.]", exitData.valuationMethod)
+        .replace("[specified time period, e.g., two years]", exitData.nonCompetePeriod)
+        .replace("[geographical scope, e.g., United States]", exitData.geographicalScope)
+        .replace("[specified time period, e.g., one year]", exitData.nonSolicitationPeriod)
+        .replace("[number of years]", exitData.confidentialityPeriod)
+        .replace("[American Arbitration Association or other arbitration body]", exitData.arbitrationBody);
     }
 
     return content;
@@ -77,7 +98,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
