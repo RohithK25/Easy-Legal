@@ -3,9 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FileDown } from "lucide-react";
 import { Header } from "@/components/Header";
+import { DocumentForm } from "@/components/DocumentForm";
+import { useState } from "react";
 
 const Template = () => {
   const { slug } = useParams();
+  const [showForm, setShowForm] = useState(false);
 
   // Find the template data based on the slug
   const template = {
@@ -40,7 +43,7 @@ const Template = () => {
                 <p className="text-gray-600 mt-4">{template.description}</p>
               </div>
 
-              <Button className="w-full">
+              <Button className="w-full" onClick={() => setShowForm(true)}>
                 <FileDown className="mr-2" />
                 Download Document
               </Button>
@@ -69,6 +72,12 @@ const Template = () => {
           </div>
         </div>
       </main>
+
+      <DocumentForm 
+        open={showForm} 
+        onOpenChange={setShowForm}
+        templateTitle={template.title}
+      />
     </div>
   );
 };
