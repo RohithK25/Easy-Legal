@@ -84,6 +84,11 @@ import {
   type PurchaseOrderFormData
 } from "./forms/purchase-order/types";
 import { PurchaseOrderForm } from "./forms/purchase-order/PurchaseOrderForm";
+import {
+  termsConditionsFormSchema,
+  type TermsConditionsFormData
+} from "./forms/terms-conditions/types";
+import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -99,6 +104,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
   const isSalesAgreement = templateTitle === "Sales Agreement";
   const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
+  const isTermsAndConditions = templateTitle === "Terms and Conditions";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -373,10 +379,34 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData) => {
+  const termsConditionsForm = useForm<TermsConditionsFormData>({
+    resolver: zodResolver(termsConditionsFormSchema),
+    defaultValues: {
+      companyName: "",
+      websiteUrl: "",
+      contactEmail: "",
+      contactPhone: "",
+      businessAddress: "",
+      state: "",
+      location: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData) => {
     let content = templateContent;
     
-    if (isSalesAgreement) {
+    if (isTermsAndConditions) {
+      const termsData = data as TermsConditionsFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace(/\[Your Company Name\]/g, termsData.companyName)
+        .replace(/\[your website URL\]/g, termsData.websiteUrl)
+        .replace(/\[Your contact email\]/g, termsData.contactEmail)
+        .replace(/\[Your contact number\]/g, termsData.contactPhone)
+        .replace(/\[Your physical business address\]/g, termsData.businessAddress)
+        .replace(/\[State\]/g, termsData.state)
+        .replace(/\[Location\]/g, termsData.location);
+    } else if (isSalesAgreement) {
       const salesData = data as SalesFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -624,7 +654,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -645,7 +675,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isSalesAgreement ? (
+        {isTermsAndConditions ? (
+          <Form {...termsConditionsForm}>
+            <form onSubmit={termsConditionsForm.handleSubmit(onSubmit)} className="space-y-4">
+              <TermsConditionsForm form={termsConditionsForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isSalesAgreement ? (
           <Form {...salesForm}>
             <form onSubmit={salesForm.handleSubmit(onSubmit)} className="space-y-4">
               <SalesAgreementForm form={salesForm} />
