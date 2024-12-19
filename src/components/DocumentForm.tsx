@@ -21,9 +21,10 @@ import { SalesFormData } from "./forms/sales-agreement/types";
 import { DividendPolicyFormData } from "./forms/dividend-policy/types";
 import { LoanNoteFormData } from "./forms/loan-note/types";
 import { LoanFormData } from "./forms/loan-agreement/types";
+import { InvestmentFormData } from "./forms/investment-agreement/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData | InvestmentFormData) => {
     let content = templateContent;
 
     if (templateTitle === "Loan Agreement") {
@@ -228,6 +229,22 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Your physical business address]", termsData.businessAddress)
         .replace(/\[State\]/g, termsData.state)
         .replace("[Location]", termsData.location);
+    } else if (templateTitle === "Investment Agreement") {
+      const investmentData = data as InvestmentFormData;
+      content = content
+        .replace("[Investor Name]", investmentData.investorName)
+        .replace("[Investor Address]", investmentData.investorAddress)
+        .replace("[Company Name]", investmentData.companyName)
+        .replace("[Company Address]", investmentData.companyAddress)
+        .replace(/\[State\]/g, investmentData.state)
+        .replace(/\[Investment Amount\]/g, investmentData.investmentAmount)
+        .replace("[Number]", investmentData.numberOfShares)
+        .replace("[Price per Share]", investmentData.pricePerShare)
+        .replace("[Closing Date]", new Date(investmentData.closingDate).toLocaleDateString())
+        .replace("[X]", investmentData.boardRepresentationThreshold)
+        .replace("[X years]", investmentData.nonCompetePeriod)
+        .replace("[geographic region]", investmentData.geographicRegion)
+        .replace("[Date]", new Date().toLocaleDateString());
     }
 
     return content;
@@ -250,7 +267,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData | InvestmentFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);

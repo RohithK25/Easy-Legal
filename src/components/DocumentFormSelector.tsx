@@ -28,6 +28,8 @@ import { LoanNoteForm } from "./forms/loan-note/LoanNoteForm";
 import { loanNoteFormSchema, type LoanNoteFormData } from "./forms/loan-note/types";
 import { LoanAgreementForm } from "./forms/loan-agreement/LoanAgreementForm";
 import { loanFormSchema, type LoanFormData } from "./forms/loan-agreement/types";
+import { InvestmentAgreementForm } from "./forms/investment-agreement/InvestmentAgreementForm";
+import { investmentFormSchema, type InvestmentFormData } from "./forms/investment-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -46,6 +48,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
   const isLoanNote = templateTitle === "Loan Note";
   const isLoanAgreement = templateTitle === "Loan Agreement";
+  const isInvestmentAgreement = templateTitle === "Investment Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -276,6 +279,24 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const investmentForm = useForm<InvestmentFormData>({
+    resolver: zodResolver(investmentFormSchema),
+    defaultValues: {
+      investorName: "",
+      investorAddress: "",
+      companyName: "",
+      companyAddress: "",
+      state: "",
+      investmentAmount: "",
+      numberOfShares: "",
+      pricePerShare: "",
+      closingDate: "",
+      boardRepresentationThreshold: "",
+      nonCompetePeriod: "",
+      geographicRegion: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -424,6 +445,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...loanAgreementForm}>
         <form onSubmit={loanAgreementForm.handleSubmit(onSubmit)} className="space-y-4">
           <LoanAgreementForm form={loanAgreementForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isInvestmentAgreement) {
+    return (
+      <Form {...investmentForm}>
+        <form onSubmit={investmentForm.handleSubmit(onSubmit)} className="space-y-4">
+          <InvestmentAgreementForm form={investmentForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
