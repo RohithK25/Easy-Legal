@@ -30,6 +30,8 @@ import { LoanAgreementForm } from "./forms/loan-agreement/LoanAgreementForm";
 import { loanFormSchema, type LoanFormData } from "./forms/loan-agreement/types";
 import { InvestmentAgreementForm } from "./forms/investment-agreement/InvestmentAgreementForm";
 import { investmentFormSchema, type InvestmentFormData } from "./forms/investment-agreement/types";
+import { ShareholderAgreementForm } from "./forms/shareholder-agreement/ShareholderAgreementForm";
+import { shareholderFormSchema, type ShareholderFormData } from "./forms/shareholder-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -49,6 +51,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isLoanNote = templateTitle === "Loan Note";
   const isLoanAgreement = templateTitle === "Loan Agreement";
   const isInvestmentAgreement = templateTitle === "Investment Agreement";
+  const isShareholderAgreement = templateTitle === "Shareholder Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -297,6 +300,31 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const shareholderForm = useForm<ShareholderFormData>({
+    resolver: zodResolver(shareholderFormSchema),
+    defaultValues: {
+      shareholder1Name: "",
+      shareholder1Address: "",
+      shareholder2Name: "",
+      shareholder2Address: "",
+      companyName: "",
+      companyType: "",
+      state: "",
+      incorporationDate: "",
+      companyAddress: "",
+      shareholder1Shares: "",
+      shareholder2Shares: "",
+      shareholder1Ownership: "",
+      shareholder2Ownership: "",
+      shareholder1Directors: "",
+      shareholder2Directors: "",
+      supermajorityThreshold: "",
+      dragAlongThreshold: "",
+      confidentialityPeriod: "",
+      amendmentThreshold: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -458,6 +486,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...investmentForm}>
         <form onSubmit={investmentForm.handleSubmit(onSubmit)} className="space-y-4">
           <InvestmentAgreementForm form={investmentForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isShareholderAgreement) {
+    return (
+      <Form {...shareholderForm}>
+        <form onSubmit={shareholderForm.handleSubmit(onSubmit)} className="space-y-4">
+          <ShareholderAgreementForm form={shareholderForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>

@@ -23,8 +23,11 @@ import { LoanNoteFormData } from "./forms/loan-note/types";
 import { LoanFormData } from "./forms/loan-agreement/types";
 import { InvestmentFormData } from "./forms/investment-agreement/types";
 
+import { ShareholderFormData } from "./forms/shareholder-agreement/types";
+
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData | InvestmentFormData) => {
+
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData | SalesFormData | DividendPolicyFormData | LoanNoteFormData | LoanFormData | InvestmentFormData | ShareholderFormData) => {
     let content = templateContent;
 
     if (templateTitle === "Loan Agreement") {
@@ -245,6 +248,29 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[X years]", investmentData.nonCompetePeriod)
         .replace("[geographic region]", investmentData.geographicRegion)
         .replace("[Date]", new Date().toLocaleDateString());
+    }
+
+    if (templateTitle === "Shareholder Agreement") {
+      const shareholderData = data as ShareholderFormData;
+      content = content
+        .replace("[Company Name]", shareholderData.companyName)
+        .replace("[type of entity, e.g., corporation]", shareholderData.companyType)
+        .replace(/\[State\]/g, shareholderData.state)
+        .replace("[Date]", new Date(shareholderData.incorporationDate).toLocaleDateString())
+        .replace("[Shareholder 1 Full Name]", shareholderData.shareholder1Name)
+        .replace("[Address]", shareholderData.shareholder1Address)
+        .replace("[Shareholder 2 Full Name]", shareholderData.shareholder2Name)
+        .replace("[Address]", shareholderData.shareholder2Address)
+        .replace("[Number of Shares]", shareholderData.shareholder1Shares)
+        .replace("[X]%", shareholderData.shareholder1Ownership + "%")
+        .replace("[Number of Shares]", shareholderData.shareholder2Shares)
+        .replace("[X]%", shareholderData.shareholder2Ownership + "%")
+        .replace("[X] Directors", shareholderData.shareholder1Directors + " Directors")
+        .replace("[X] Directors", shareholderData.shareholder2Directors + " Directors")
+        .replace("[X]%", shareholderData.supermajorityThreshold + "%")
+        .replace("[X]%", shareholderData.dragAlongThreshold + "%")
+        .replace("[X] years", shareholderData.confidentialityPeriod + " years")
+        .replace("[X]%", shareholderData.amendmentThreshold + "%");
     }
 
     return content;
