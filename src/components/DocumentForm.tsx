@@ -47,6 +47,11 @@ import {
   operatingFormSchema,
   type OperatingFormData
 } from "./forms/OperatingAgreementForm";
+import {
+  ShareholderAgreementForm,
+  shareholderFormSchema,
+  type ShareholderFormData
+} from "./forms/ShareholderAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -62,6 +67,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
   const isPartnershipAgreement = templateTitle === "Partnership Agreement";
   const isOperatingAgreement = templateTitle === "Operating Agreement";
+  const isShareholderAgreement = templateTitle === "Shareholder Agreement";
 
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -193,10 +199,58 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData) => {
+  const shareholderForm = useForm<ShareholderFormData>({
+    resolver: zodResolver(shareholderFormSchema),
+    defaultValues: {
+      shareholder1Name: "",
+      shareholder1Address: "",
+      shareholder2Name: "",
+      shareholder2Address: "",
+      companyName: "",
+      companyType: "",
+      state: "",
+      incorporationDate: "",
+      companyAddress: "",
+      shareholder1Shares: "",
+      shareholder2Shares: "",
+      shareholder1Ownership: "",
+      shareholder2Ownership: "",
+      shareholder1Directors: "",
+      shareholder2Directors: "",
+      supermajorityThreshold: "",
+      dragAlongThreshold: "",
+      confidentialityPeriod: "",
+      amendmentThreshold: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData) => {
     let content = templateContent;
     
-    if (isOperatingAgreement) {
+    if (isShareholderAgreement) {
+      const shareholderData = data as ShareholderFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Shareholder 1 Full Name]", shareholderData.shareholder1Name)
+        .replace(/\[Address\]/, shareholderData.shareholder1Address)
+        .replace("[Shareholder 2 Full Name]", shareholderData.shareholder2Name)
+        .replace(/\[Address\]/, shareholderData.shareholder2Address)
+        .replace("[Company Name]", shareholderData.companyName)
+        .replace("[type of entity, e.g., corporation]", shareholderData.companyType)
+        .replace(/\[State\]/g, shareholderData.state)
+        .replace("[Date]", new Date(shareholderData.incorporationDate).toLocaleDateString())
+        .replace("[Company Address]", shareholderData.companyAddress)
+        .replace("[Number of Shares]", shareholderData.shareholder1Shares)
+        .replace(/\[X\]%/, `${shareholderData.shareholder1Ownership}%`)
+        .replace("[Number of Shares]", shareholderData.shareholder2Shares)
+        .replace(/\[X\]%/, `${shareholderData.shareholder2Ownership}%`)
+        .replace("[X]", shareholderData.shareholder1Directors)
+        .replace("[X]", shareholderData.shareholder2Directors)
+        .replace(/\[X\]%/, `${shareholderData.supermajorityThreshold}%`)
+        .replace(/\[X\]%/, `${shareholderData.dragAlongThreshold}%`)
+        .replace("[X]", shareholderData.confidentialityPeriod)
+        .replace(/\[X\]%/, `${shareholderData.amendmentThreshold}%`);
+    } else if (isOperatingAgreement) {
       const operatingData = data as OperatingFormData;
       content = content
         .replace("[LLC Name]", operatingData.llcName)
@@ -332,7 +386,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -353,7 +407,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isOperatingAgreement ? (
+        {isShareholderAgreement ? (
+          <Form {...shareholderForm}>
+            <form onSubmit={shareholderForm.handleSubmit(onSubmit)} className="space-y-4">
+              <ShareholderAgreementForm form={shareholderForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isOperatingAgreement ? (
           <Form {...operatingForm}>
             <form onSubmit={operatingForm.handleSubmit(onSubmit)} className="space-y-4">
               <OperatingAgreementForm form={operatingForm} />
