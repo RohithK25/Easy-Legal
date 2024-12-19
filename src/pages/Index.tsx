@@ -4,40 +4,124 @@ import { TemplateCard } from "@/components/TemplateCard";
 const templates = [
   {
     title: "Non-Disclosure Agreement (NDA)",
-    description: "Protect your confidential information when sharing with other parties.",
+    description: "Protect confidential information shared between two or more parties. Essential for business discussions, product development, and negotiations.",
     category: "Confidentiality",
     slug: "nda",
   },
   {
     title: "Employment Agreement",
-    description: "Standard employment contract for hiring new employees.",
+    description: "Define employment terms including salary, benefits, job responsibilities, and confidentiality obligations.",
     category: "Employment",
     slug: "employment-agreement",
   },
   {
-    title: "Terms of Service",
-    description: "Define the terms and conditions for using your service or product.",
-    category: "Website Policies",
-    slug: "terms-of-service",
-  },
-  {
-    title: "Privacy Policy",
-    description: "Explain how you collect and use customer data.",
-    category: "Website Policies",
-    slug: "privacy-policy",
-  },
-  {
     title: "Independent Contractor Agreement",
-    description: "Contract for hiring freelancers and contractors.",
+    description: "Establish terms for freelancers and contractors, including work scope, payment, and deliverables.",
     category: "Employment",
     slug: "contractor-agreement",
   },
   {
     title: "Partnership Agreement",
-    description: "Establish terms and conditions for business partnerships.",
+    description: "Define partnership terms including profit-sharing, decision-making, roles, and exit strategies.",
     category: "Business Formation",
     slug: "partnership-agreement",
   },
+  {
+    title: "Operating Agreement",
+    description: "Set out LLC member rights, duties, company structure, and profit-sharing arrangements.",
+    category: "Business Formation",
+    slug: "operating-agreement",
+  },
+  {
+    title: "Shareholder Agreement",
+    description: "Govern shareholder relationships, including voting rights, stock transfers, and dividend policies.",
+    category: "Business Formation",
+    slug: "shareholder-agreement",
+  },
+  {
+    title: "Terms and Conditions",
+    description: "Establish rules for using your website, app, or service, including liability and user responsibilities.",
+    category: "Website Policies",
+    slug: "terms-and-conditions",
+  },
+  {
+    title: "Privacy Policy",
+    description: "Explain how you collect, store, and use customer data in compliance with regulations like GDPR.",
+    category: "Website Policies",
+    slug: "privacy-policy",
+  },
+  {
+    title: "Intellectual Property Assignment",
+    description: "Ensure company ownership of IP created by employees or contractors.",
+    category: "Intellectual Property",
+    slug: "ip-assignment",
+  },
+  {
+    title: "Confidentiality Agreement",
+    description: "Protect proprietary business data when sharing with employees or partners.",
+    category: "Confidentiality",
+    slug: "confidentiality-agreement",
+  },
+  {
+    title: "Loan Agreement",
+    description: "Detail terms of business loans including interest rates, repayment schedules, and collateral.",
+    category: "Financial",
+    slug: "loan-agreement",
+  },
+  {
+    title: "Investment Agreement",
+    description: "Outline terms for investor capital including equity, ownership percentages, and voting rights.",
+    category: "Financial",
+    slug: "investment-agreement",
+  },
+  {
+    title: "Sales Agreement",
+    description: "Define terms for sales contracts including price, delivery, warranties, and responsibilities.",
+    category: "Sales",
+    slug: "sales-agreement",
+  },
+  {
+    title: "Non-Compete Agreement",
+    description: "Prevent competition from former employees or business partners for a specified period.",
+    category: "Employment",
+    slug: "non-compete",
+  },
+  {
+    title: "Waiver and Release",
+    description: "Limit business liability for potential accidents, injuries, or damages.",
+    category: "Legal Protection",
+    slug: "waiver-release",
+  },
+  {
+    title: "Lease Agreement",
+    description: "Establish terms for commercial property rental including rent, duration, and maintenance.",
+    category: "Real Estate",
+    slug: "lease-agreement",
+  },
+  {
+    title: "Purchase Order Agreement",
+    description: "Specify terms for purchasing goods or services including quantities, prices, and delivery.",
+    category: "Sales",
+    slug: "purchase-order",
+  },
+  {
+    title: "Loan Note",
+    description: "Confirm terms of debt agreements with investors or third parties.",
+    category: "Financial",
+    slug: "loan-note",
+  },
+  {
+    title: "Exit Strategy Agreement",
+    description: "Plan business exit through equity sale, merger, or acquisition.",
+    category: "Business Planning",
+    slug: "exit-strategy",
+  },
+  {
+    title: "Dividend Policy Agreement",
+    description: "Define how company profits will be distributed to shareholders.",
+    category: "Financial",
+    slug: "dividend-policy",
+  }
 ];
 
 const Index = () => {
