@@ -13,12 +13,24 @@ import { WaiverReleaseFormData } from "./forms/waiver-release/types";
 import { LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyFormData } from "./forms/exit-strategy/types";
 import { ConfidentialityFormData } from "./forms/confidentiality/types";
+import { IpAssignmentFormData } from "./forms/ip-assignment/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData) => {
     let content = templateContent;
 
-    if (templateTitle === "Waiver and Release") {
+    if (templateTitle === "Intellectual Property Assignment") {
+      const ipData = data as IpAssignmentFormData;
+      content = content
+        .replace("[Assignor's Full Name]", ipData.assignorName)
+        .replace("[Assignor's Address]", ipData.assignorAddress)
+        .replace("[Assignee's Full Name or Company Name]", ipData.assigneeName)
+        .replace("[Assignee's Address]", ipData.assigneeAddress)
+        .replace("[describe the work, project, or area of work]", ipData.workDescription)
+        .replace("[employment, contractual agreement, partnership, etc.]", ipData.relationshipType)
+        .replace("[Insert Amount]", ipData.consideration)
+        .replace(/\[State\]/g, ipData.state);
+    } else if (templateTitle === "Waiver and Release") {
       const waiverData = data as WaiverReleaseFormData;
       content = content
         .replace("[Effective Date]", new Date(waiverData.effectiveDate).toLocaleDateString())
@@ -111,7 +123,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData) => {
+  const onSubmit = async (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);

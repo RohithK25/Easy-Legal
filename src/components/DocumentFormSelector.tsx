@@ -12,6 +12,8 @@ import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
 import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
 import { ConfidentialityAgreementForm } from "@/components/forms/confidentiality/ConfidentialityAgreementForm";
 import { confidentialityFormSchema, type ConfidentialityFormData } from "./forms/confidentiality/types";
+import { IpAssignmentForm } from "./forms/ip-assignment/IpAssignmentForm";
+import { ipAssignmentFormSchema, type IpAssignmentFormData } from "./forms/ip-assignment/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -22,6 +24,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isLeaseAgreement = templateTitle === "Commercial Lease Agreement";
   const isExitStrategy = templateTitle === "Exit Strategy Agreement";
   const isConfidentiality = templateTitle === "Confidentiality Agreement";
+  const isIpAssignment = templateTitle === "Intellectual Property Assignment";
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -107,6 +110,20 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const ipAssignmentForm = useForm<IpAssignmentFormData>({
+    resolver: zodResolver(ipAssignmentFormSchema),
+    defaultValues: {
+      assignorName: "",
+      assignorAddress: "",
+      assigneeName: "",
+      assigneeAddress: "",
+      workDescription: "",
+      relationshipType: "",
+      consideration: "",
+      state: "",
+    }
+  });
+
   if (isWaiverRelease) {
     return (
       <Form {...waiverReleaseForm}>
@@ -151,6 +168,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...confidentialityForm}>
         <form onSubmit={confidentialityForm.handleSubmit(onSubmit)} className="space-y-4">
           <ConfidentialityAgreementForm form={confidentialityForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isIpAssignment) {
+    return (
+      <Form {...ipAssignmentForm}>
+        <form onSubmit={ipAssignmentForm.handleSubmit(onSubmit)} className="space-y-4">
+          <IpAssignmentForm form={ipAssignmentForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
