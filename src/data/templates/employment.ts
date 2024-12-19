@@ -1,4 +1,12 @@
-export const employmentTemplates = [
+interface TemplateType {
+  title: string;
+  description: string;
+  category: string;
+  slug: string;
+  content: string;
+}
+
+export const employmentTemplates: TemplateType[] = [
   {
     title: "Employment Agreement",
     description: "Outlines terms and conditions of employment, including salary, benefits, and responsibilities.",
@@ -87,17 +95,20 @@ Date: __________________________`
     description: "Defines relationship between business and contractors, including work terms and deliverables.",
     category: "Employment",
     slug: "contractor-agreement",
+    content: "Template content for Independent Contractor Agreement"
   },
   {
     title: "Non-Compete Agreement",
     description: "Prevents competition from former employees or business partners.",
     category: "Employment",
     slug: "non-compete",
+    content: "Template content for Non-Compete Agreement"
   },
   {
     title: "Stock Option Agreement",
     description: "Allows purchase of company stock at discounted price as incentive.",
     category: "Employment",
     slug: "stock-option",
+    content: "Template content for Stock Option Agreement"
   }
 ];

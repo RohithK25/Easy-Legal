@@ -16,7 +16,8 @@ const Template = () => {
     title: "Template Not Found",
     description: "The requested template could not be found.",
     category: "Unknown",
-    content: "Template content not available."
+    content: "Template content not available.",
+    slug: "not-found"
   };
 
   const handleSearch = (value: string) => {
