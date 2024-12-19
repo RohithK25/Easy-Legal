@@ -22,8 +22,12 @@ const Index = () => {
         <div className="container">
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold mb-4">Legal Document Templates</h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 mb-4">
               Professional legal templates for your business needs.
+            </p>
+            <p className="text-sm text-gray-500 mb-8">
+              These templates are primarily designed for U.S. startups and small-to-medium enterprises (SMEs), 
+              with terms and conditions aligned with common U.S. business practices.
             </p>
           </div>
           
