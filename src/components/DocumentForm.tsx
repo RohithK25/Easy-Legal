@@ -33,9 +33,9 @@ interface DocumentFormProps {
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   
-  const form = useForm({
-    resolver: zodResolver(isEmploymentAgreement ? employmentFormSchema : confidentialityFormSchema),
-    defaultValues: isEmploymentAgreement ? {
+  const employmentForm = useForm<EmploymentFormData>({
+    resolver: zodResolver(employmentFormSchema),
+    defaultValues: {
       employerName: "",
       employerAddress: "",
       employeeName: "",
@@ -44,7 +44,12 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       jobTitle: "",
       salary: "",
       supervisorName: "",
-    } : {
+    }
+  });
+
+  const confidentialityForm = useForm<ConfidentialityFormData>({
+    resolver: zodResolver(confidentialityFormSchema),
+    defaultValues: {
       partyAName: "",
       partyAAddress: "",
       partyBName: "",
@@ -54,8 +59,10 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       location: "",
       confidentialityPeriod: "",
       returnPeriod: "",
-    },
+    }
   });
+
+  const form = isEmploymentAgreement ? employmentForm : confidentialityForm;
 
   const generateDocument = (data: EmploymentFormData | ConfidentialityFormData) => {
     let content = templateContent;
@@ -130,9 +137,9 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {isEmploymentAgreement ? (
-              <EmploymentAgreementForm />
+              <EmploymentAgreementForm form={employmentForm} />
             ) : (
-              <ConfidentialityAgreementForm form={form} />
+              <ConfidentialityAgreementForm form={confidentialityForm} />
             )}
             <DialogFooter>
               <Button type="submit">Generate Document</Button>

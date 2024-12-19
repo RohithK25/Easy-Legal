@@ -1,4 +1,3 @@
-import { useFormContext } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -8,6 +7,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
+import { UseFormReturn } from "react-hook-form";
 
 export const employmentFormSchema = z.object({
   employerName: z.string().min(1, "Employer name is required"),
@@ -22,9 +22,11 @@ export const employmentFormSchema = z.object({
 
 export type EmploymentFormData = z.infer<typeof employmentFormSchema>;
 
-export const EmploymentAgreementForm = () => {
-  const form = useFormContext<EmploymentFormData>();
+interface EmploymentAgreementFormProps {
+  form: UseFormReturn<EmploymentFormData>;
+}
 
+export const EmploymentAgreementForm = ({ form }: EmploymentAgreementFormProps) => {
   return (
     <div className="space-y-4">
       <FormField
