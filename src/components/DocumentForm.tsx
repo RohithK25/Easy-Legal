@@ -55,8 +55,8 @@ import {
 import {
   LoanAgreementForm,
   loanFormSchema,
-  type LoanFormData
-} from "./forms/LoanAgreementForm";
+  type LoanFormData 
+} from "./forms/loan-agreement/LoanAgreementForm";
 import {
   InvestmentAgreementForm,
   investmentFormSchema,
@@ -90,17 +90,12 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       borrowerAddress: "",
       state: "",
       loanAmount: "",
-      accountDetails: "",
-      disbursementPeriod: "",
+      bankName: "",
+      accountNumber: "",
       interestRate: "",
-      interestType: "",
       startDate: "",
-      installmentAmount: "",
-      finalPaymentDate: "",
+      maturityDate: "",
       lateFee: "",
-      gracePeriod: "",
-      collateralDescription: "",
-      defaultCurePeriod: "",
     }
   });
 
@@ -289,18 +284,13 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[Borrower Name]", loanData.borrowerName)
         .replace("[Borrower Address]", loanData.borrowerAddress)
         .replace(/\[State\]/g, loanData.state)
-        .replace("[Loan Amount]", loanData.loanAmount)
-        .replace("[Account Details]", loanData.accountDetails)
-        .replace("[X] days", `${loanData.disbursementPeriod} days`)
+        .replace(/\$\[Loan Amount\]/g, `$${loanData.loanAmount}`)
+        .replace("[Bank Name]", loanData.bankName)
+        .replace("[Account Number]", loanData.accountNumber)
         .replace("[X]%", `${loanData.interestRate}%`)
-        .replace("[simple/compound]", loanData.interestType)
         .replace("[Start Date]", new Date(loanData.startDate).toLocaleDateString())
-        .replace("[Installment Amount]", loanData.installmentAmount)
-        .replace("[Final Payment Date]", new Date(loanData.finalPaymentDate).toLocaleDateString())
-        .replace("[Late Fee]", loanData.lateFee)
-        .replace("[Grace Period]", loanData.gracePeriod)
-        .replace("[Collateral Description]", loanData.collateralDescription)
-        .replace("[Default Cure Period]", loanData.defaultCurePeriod);
+        .replace("[Maturity Date]", new Date(loanData.maturityDate).toLocaleDateString())
+        .replace(/\$\[Late Fee\]/g, `$${loanData.lateFee}`);
     } else if (isInvestmentAgreement) {
       const investmentData = data as InvestmentFormData;
       content = content
