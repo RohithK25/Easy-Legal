@@ -62,6 +62,11 @@ import {
   investmentFormSchema,
   type InvestmentFormData
 } from "./forms/InvestmentAgreementForm";
+import {
+  LoanNoteForm,
+  loanNoteFormSchema,
+  type LoanNoteFormData
+} from "./forms/loan-note/LoanNoteForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -73,6 +78,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isShareholderAgreement = templateTitle === "Shareholder Agreement";
   const isInvestmentAgreement = templateTitle === "Investment Agreement";
   const isLoanAgreement = templateTitle === "Loan Agreement";
+  const isLoanNote = templateTitle === "Loan Note";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -98,6 +104,21 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       gracePeriod: "",
       entityType: "",
       defaultCurePeriod: "",
+    }
+  });
+
+  const loanNoteForm = useForm<LoanNoteFormData>({
+    resolver: zodResolver(loanNoteFormSchema),
+    defaultValues: {
+      lenderName: "",
+      lenderAddress: "",
+      borrowerName: "",
+      borrowerAddress: "",
+      loanAmount: "",
+      bankName: "",
+      accountNumber: "",
+      maturityDate: "",
+      state: "",
     }
   });
 
@@ -274,10 +295,23 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData) => {
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData) => {
     let content = templateContent;
     
-    if (isLoanAgreement) {
+    if (isLoanNote) {
+      const loanNoteData = data as LoanNoteFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Lender Name]", loanNoteData.lenderName)
+        .replace("[Lender Address]", loanNoteData.lenderAddress)
+        .replace("[Borrower Name]", loanNoteData.borrowerName)
+        .replace("[Borrower Address]", loanNoteData.borrowerAddress)
+        .replace(/\$\[Loan Amount\]/g, `$${loanNoteData.loanAmount}`)
+        .replace("[Bank Name]", loanNoteData.bankName)
+        .replace("[Account Number]", loanNoteData.accountNumber)
+        .replace("[Maturity Date]", new Date(loanNoteData.maturityDate).toLocaleDateString())
+        .replace(/\[State\]/g, loanNoteData.state);
+    } else if (isLoanAgreement) {
       const loanData = data as LoanFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -468,7 +502,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -489,7 +523,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isLoanAgreement ? (
+        {isLoanNote ? (
+          <Form {...loanNoteForm}>
+            <form onSubmit={loanNoteForm.handleSubmit(onSubmit)} className="space-y-4">
+              <LoanNoteForm form={loanNoteForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isLoanAgreement ? (
           <Form {...loanForm}>
             <form onSubmit={loanForm.handleSubmit(onSubmit)} className="space-y-4">
               <LoanAgreementForm form={loanForm} />
