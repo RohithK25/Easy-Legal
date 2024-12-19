@@ -10,7 +10,7 @@ import { LeaseAgreementForm } from "./forms/lease-agreement/LeaseAgreementForm";
 import { leaseFormSchema, type LeaseFormData } from "./forms/lease-agreement/types";
 import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
 import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
-import { ConfidentialityAgreementForm } from "./forms/confidentiality/ConfidentialityAgreementForm";
+import { ConfidentialityAgreementForm } from "@/components/forms/confidentiality/ConfidentialityAgreementForm";
 import { confidentialityFormSchema, type ConfidentialityFormData } from "./forms/confidentiality/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
