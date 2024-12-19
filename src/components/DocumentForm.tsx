@@ -89,6 +89,11 @@ import {
   type TermsConditionsFormData
 } from "./forms/terms-conditions/types";
 import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsForm";
+import {
+  PrivacyPolicyForm,
+  privacyPolicyFormSchema,
+  type PrivacyPolicyFormData
+} from "./forms/privacy-policy/PrivacyPolicyForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -105,6 +110,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isSalesAgreement = templateTitle === "Sales Agreement";
   const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
   const isTermsAndConditions = templateTitle === "Terms and Conditions";
+  const isPrivacyPolicy = templateTitle === "Privacy Policy";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -392,10 +398,34 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData) => {
+  const privacyPolicyForm = useForm<PrivacyPolicyFormData>({
+    resolver: zodResolver(privacyPolicyFormSchema),
+    defaultValues: {
+      companyName: "",
+      websiteUrl: "",
+      contactEmail: "",
+      contactPhone: "",
+      businessAddress: "",
+      state: "",
+      location: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData) => {
     let content = templateContent;
     
-    if (isTermsAndConditions) {
+    if (isPrivacyPolicy) {
+      const privacyData = data as PrivacyPolicyFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace(/\[Your Company Name\]/g, privacyData.companyName)
+        .replace(/\[your website URL\]/g, privacyData.websiteUrl)
+        .replace(/\[Your contact email\]/g, privacyData.contactEmail)
+        .replace(/\[Your contact number\]/g, privacyData.contactPhone)
+        .replace(/\[Your physical business address\]/g, privacyData.businessAddress)
+        .replace(/\[State\]/g, privacyData.state)
+        .replace(/\[Location\]/g, privacyData.location);
+    } else if (isTermsAndConditions) {
       const termsData = data as TermsConditionsFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -654,7 +684,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -675,7 +705,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isTermsAndConditions ? (
+        {isPrivacyPolicy ? (
+          <Form {...privacyPolicyForm}>
+            <form onSubmit={privacyPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
+              <PrivacyPolicyForm form={privacyPolicyForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isTermsAndConditions ? (
           <Form {...termsConditionsForm}>
             <form onSubmit={termsConditionsForm.handleSubmit(onSubmit)} className="space-y-4">
               <TermsConditionsForm form={termsConditionsForm} />
