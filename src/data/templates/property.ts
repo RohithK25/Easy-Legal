@@ -8,115 +8,123 @@ export const propertyTemplates: Template[] = [
     slug: "commercial-lease-agreement",
     content: `**COMMERCIAL LEASE AGREEMENT**
 
-Principal Property: [Property Address]
-Date: [Effective Date]
-Term: [Number of Years or Months]
+This Commercial Lease Agreement (the "Agreement") is made and entered into as of [Effective Date], by and between:
 
-This Commercial Lease Agreement (the "Agreement") is made as of the date first written above by [Lessor's Full Name or Company Name], with its principal place of business at [Lessor's Address] (the "Lessor"), and [Lessee's Full Name or Company Name], with its principal place of business at [Lessee's Address] (the "Lessee").
+**LESSOR:**
+[Lessor's Full Name or Company Name]
+[Lessor's Address]
+(hereinafter referred to as the "Lessor")
 
-**1. Lease of Premises**
-1.1 Leased Property
-The Lessor hereby leases to the Lessee, and the Lessee hereby rents from the Lessor, the Premises located at [Property Address], including all improvements, fixtures, and appurtenances located on the Premises.
+**LESSEE:**
+[Lessee's Full Name or Company Name]
+[Lessee's Address]
+(hereinafter referred to as the "Lessee")
 
-1.2 Use of Premises
-The Premises shall be used and occupied by the Lessee exclusively for [Describe the intended use, such as office space, retail business, warehouse, etc.]. The Lessee agrees not to use the Premises for any unlawful or unauthorized purpose.
+**1. LEASE OF PREMISES**
+The Lessor hereby leases to the Lessee the premises located at [Property Address] (the "Premises").
 
-**2. Term and Renewal**
-2.1 Initial Term
-The lease shall begin on [Start Date] and shall continue until [End Date] (the "Initial Term").
+**2. TERM**
+Initial Term: [Number of Years or Months]
+Start Date: [Start Date]
+End Date: [End Date]
 
-2.2 Renewal Option
-Lessee shall have the option to renew the lease for an additional term of [Renewal Term], by providing written notice at least [Notice Period] days before expiration.
+**3. RENT AND PAYMENTS**
+Base Rent: [Dollar Amount] per month
+Due Date: [Day of the Month] of each month
+Late Fee: [Late Fee Amount or Percentage] after [Number of Days] days
+Security Deposit: [Security Deposit Amount]
+Deposit Return: Within [Deposit Return Period] days of lease termination
 
-**3. Rent and Payments**
-3.1 Base Rent
-The Lessee shall pay monthly rent of [Dollar Amount], due on the [Day of the Month] of each month.
+**4. USE OF PREMISES**
+Intended Use: [Describe the intended use, such as office space, retail business, warehouse, etc.]
 
-3.2 Security Deposit
-Upon execution, the Lessee shall deposit [Security Deposit Amount] as security, returnable within [Number of Days] days after lease termination.
+**5. RENEWAL OPTION**
+Renewal Term: [Renewal Term]
+Notice Required: [Notice Period] days before expiration
 
-3.3 Late Fees
-Payments received after [Number of Days] days from due date incur a late fee of [Late Fee Amount or Percentage].
+**6. DEFAULT AND REMEDIES**
+Default Period: [Default Period] days
+Cure Period: [Cure Period] days
 
-3.4 Operating Expenses
-The Lessee shall pay its share of:
-- Property taxes
-- Insurance premiums
-- Maintenance and repairs
-- Utilities (electricity, water, etc.)
+**7. TERMINATION**
+Notice Period: [Termination Notice Period]
+Early Termination Fee: [Termination Fee Amount]
 
-**4. Maintenance and Repairs**
-4.1 Lessee's Responsibilities
-- Routine cleaning
-- Interior repairs
-- Equipment maintenance
-- Fixture replacements
-
-4.2 Lessor's Responsibilities
-- Structural integrity
-- Foundation maintenance
-- Roof repairs
-- Exterior walls
-
-4.3 Alterations
-No alterations without Lessor's written consent. All approved alterations become Lessor's property upon lease expiration.
-
-**5. Insurance Requirements**
-5.1 Lessee's Insurance
-- Commercial general liability
-- Property insurance
-- Additional coverage as needed
-
-5.2 Lessor's Insurance
-- Building insurance
-- Common area coverage
-- Fire and flood protection
-
-**6. Default and Remedies**
-6.1 Events of Default
-- Unpaid rent for [Number of Days] days
-- Breach of terms uncured within [Cure Period] days
-- Unauthorized alterations or use
-
-6.2 Lessor's Remedies
-Upon default, Lessor may:
-- Terminate the lease
-- Retake possession
-- Seek damages
-- Pursue legal action
-
-**7. Assignment and Subletting**
-No assignment or subletting without Lessor's written consent. Unauthorized transfers void the lease.
-
-**8. Termination**
-8.1 Early Termination
-Requires [Number of Days] days' notice and [Termination Fee Amount] fee.
-
-8.2 Breach Termination
-Either party may terminate for uncured material breach.
-
-**9. Governing Law**
+**8. GOVERNING LAW**
 This Agreement shall be governed by the laws of [State].
 
-**10. Signatures**
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first written above.
 
-Lessor:
-By: ____________________________
-Name: _________________________
-Title: __________________________
+Lessor: _________________________
 Date: __________________________
 
-Lessee:
-By: ____________________________
-Name: _________________________
-Title: __________________________
-Date: __________________________`,
+Lessee: _________________________
+Date: __________________________`
   },
   {
     title: "Waiver and Release",
     description: "Limits business liability for accidents, injuries, or damages.",
     category: "Liability",
     slug: "waiver-release",
-    content: "Template content here"
+    content: `**WAIVER AND RELEASE AGREEMENT**
+
+This Waiver and Release Agreement (the "Agreement") is made and entered into as of [Effective Date], by and between:
+
+**RELEASOR:**
+[Releasor's Full Name]
+[Releasor's Address]
+(hereinafter referred to as the "Releasor")
+
+**RELEASEE:**
+[Releasee's Full Name or Company Name]
+[Releasee's Address]
+(hereinafter referred to as the "Releasee")
+
+**RECITALS**
+WHEREAS, the Releasor is voluntarily participating in certain activities or events organized by the Releasee, including but not limited to [describe the activity/event, e.g., workshops, training, exercise, or participation in a contest, etc.] (the "Activity");
+
+WHEREAS, the Releasor understands that participation in the Activity may involve inherent risks, including personal injury, property damage, or other forms of loss or harm;
+
+WHEREAS, the Releasor wishes to voluntarily waive and release the Releasee from any claims or liabilities that may arise as a result of participation in the Activity.
+
+**1. WAIVER AND RELEASE OF CLAIMS**
+1.1 Waiver
+The Releasor, on behalf of themselves, their heirs, executors, administrators, and assigns, hereby irrevocably and unconditionally waives any and all claims, demands, or causes of action against the Releasee arising from or related to the Activity.
+
+1.2 Release
+The Releasor releases and discharges the Releasee from any and all liability, responsibility, or obligations arising from the Activity.
+
+**2. ACKNOWLEDGMENT OF RISKS**
+The Releasor acknowledges and understands that the Activity may involve certain risks, including but not limited to [describe the risks specific to the activity, such as physical injury, property damage, health risks, etc.].
+
+**3. INDEMNIFICATION**
+The Releasor agrees to indemnify, defend, and hold harmless the Releasee from any and all claims, damages, losses, liabilities, and expenses arising out of or in connection with the Activity.
+
+**4. MEDICAL TREATMENT**
+The Releasor authorizes the Releasee to provide or seek emergency medical treatment if needed. The cost of any medical treatment will be the responsibility of the Releasor.
+
+**5. GOVERNING LAW**
+This Agreement shall be governed by the laws of [State].
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first written above.
+
+Releasor:
+Signature: _________________________
+Printed Name: _____________________
+Date: ____________________________
+
+Releasee:
+Signature: _________________________
+Printed Name: _____________________
+Date: ____________________________
+
+**NOTARY ACKNOWLEDGMENT** (Optional)
+State of [State]
+County of [County]
+
+On [Date], before me, [Notary Name], personally appeared [Releasor's Full Name].
+
+Notary Public: _____________________
+Commission Expires: _______________`
   }
 ];
