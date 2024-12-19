@@ -106,6 +106,14 @@ import {
   type IpAssignmentFormData
 } from "./forms/ip-assignment/types";
 
+import {
+  LeaseAgreementForm
+} from "./forms/lease-agreement/LeaseAgreementForm";
+import {
+  leaseFormSchema,
+  type LeaseFormData
+} from "./forms/lease-agreement/types";
+
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
@@ -123,6 +131,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isTermsAndConditions = templateTitle === "Terms and Conditions";
   const isPrivacyPolicy = templateTitle === "Privacy Policy";
   const isIpAssignment = templateTitle === "Intellectual Property Assignment";
+  const isLeaseAgreement = templateTitle === "Commercial Lease Agreement";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -437,10 +446,64 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData) => {
+  const leaseForm = useForm<LeaseFormData>({
+    resolver: zodResolver(leaseFormSchema),
+    defaultValues: {
+      lessorName: "",
+      lessorAddress: "",
+      lesseeName: "",
+      lesseeAddress: "",
+      propertyAddress: "",
+      intendedUse: "",
+      startDate: "",
+      endDate: "",
+      term: "",
+      renewalTerm: "",
+      noticePeriod: "",
+      rentAmount: "",
+      rentDueDay: "",
+      lateFeeGracePeriod: "",
+      lateFeeAmount: "",
+      securityDeposit: "",
+      depositReturnPeriod: "",
+      defaultPeriod: "",
+      curePeriod: "",
+      terminationNoticePeriod: "",
+      terminationFee: "",
+      state: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData | LeaseFormData) => {
     let content = templateContent;
     
-    if (isIpAssignment) {
+    if (isLeaseAgreement) {
+      const leaseData = data as LeaseFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Lessor's Full Name or Company Name]", leaseData.lessorName)
+        .replace("[Lessor's Address]", leaseData.lessorAddress)
+        .replace("[Lessee's Full Name or Company Name]", leaseData.lesseeName)
+        .replace("[Lessee's Address]", leaseData.lesseeAddress)
+        .replace(/\[Property Address\]/g, leaseData.propertyAddress)
+        .replace("[Describe the intended use, such as office space, retail business, warehouse, etc.]", leaseData.intendedUse)
+        .replace("[Start Date]", new Date(leaseData.startDate).toLocaleDateString())
+        .replace("[End Date]", new Date(leaseData.endDate).toLocaleDateString())
+        .replace("[Term]", leaseData.term)
+        .replace("[Renewal Term]", leaseData.renewalTerm)
+        .replace("[Notice Period]", leaseData.noticePeriod)
+        .replace("[Rent Amount]", leaseData.rentAmount)
+        .replace("[Rent Due Day]", leaseData.rentDueDay)
+        .replace("[Late Fee Grace Period]", leaseData.lateFeeGracePeriod)
+        .replace("[Late Fee Amount]", leaseData.lateFeeAmount)
+        .replace("[Security Deposit]", leaseData.securityDeposit)
+        .replace("[Deposit Return Period]", leaseData.depositReturnPeriod)
+        .replace("[Default Period]", leaseData.defaultPeriod)
+        .replace("[Cure Period]", leaseData.curePeriod)
+        .replace("[Termination Notice Period]", leaseData.terminationNoticePeriod)
+        .replace("[Termination Fee]", leaseData.terminationFee)
+        .replace(/\[State\]/g, leaseData.state);
+    } else if (isIpAssignment) {
       const ipData = data as IpAssignmentFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -722,7 +785,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData | PurchaseOrderFormData | TermsConditionsFormData | PrivacyPolicyFormData | IpAssignmentFormData | LeaseFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -743,7 +806,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isIpAssignment ? (
+        {isLeaseAgreement ? (
+          <Form {...leaseForm}>
+            <form onSubmit={leaseForm.handleSubmit(onSubmit)} className="space-y-4">
+              <LeaseAgreementForm form={leaseForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isIpAssignment ? (
           <Form {...ipAssignmentForm}>
             <form onSubmit={ipAssignmentForm.handleSubmit(onSubmit)} className="space-y-4">
               <IpAssignmentForm form={ipAssignmentForm} />
