@@ -1,6 +1,6 @@
 export const confidentialityTemplates = [
   {
-    title: "Non-DDisclosure Agreement (NDA)",
+    title: "Non-Disclosure Agreement (NDA)",
     description: "Protect confidential information shared between parties.",
     category: "Essential Agreements",
     slug: "nda",
