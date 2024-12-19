@@ -27,6 +27,11 @@ import {
   contractorFormSchema,
   type ContractorFormData
 } from "./forms/ContractorAgreementForm";
+import {
+  NonCompeteAgreementForm,
+  nonCompeteFormSchema,
+  type NonCompeteFormData
+} from "./forms/NonCompeteAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -38,6 +43,7 @@ interface DocumentFormProps {
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
+  const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
   
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -92,7 +98,21 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData) => {
+  const nonCompeteForm = useForm<NonCompeteFormData>({
+    resolver: zodResolver(nonCompeteFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      employeeName: "",
+      employeeAddress: "",
+      effectiveDate: "",
+      nonCompetePeriod: "",
+      nonSolicitPeriod: "",
+      state: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData) => {
     let content = templateContent;
     
     if (isEmploymentAgreement) {
@@ -130,6 +150,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace(/\[State\]/g, contractorData.state)
         .replace("[Location]", contractorData.location)
         .replace("[arbitration/mediation]", "arbitration");
+    } else if (isNonCompeteAgreement) {
+      const nonCompeteData = data as NonCompeteFormData;
+      content = content
+        .replace("[Date]", new Date(nonCompeteData.effectiveDate).toLocaleDateString())
+        .replace("[Company Name]", nonCompeteData.companyName)
+        .replace("[Address]", nonCompeteData.companyAddress)
+        .replace("[Employee/Contractor's Full Name]", nonCompeteData.employeeName)
+        .replace(/\[Address\]/, nonCompeteData.employeeAddress)
+        .replace(/\[X\] years/g, `${nonCompeteData.nonCompetePeriod} years`)
+        .replace(/\[State\]/g, nonCompeteData.state);
     } else {
       const confidentialityData = data as ConfidentialityFormData;
       content = content
@@ -165,7 +195,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -199,6 +229,15 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
           <Form {...contractorForm}>
             <form onSubmit={contractorForm.handleSubmit(onSubmit)} className="space-y-4">
               <ContractorAgreementForm form={contractorForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isNonCompeteAgreement ? (
+          <Form {...nonCompeteForm}>
+            <form onSubmit={nonCompeteForm.handleSubmit(onSubmit)} className="space-y-4">
+              <NonCompeteAgreementForm form={nonCompeteForm} />
               <DialogFooter>
                 <Button type="submit">Generate Document</Button>
               </DialogFooter>
