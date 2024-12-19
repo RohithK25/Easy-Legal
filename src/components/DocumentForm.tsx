@@ -16,10 +16,28 @@ import { ConfidentialityFormData } from "./forms/confidentiality/types";
 import { IpAssignmentFormData } from "./forms/ip-assignment/types";
 import { PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 import { TermsConditionsFormData } from "./forms/terms-conditions/types";
+import { PurchaseOrderFormData } from "./forms/purchase-order/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
-  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData) => {
+  const generateDocument = (data: WaiverReleaseFormData | LeaseFormData | ExitStrategyFormData | ConfidentialityFormData | IpAssignmentFormData | PrivacyPolicyFormData | TermsConditionsFormData | PurchaseOrderFormData) => {
     let content = templateContent;
+
+    if (templateTitle === "Purchase Order Agreement") {
+      const purchaseOrderData = data as PurchaseOrderFormData;
+      content = content
+        .replace("[Buyer Name]", purchaseOrderData.buyerName)
+        .replace("[Buyer Address]", purchaseOrderData.buyerAddress)
+        .replace("[Seller Name]", purchaseOrderData.sellerName)
+        .replace("[Seller Address]", purchaseOrderData.sellerAddress)
+        .replace("[Detailed description of the goods or services being purchased, including item numbers, quantities, specifications, and any applicable features or requirements.]", purchaseOrderData.goodsDescription)
+        .replace("[Quantity of goods/services]", purchaseOrderData.quantity)
+        .replace("[Unit Price]", purchaseOrderData.unitPrice)
+        .replace(/\[Total Price\]/g, purchaseOrderData.totalPrice)
+        .replace("[Delivery Date]", new Date(purchaseOrderData.deliveryDate).toLocaleDateString())
+        .replace("[Delivery Address]", purchaseOrderData.deliveryAddress)
+        .replace("[Payment Method: Bank transfer, check, credit card, etc.]", purchaseOrderData.paymentTerms)
+        .replace(/\[State\]/g, purchaseOrderData.state);
+    }
 
     if (templateTitle === "Privacy Policy") {
       const privacyData = data as PrivacyPolicyFormData;

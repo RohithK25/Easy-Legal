@@ -18,6 +18,8 @@ import { PrivacyPolicyForm } from "./forms/privacy-policy/PrivacyPolicyForm";
 import { privacyPolicyFormSchema, type PrivacyPolicyFormData } from "./forms/privacy-policy/types";
 import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsForm";
 import { termsConditionsFormSchema, type TermsConditionsFormData } from "./forms/terms-conditions/types";
+import { PurchaseOrderForm } from "./forms/purchase-order/PurchaseOrderForm";
+import { purchaseOrderFormSchema, type PurchaseOrderFormData } from "./forms/purchase-order/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -31,6 +33,25 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isIpAssignment = templateTitle === "Intellectual Property Assignment";
   const isPrivacyPolicy = templateTitle === "Privacy Policy";
   const isTermsConditions = templateTitle === "Terms and Conditions";
+  const isPurchaseOrder = templateTitle === "Purchase Order Agreement";
+
+  const purchaseOrderForm = useForm<PurchaseOrderFormData>({
+    resolver: zodResolver(purchaseOrderFormSchema),
+    defaultValues: {
+      buyerName: "",
+      buyerAddress: "",
+      sellerName: "",
+      sellerAddress: "",
+      goodsDescription: "",
+      quantity: "",
+      unitPrice: "",
+      totalPrice: "",
+      deliveryDate: "",
+      deliveryAddress: "",
+      paymentTerms: "",
+      state: "",
+    }
+  });
 
   const waiverReleaseForm = useForm<WaiverReleaseFormData>({
     resolver: zodResolver(waiverReleaseFormSchema),
@@ -155,6 +176,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       location: "",
     }
   });
+
+  if (isPurchaseOrder) {
+    return (
+      <Form {...purchaseOrderForm}>
+        <form onSubmit={purchaseOrderForm.handleSubmit(onSubmit)} className="space-y-4">
+          <PurchaseOrderForm form={purchaseOrderForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
 
   if (isWaiverRelease) {
     return (
