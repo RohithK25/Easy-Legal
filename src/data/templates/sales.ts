@@ -5,131 +5,78 @@ const salesAgreementTemplate: Template = {
   description: "Defines terms of sale or service between business and customers.",
   category: "Sales",
   slug: "sales-agreement",
-  content: `SALE AGREEMENT
+  content: `**SALES AGREEMENT**
 
-This Sale Agreement (the "Agreement") is made and entered into as of [Date], by and between:
+Principal Amount: $[Total Purchase Price]
+Date: [Date]
+Delivery Date: [Delivery Date]
 
-Seller: [Seller Name], a [State] [corporation/LLC], with its principal place of business at [Seller Address] (the "Seller").
+This Sales Agreement (the "Agreement") is made as of the date first written above by [Seller Name], a [State] [corporation/LLC], with its principal place of business at [Seller Address] (the "Seller"), and [Buyer Name], a [State] [corporation/LLC/individual], with its principal place of business at [Buyer Address] (the "Buyer").
 
-Buyer: [Buyer Name], a [State] [corporation/LLC/individual], with its principal place of business at [Buyer Address] (the "Buyer").
+For value received, the Buyer agrees to purchase from the Seller, and the Seller agrees to sell to the Buyer, the Goods/Assets as described herein.
 
-The Seller and Buyer are collectively referred to as the "Parties" and individually as a "Party."
+**1. Description of Goods/Assets**
+1.1 Description
+[Detailed description of the goods or assets being sold, including any identifying features such as model numbers, serial numbers, etc.]
 
-1. SALE OF GOODS/ASSETS
+1.2 Quantity/Amount
+[Quantity or value of goods/assets being sold]
 
-1.1 Sale of Goods/Assets
-Subject to the terms and conditions of this Agreement, the Seller agrees to sell, transfer, and deliver to the Buyer, and the Buyer agrees to purchase from the Seller, the following goods/assets (the "Goods/Assets"):
+1.3 Condition
+[New, used, or refurbished condition, as applicable]
 
-Description of Goods/Assets: [Description]
-Quantity/Amount: [Quantity]
-Condition: [Condition]
-
-2. PURCHASE PRICE AND PAYMENT TERMS
-
+**2. Purchase Price and Payment**
 2.1 Purchase Price
-The total purchase price for the Goods/Assets is $[Total Price] (the "Purchase Price").
+The total purchase price for the Goods/Assets is $[Total Purchase Price].
 
 2.2 Payment Terms
-The Buyer agrees to pay the Purchase Price as follows:
-
 Deposit Amount: $[Deposit Amount]
-Balance Payment: $[Balance Amount]
-Payment Schedule: [Payment Schedule]
+Balance Amount: $[Balance Amount]
+Payment Schedule: [Payment schedule, e.g., "50% upon execution of the Agreement and 50% upon delivery."]
 
 2.3 Method of Payment
-All payments shall be made by [Payment Method] to the Seller's designated account.
+All payments shall be made by [method of payment, e.g., wire transfer, check, credit card, etc.].
 
-3. DELIVERY AND TRANSFER
+**3. Delivery**
+3.1 Delivery Location
+The Goods/Assets shall be delivered to: [Delivery Address]
 
-3.1 Delivery Date
-The Seller shall deliver the Goods/Assets to the Buyer on or before [Delivery Date].
+3.2 Shipping Responsibility
+The [Buyer/Seller] shall be responsible for shipping and handling costs.
 
-3.2 Delivery Location
-Delivery Address: [Delivery Address]
+**4. Inspection and Acceptance**
+4.1 Inspection Period
+The Buyer shall have [X] days to inspect the Goods/Assets upon delivery.
 
-3.3 Shipping and Handling
-The [Responsible Party] shall bear the costs of shipping and handling.
+4.2 Dispute Resolution
+Any disputes shall be resolved through [arbitration/mediation] in [Location].
 
-3.4 Risk of Loss
-Risk of loss or damage to the Goods/Assets shall transfer from the Seller to the Buyer upon delivery.
-
-4. TITLE AND OWNERSHIP
-
-4.1 Transfer of Title
-Title to the Goods/Assets shall transfer to the Buyer upon full payment and delivery.
-
-4.2 Retention of Title
-The Seller retains the right to reclaim the Goods/Assets until full payment is received.
-
-5. REPRESENTATIONS AND WARRANTIES
-
+**5. Representations and Warranties**
 5.1 Seller's Warranties
-The Seller warrants that:
+The Seller represents and warrants that:
 - The Seller has good title to the Goods/Assets
 - The Goods/Assets are free from liens and encumbrances
 - The Goods/Assets conform to specifications
 
 5.2 Buyer's Warranties
-The Buyer warrants that:
-- The Buyer has authority to enter this Agreement
-- The Buyer accepts the Goods/Assets in current condition
+The Buyer represents and warrants that:
+- The Buyer has the authority to enter into this Agreement
+- The Buyer accepts the Goods/Assets in their current condition
 
-6. INSPECTION AND ACCEPTANCE
+**6. Governing Law**
+This Agreement shall be governed by and construed in accordance with the laws of the state of [State].
 
-6.1 Inspection
-The Buyer has the right to inspect the Goods/Assets upon delivery.
+**7. Signatures**
 
-6.2 Acceptance
-The Goods/Assets shall be deemed accepted if no defects are reported within [Inspection Period] days after delivery.
+IN WITNESS WHEREOF, the Parties have executed this Sales Agreement as of the date first written above.
 
-7. INDEMNIFICATION
-
-7.1 Seller's Indemnification
-The Seller agrees to indemnify the Buyer against claims arising from breach of Seller's warranties.
-
-7.2 Buyer's Indemnification
-The Buyer agrees to indemnify the Seller against claims arising from Buyer's use of the Goods/Assets.
-
-8. CONFIDENTIALITY
-
-The Parties agree to maintain confidentiality of information disclosed during this Agreement.
-
-9. DEFAULT
-
-9.1 Seller's Default
-The Buyer may terminate and seek remedies if the Seller fails to deliver or breaches terms.
-
-9.2 Buyer's Default
-The Seller may terminate, retain deposits, and seek remedies if the Buyer breaches terms.
-
-10. MISCELLANEOUS
-
-10.1 Governing Law
-This Agreement is governed by the laws of [State].
-
-10.2 Dispute Resolution
-Disputes shall be resolved through [Dispute Resolution] in [Location].
-
-10.3 Entire Agreement
-This Agreement constitutes the entire understanding between the Parties.
-
-10.4 Amendments
-Amendments must be in writing and signed by both Parties.
-
-10.5 Severability
-Invalid provisions shall not affect the remainder of the Agreement.
-
-11. SIGNATURES
-
-IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first written above.
-
-Seller:
+**Seller:**
 By: ____________________________
 Name: _________________________
 Title: __________________________
 Date: __________________________
 
-Buyer:
+**Buyer:**
 By: ____________________________
 Name: _________________________
 Title: __________________________
