@@ -57,6 +57,11 @@ import {
   loanFormSchema,
   type LoanFormData
 } from "./forms/LoanAgreementForm";
+import {
+  InvestmentAgreementForm,
+  investmentFormSchema,
+  type InvestmentFormData
+} from "./forms/InvestmentAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
