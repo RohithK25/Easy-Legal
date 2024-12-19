@@ -1,3 +1,4 @@
+import { DocumentFormProps } from "@/types/document-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -735,3 +736,4 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     </Dialog>
   );
 };
+
