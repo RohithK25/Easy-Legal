@@ -32,6 +32,11 @@ import {
   nonCompeteFormSchema,
   type NonCompeteFormData
 } from "./forms/NonCompeteAgreementForm";
+import {
+  StockOptionAgreementForm,
+  stockOptionFormSchema,
+  type StockOptionFormData
+} from "./forms/StockOptionAgreementForm";
 
 interface DocumentFormProps {
   open: boolean;
@@ -44,6 +49,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
   const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
+  const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
   
   const employmentForm = useForm<EmploymentFormData>({
     resolver: zodResolver(employmentFormSchema),
@@ -114,7 +120,26 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData) => {
+  const stockOptionForm = useForm<StockOptionFormData>({
+    resolver: zodResolver(stockOptionFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      optionHolderName: "",
+      optionHolderAddress: "",
+      effectiveDate: "",
+      numberOfShares: "",
+      exercisePrice: "",
+      vestingSchedule: "",
+      optionTerm: "",
+      expirationDate: "",
+      terminationPeriod: "",
+      paymentMethod: "",
+      state: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData) => {
     let content = templateContent;
     
     if (isEmploymentAgreement) {
@@ -164,6 +189,22 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
         .replace("[define area, e.g., specific states, cities, or nationwide]", nonCompeteData.geographicArea)
         .replace("[describe the industry, e.g., technology, software development, etc.]", nonCompeteData.industry)
         .replace(/\[State\]/g, nonCompeteData.state);
+    } else if (isStockOptionAgreement) {
+      const stockOptionData = data as StockOptionFormData;
+      content = content
+        .replace("[Date]", new Date(stockOptionData.effectiveDate).toLocaleDateString())
+        .replace("[Company Name]", stockOptionData.companyName)
+        .replace("[Address]", stockOptionData.companyAddress)
+        .replace("[Option Holder's Full Name]", stockOptionData.optionHolderName)
+        .replace(/\[Address\]/, stockOptionData.optionHolderAddress)
+        .replace("[Number of Shares]", stockOptionData.numberOfShares)
+        .replace(/\$\[Exercise Price\]/g, `$${stockOptionData.exercisePrice}`)
+        .replace("[e.g., 25% annually over 4 years, or specific vesting milestones]", stockOptionData.vestingSchedule)
+        .replace("[X] years", stockOptionData.optionTerm)
+        .replace("[Expiration Date]", new Date(stockOptionData.expirationDate).toLocaleDateString())
+        .replace("[X] days", stockOptionData.terminationPeriod)
+        .replace("[check, wire transfer, or other method]", stockOptionData.paymentMethod)
+        .replace(/\[State\]/g, stockOptionData.state);
     } else {
       const confidentialityData = data as ConfidentialityFormData;
       content = content
@@ -242,6 +283,15 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
           <Form {...nonCompeteForm}>
             <form onSubmit={nonCompeteForm.handleSubmit(onSubmit)} className="space-y-4">
               <NonCompeteAgreementForm form={nonCompeteForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isStockOptionAgreement ? (
+          <Form {...stockOptionForm}>
+            <form onSubmit={stockOptionForm.handleSubmit(onSubmit)} className="space-y-4">
+              <StockOptionAgreementForm form={stockOptionForm} />
               <DialogFooter>
                 <Button type="submit">Generate Document</Button>
               </DialogFooter>
