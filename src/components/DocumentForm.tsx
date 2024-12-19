@@ -72,6 +72,11 @@ import {
   dividendPolicyFormSchema,
   type DividendPolicyFormData
 } from "./forms/dividend-policy/DividendPolicyAgreementForm";
+import {
+  SalesAgreementForm,
+  salesFormSchema,
+  type SalesFormData
+} from "./forms/sales-agreement/SalesAgreementForm";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -85,6 +90,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const isLoanAgreement = templateTitle === "Loan Agreement";
   const isLoanNote = templateTitle === "Loan Note";
   const isDividendPolicy = templateTitle === "Dividend Policy Agreement";
+  const isSalesAgreement = templateTitle === "Sales Agreement";
 
   const loanForm = useForm<LoanFormData>({
     resolver: zodResolver(loanFormSchema),
@@ -321,10 +327,58 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   });
 
-  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData) => {
+  const salesForm = useForm<SalesFormData>({
+    resolver: zodResolver(salesFormSchema),
+    defaultValues: {
+      sellerName: "",
+      sellerAddress: "",
+      buyerName: "",
+      buyerAddress: "",
+      state: "",
+      description: "",
+      quantity: "",
+      condition: "",
+      totalPrice: "",
+      depositAmount: "",
+      balanceAmount: "",
+      paymentSchedule: "",
+      paymentMethod: "",
+      deliveryDate: "",
+      deliveryAddress: "",
+      responsibleParty: "",
+      inspectionPeriod: "",
+      disputeResolution: "",
+      location: "",
+    }
+  });
+
+  const generateDocument = (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData) => {
     let content = templateContent;
     
-    if (isDividendPolicy) {
+    if (isSalesAgreement) {
+      const salesData = data as SalesFormData;
+      content = content
+        .replace("[Date]", new Date().toLocaleDateString())
+        .replace("[Seller Name]", salesData.sellerName)
+        .replace("[Seller Address]", salesData.sellerAddress)
+        .replace("[Buyer Name]", salesData.buyerName)
+        .replace("[Buyer Address]", salesData.buyerAddress)
+        .replace(/\[State\]/g, salesData.state)
+        .replace("[Detailed description of the goods or assets being sold, including any identifying features such as model numbers, serial numbers, etc.]", salesData.description)
+        .replace("[Quantity or value of goods/assets being sold]", salesData.quantity)
+        .replace("[New, used, or refurbished condition, as applicable]", salesData.condition)
+        .replace(/\$\[Total Purchase Price\]/g, `$${salesData.totalPrice}`)
+        .replace(/\$\[Deposit Amount\]/g, `$${salesData.depositAmount}`)
+        .replace(/\$\[Balance Amount\]/g, `$${salesData.balanceAmount}`)
+        .replace("[Payment schedule, e.g., \"50% upon execution of the Agreement and 50% upon delivery.\"]", salesData.paymentSchedule)
+        .replace("[method of payment, e.g., wire transfer, check, credit card, etc.]", salesData.paymentMethod)
+        .replace("[Delivery Date]", new Date(salesData.deliveryDate).toLocaleDateString())
+        .replace("[Delivery Address]", salesData.deliveryAddress)
+        .replace("[Buyer/Seller]", salesData.responsibleParty)
+        .replace("[X]", salesData.inspectionPeriod)
+        .replace("[arbitration/mediation]", salesData.disputeResolution)
+        .replace("[Location]", salesData.location);
+    } else if (isDividendPolicy) {
       const dividendPolicyData = data as DividendPolicyFormData;
       content = content
         .replace("[Date]", new Date().toLocaleDateString())
@@ -538,7 +592,7 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     }
   };
 
-  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData) => {
+  const onSubmit = async (data: EmploymentFormData | ConfidentialityFormData | ContractorFormData | NonCompeteFormData | StockOptionFormData | PartnershipFormData | OperatingFormData | ShareholderFormData | InvestmentFormData | LoanFormData | LoanNoteFormData | DividendPolicyFormData | SalesFormData) => {
     try {
       const documentContent = generateDocument(data);
       await downloadDocument(documentContent);
@@ -559,7 +613,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
             Fill in the required information to generate your document.
           </DialogDescription>
         </DialogHeader>
-        {isDividendPolicy ? (
+        {isSalesAgreement ? (
+          <Form {...salesForm}>
+            <form onSubmit={salesForm.handleSubmit(onSubmit)} className="space-y-4">
+              <SalesAgreementForm form={salesForm} />
+              <DialogFooter>
+                <Button type="submit">Generate Document</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        ) : isDividendPolicy ? (
           <Form {...dividendPolicyForm}>
             <form onSubmit={dividendPolicyForm.handleSubmit(onSubmit)} className="space-y-4">
               <DividendPolicyAgreementForm form={dividendPolicyForm} />
