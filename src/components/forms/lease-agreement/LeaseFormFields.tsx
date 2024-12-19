@@ -18,12 +18,25 @@ export function LeaseFormFields({ form }: LeaseFormFieldsProps) {
     <div className="grid gap-4">
       <FormField
         control={form.control}
+        name="effectiveDate"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Effective Date</FormLabel>
+            <FormControl>
+              <Input type="date" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="lessorName"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Lessor Name</FormLabel>
             <FormControl>
-              <Input placeholder="Enter lessor's name" {...field} />
+              <Input placeholder="Enter lessor's full name or company name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -49,7 +62,7 @@ export function LeaseFormFields({ form }: LeaseFormFieldsProps) {
           <FormItem>
             <FormLabel>Lessee Name</FormLabel>
             <FormControl>
-              <Input placeholder="Enter lessee's name" {...field} />
+              <Input placeholder="Enter lessee's full name or company name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -96,6 +109,19 @@ export function LeaseFormFields({ form }: LeaseFormFieldsProps) {
       />
       <FormField
         control={form.control}
+        name="term"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Term</FormLabel>
+            <FormControl>
+              <Input placeholder="e.g., 12 months, 2 years" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="startDate"
         render={({ field }) => (
           <FormItem>
@@ -115,19 +141,6 @@ export function LeaseFormFields({ form }: LeaseFormFieldsProps) {
             <FormLabel>End Date</FormLabel>
             <FormControl>
               <Input type="date" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="term"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Term</FormLabel>
-            <FormControl>
-              <Input placeholder="e.g., 12 months, 2 years" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

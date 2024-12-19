@@ -449,15 +449,16 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
   const leaseForm = useForm<LeaseFormData>({
     resolver: zodResolver(leaseFormSchema),
     defaultValues: {
+      effectiveDate: "",
       lessorName: "",
       lessorAddress: "",
       lesseeName: "",
       lesseeAddress: "",
       propertyAddress: "",
       intendedUse: "",
+      term: "",
       startDate: "",
       endDate: "",
-      term: "",
       renewalTerm: "",
       noticePeriod: "",
       rentAmount: "",
@@ -480,28 +481,28 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     if (isLeaseAgreement) {
       const leaseData = data as LeaseFormData;
       content = content
-        .replace("[Date]", new Date().toLocaleDateString())
-        .replace("[Lessor's Full Name or Company Name]", leaseData.lessorName)
-        .replace("[Lessor's Address]", leaseData.lessorAddress)
-        .replace("[Lessee's Full Name or Company Name]", leaseData.lesseeName)
-        .replace("[Lessee's Address]", leaseData.lesseeAddress)
+        .replace("[Effective Date]", new Date(leaseData.effectiveDate).toLocaleDateString())
+        .replace(/\[Lessor's Full Name or Company Name\]/g, leaseData.lessorName)
+        .replace(/\[Lessor's Address\]/g, leaseData.lessorAddress)
+        .replace(/\[Lessee's Full Name or Company Name\]/g, leaseData.lesseeName)
+        .replace(/\[Lessee's Address\]/g, leaseData.lesseeAddress)
         .replace(/\[Property Address\]/g, leaseData.propertyAddress)
         .replace("[Describe the intended use, such as office space, retail business, warehouse, etc.]", leaseData.intendedUse)
+        .replace("[Number of Years or Months]", leaseData.term)
         .replace("[Start Date]", new Date(leaseData.startDate).toLocaleDateString())
         .replace("[End Date]", new Date(leaseData.endDate).toLocaleDateString())
-        .replace("[Term]", leaseData.term)
         .replace("[Renewal Term]", leaseData.renewalTerm)
         .replace("[Notice Period]", leaseData.noticePeriod)
-        .replace("[Rent Amount]", leaseData.rentAmount)
-        .replace("[Rent Due Day]", leaseData.rentDueDay)
-        .replace("[Late Fee Grace Period]", leaseData.lateFeeGracePeriod)
-        .replace("[Late Fee Amount]", leaseData.lateFeeAmount)
-        .replace("[Security Deposit]", leaseData.securityDeposit)
+        .replace("[Dollar Amount]", leaseData.rentAmount)
+        .replace("[Day of the Month]", leaseData.rentDueDay)
+        .replace("[Number of Days]", leaseData.lateFeeGracePeriod)
+        .replace("[Late Fee Amount or Percentage]", leaseData.lateFeeAmount)
+        .replace("[Security Deposit Amount]", leaseData.securityDeposit)
         .replace("[Deposit Return Period]", leaseData.depositReturnPeriod)
         .replace("[Default Period]", leaseData.defaultPeriod)
         .replace("[Cure Period]", leaseData.curePeriod)
         .replace("[Termination Notice Period]", leaseData.terminationNoticePeriod)
-        .replace("[Termination Fee]", leaseData.terminationFee)
+        .replace("[Termination Fee Amount]", leaseData.terminationFee)
         .replace(/\[State\]/g, leaseData.state);
     } else if (isIpAssignment) {
       const ipData = data as IpAssignmentFormData;

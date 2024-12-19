@@ -1,15 +1,16 @@
 import * as z from "zod";
 
 export const leaseFormSchema = z.object({
+  effectiveDate: z.string().min(1, "Effective date is required"),
   lessorName: z.string().min(1, "Lessor name is required"),
   lessorAddress: z.string().min(1, "Lessor address is required"),
   lesseeName: z.string().min(1, "Lessee name is required"),
   lesseeAddress: z.string().min(1, "Lessee address is required"),
   propertyAddress: z.string().min(1, "Property address is required"),
   intendedUse: z.string().min(1, "Intended use is required"),
+  term: z.string().min(1, "Term is required"),
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().min(1, "End date is required"),
-  term: z.string().min(1, "Term is required"),
   renewalTerm: z.string().min(1, "Renewal term is required"),
   noticePeriod: z.string().min(1, "Notice period is required"),
   rentAmount: z.string().min(1, "Rent amount is required"),
