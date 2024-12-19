@@ -254,12 +254,6 @@ export const templates = [
   },
   // Employment & HR
   {
-    title: "Employment Agreement",
-    description: "Outlines terms and conditions of employment, including salary, benefits, and responsibilities.",
-    category: "Employment",
-    slug: "employment-agreement",
-  },
-  {
     title: "Independent Contractor Agreement",
     description: "Defines relationship between business and contractors, including work terms and deliverables.",
     category: "Employment",
