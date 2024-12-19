@@ -121,9 +121,14 @@ const Template = () => {
     content: "Template content not available."
   };
 
+  // Add empty search handler since we don't need search functionality on this page
+  const handleSearch = (value: string) => {
+    // Search is not needed on the template detail page
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header onSearch={handleSearch} />
       <main className="flex-1 py-12">
         <div className="container max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
