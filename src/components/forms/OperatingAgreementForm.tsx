@@ -8,6 +8,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const operatingFormSchema = z.object({
   llcName: z.string().min(1, "LLC name is required"),
@@ -145,7 +152,7 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
         name="businessActivity"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Business Activity</FormLabel>
+            <FormLabel>Business Activity Description</FormLabel>
             <FormControl>
               <Input placeholder="Enter business activity" {...field} />
             </FormControl>
@@ -158,7 +165,7 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
         name="member1Contribution"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Member 1 Contribution ($)</FormLabel>
+            <FormLabel>Member 1 Initial Capital Contribution ($)</FormLabel>
             <FormControl>
               <Input type="number" placeholder="Enter amount" {...field} />
             </FormControl>
@@ -171,7 +178,7 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
         name="member2Contribution"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Member 2 Contribution ($)</FormLabel>
+            <FormLabel>Member 2 Initial Capital Contribution ($)</FormLabel>
             <FormControl>
               <Input type="number" placeholder="Enter amount" {...field} />
             </FormControl>
@@ -184,7 +191,7 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
         name="member1Ownership"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Member 1 Ownership (%)</FormLabel>
+            <FormLabel>Member 1 Ownership Percentage (%)</FormLabel>
             <FormControl>
               <Input type="number" placeholder="Enter percentage" {...field} />
             </FormControl>
@@ -197,7 +204,7 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
         name="member2Ownership"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Member 2 Ownership (%)</FormLabel>
+            <FormLabel>Member 2 Ownership Percentage (%)</FormLabel>
             <FormControl>
               <Input type="number" placeholder="Enter percentage" {...field} />
             </FormControl>
@@ -212,7 +219,15 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
           <FormItem>
             <FormLabel>Management Type</FormLabel>
             <FormControl>
-              <Input placeholder="Enter management type (e.g., Members/Manager)" {...field} />
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select management type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="member-managed">Member-Managed</SelectItem>
+                  <SelectItem value="manager-managed">Manager-Managed</SelectItem>
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -225,7 +240,16 @@ export const OperatingAgreementForm = ({ form }: OperatingAgreementFormProps) =>
           <FormItem>
             <FormLabel>Tax Status</FormLabel>
             <FormControl>
-              <Input placeholder="Enter tax status (e.g., partnership/S-corp/C-corp)" {...field} />
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select tax status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="partnership">Partnership</SelectItem>
+                  <SelectItem value="s-corporation">S-Corporation</SelectItem>
+                  <SelectItem value="c-corporation">C-Corporation</SelectItem>
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormMessage />
           </FormItem>
