@@ -63,13 +63,6 @@ import {
   type InvestmentFormData
 } from "./forms/InvestmentAgreementForm";
 
-interface DocumentFormProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  templateTitle: string;
-  templateContent: string;
-}
-
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
   const isContractorAgreement = templateTitle === "Independent Contractor Agreement";
@@ -93,9 +86,18 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
       bankName: "",
       accountNumber: "",
       interestRate: "",
+      yearBasis: "",
+      paymentFrequency: "",
       startDate: "",
       maturityDate: "",
+      installmentAmount: "",
+      paymentDay: "",
+      paymentPeriod: "",
       lateFee: "",
+      lateFeePercentage: "",
+      gracePeriod: "",
+      entityType: "",
+      defaultCurePeriod: "",
     }
   });
 
