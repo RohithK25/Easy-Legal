@@ -3,5 +3,5 @@ export interface Template {
   description: string;
   category: string;
   slug: string;
-  content?: string;
+  content: string;
 }
