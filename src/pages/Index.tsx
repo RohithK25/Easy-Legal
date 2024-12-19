@@ -3,12 +3,21 @@ import { TemplateCard } from "@/components/TemplateCard";
 import { useState } from "react";
 
 const templates = [
+  // Essential Business Agreements
   {
     title: "Non-Disclosure Agreement (NDA)",
     description: "Protect confidential information shared between parties.",
-    category: "Confidentiality",
+    category: "Essential Agreements",
     slug: "nda",
   },
+  {
+    title: "Confidentiality Agreement",
+    description: "Protects confidential information, used for employees or partners.",
+    category: "Essential Agreements",
+    slug: "confidentiality-agreement",
+  },
+
+  // Employment & HR
   {
     title: "Employment Agreement",
     description: "Outlines terms and conditions of employment, including salary, benefits, and responsibilities.",
@@ -21,6 +30,20 @@ const templates = [
     category: "Employment",
     slug: "contractor-agreement",
   },
+  {
+    title: "Non-Compete Agreement",
+    description: "Prevents competition from former employees or business partners.",
+    category: "Employment",
+    slug: "non-compete",
+  },
+  {
+    title: "Stock Option Agreement",
+    description: "Allows purchase of company stock at discounted price as incentive.",
+    category: "Employment",
+    slug: "stock-option",
+  },
+
+  // Business Formation
   {
     title: "Partnership Agreement",
     description: "Defines terms of business partnership, including profit-sharing and decision-making.",
@@ -39,6 +62,48 @@ const templates = [
     category: "Business Formation",
     slug: "shareholder-agreement",
   },
+
+  // Financial
+  {
+    title: "Investment Agreement",
+    description: "Outlines terms for investors providing capital to the business.",
+    category: "Financial",
+    slug: "investment-agreement",
+  },
+  {
+    title: "Loan Agreement",
+    description: "Details terms of business loans, including interest rates and repayment schedules.",
+    category: "Financial",
+    slug: "loan-agreement",
+  },
+  {
+    title: "Loan Note",
+    description: "Confirms terms of loan or debt agreement from investors or third parties.",
+    category: "Financial",
+    slug: "loan-note",
+  },
+  {
+    title: "Dividend Policy Agreement",
+    description: "Defines how company will distribute profits to shareholders.",
+    category: "Financial",
+    slug: "dividend-policy",
+  },
+
+  // Sales & Services
+  {
+    title: "Sales Agreement",
+    description: "Defines terms of sale or service between business and customers.",
+    category: "Sales",
+    slug: "sales-agreement",
+  },
+  {
+    title: "Purchase Order Agreement",
+    description: "Used for purchasing goods or services, detailing specifications and terms.",
+    category: "Sales",
+    slug: "purchase-order",
+  },
+
+  // Website & Digital
   {
     title: "Terms and Conditions",
     description: "Sets rules for using a website, app, or service, covering liability and user responsibilities.",
@@ -51,48 +116,16 @@ const templates = [
     category: "Website Legal",
     slug: "privacy-policy",
   },
+
+  // Intellectual Property
   {
     title: "Intellectual Property Assignment",
     description: "Ensures company ownership of IP created by employees or contractors.",
     category: "Intellectual Property",
     slug: "ip-assignment",
   },
-  {
-    title: "Confidentiality Agreement",
-    description: "Protects confidential information, used for employees or partners.",
-    category: "Confidentiality",
-    slug: "confidentiality-agreement",
-  },
-  {
-    title: "Loan Agreement",
-    description: "Details terms of business loans, including interest rates and repayment schedules.",
-    category: "Financial",
-    slug: "loan-agreement",
-  },
-  {
-    title: "Investment Agreement",
-    description: "Outlines terms for investors providing capital to the business.",
-    category: "Financial",
-    slug: "investment-agreement",
-  },
-  {
-    title: "Sales Agreement",
-    description: "Defines terms of sale or service between business and customers.",
-    category: "Sales",
-    slug: "sales-agreement",
-  },
-  {
-    title: "Non-Compete Agreement",
-    description: "Prevents competition from former employees or business partners.",
-    category: "Employment",
-    slug: "non-compete",
-  },
-  {
-    title: "Waiver and Release",
-    description: "Limits business liability for accidents, injuries, or damages.",
-    category: "Liability",
-    slug: "waiver-release",
-  },
+
+  // Property & Liability
   {
     title: "Lease Agreement",
     description: "Contract for renting commercial space, outlining terms and responsibilities.",
@@ -100,34 +133,18 @@ const templates = [
     slug: "lease-agreement",
   },
   {
-    title: "Purchase Order Agreement",
-    description: "Used for purchasing goods or services, detailing specifications and terms.",
-    category: "Sales",
-    slug: "purchase-order",
+    title: "Waiver and Release",
+    description: "Limits business liability for accidents, injuries, or damages.",
+    category: "Liability",
+    slug: "waiver-release",
   },
-  {
-    title: "Loan Note",
-    description: "Confirms terms of loan or debt agreement from investors or third parties.",
-    category: "Financial",
-    slug: "loan-note",
-  },
+
+  // Business Planning
   {
     title: "Exit Strategy Agreement",
     description: "Outlines plans for business exit, including sale of equity or acquisition.",
     category: "Business Planning",
     slug: "exit-strategy",
-  },
-  {
-    title: "Dividend Policy Agreement",
-    description: "Defines how company will distribute profits to shareholders.",
-    category: "Financial",
-    slug: "dividend-policy",
-  },
-  {
-    title: "Stock Option Agreement",
-    description: "Allows purchase of company stock at discounted price as incentive.",
-    category: "Employment",
-    slug: "stock-option",
   }
 ];
 
