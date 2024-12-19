@@ -89,11 +89,14 @@ import {
   type TermsConditionsFormData
 } from "./forms/terms-conditions/types";
 import { TermsConditionsForm } from "./forms/terms-conditions/TermsConditionsForm";
+
 import {
-  PrivacyPolicyForm,
+  PrivacyPolicyForm
+} from "./forms/privacy-policy/PrivacyPolicyForm";
+import {
   privacyPolicyFormSchema,
   type PrivacyPolicyFormData
-} from "./forms/privacy-policy/PrivacyPolicyForm";
+} from "./forms/privacy-policy/types";
 
 export const DocumentForm = ({ open, onOpenChange, templateTitle, templateContent }: DocumentFormProps) => {
   const isEmploymentAgreement = templateTitle === "Employment Agreement";
@@ -854,3 +857,4 @@ export const DocumentForm = ({ open, onOpenChange, templateTitle, templateConten
     </Dialog>
   );
 };
+
