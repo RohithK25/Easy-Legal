@@ -48,3 +48,17 @@
 .template-card:hover {
   @apply border-primary;
 }
+
+.prose pre {
+  @apply font-serif text-base leading-relaxed whitespace-pre-wrap;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  overflow: visible;
+  line-height: 1.75;
+}
+
+.prose pre strong {
+  @apply font-bold;
+}
