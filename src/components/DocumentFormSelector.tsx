@@ -45,8 +45,6 @@ import { WaiverReleaseForm } from "./forms/waiver-release/WaiverReleaseForm";
 import { waiverReleaseFormSchema, type WaiverReleaseFormData } from "./forms/waiver-release/types";
 import { ExitStrategyForm } from "./forms/exit-strategy/ExitStrategyForm";
 import { exitStrategyFormSchema, type ExitStrategyFormData } from "./forms/exit-strategy/types";
-import { ConfidentialityAgreementForm } from "./forms/confidentiality/ConfidentialityAgreementForm";
-import { confidentialityFormSchema, type ConfidentialityFormData } from "./forms/confidentiality/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -654,3 +652,4 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
 
   return renderForm();
 }
+
