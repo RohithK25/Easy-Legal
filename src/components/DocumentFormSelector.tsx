@@ -40,6 +40,8 @@ import { NonCompeteAgreementForm } from "./forms/NonCompeteAgreementForm";
 import { nonCompeteFormSchema, type NonCompeteFormData } from "./forms/NonCompeteAgreementForm";
 import { IndependentContractorAgreementForm } from "./forms/IndependentContractorAgreementForm";
 import { contractorFormSchema, type ContractorFormData } from "./forms/IndependentContractorAgreementForm";
+import { EmploymentAgreementForm } from "./forms/EmploymentAgreementForm";
+import { employmentFormSchema, type EmploymentFormData } from "./forms/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -64,6 +66,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
   const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
   const isIndependentContractorAgreement = templateTitle === "Independent Contractor Agreement";
+  const isEmploymentAgreement = templateTitle === "Employment Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -189,6 +192,25 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       returnPeriod: "",
       state: "",
       location: "",
+    }
+  });
+
+  const employmentForm = useForm<EmploymentFormData>({
+    resolver: zodResolver(employmentFormSchema),
+    defaultValues: {
+      employerName: "",
+      employerAddress: "",
+      employeeName: "",
+      employeeAddress: "",
+      startDate: "",
+      jobTitle: "",
+      salary: "",
+      salaryPeriod: "",
+      supervisorName: "",
+      nonCompetePeriod: "",
+      geographicArea: "",
+      noticePeriod: "",
+      state: "",
     }
   });
 
@@ -475,7 +497,7 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     );
   }
 
-  if (isConfidentiality) {
+  if (isConfidentiality || isIndependentContractorAgreement) {
     return (
       <Form {...confidentialityForm}>
         <form onSubmit={confidentialityForm.handleSubmit(onSubmit)} className="space-y-4">
@@ -636,6 +658,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...contractorForm}>
         <form onSubmit={contractorForm.handleSubmit(onSubmit)} className="space-y-4">
           <IndependentContractorAgreementForm form={contractorForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isEmploymentAgreement) {
+    return (
+      <Form {...employmentForm}>
+        <form onSubmit={employmentForm.handleSubmit(onSubmit)} className="space-y-4">
+          <EmploymentAgreementForm form={employmentForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
