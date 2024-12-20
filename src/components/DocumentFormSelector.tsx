@@ -218,7 +218,6 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       interestRate: "",
       yearBasis: "",
       startDate: "",
-      paymentSchedule: "",
       installmentAmount: "",
       paymentDay: "",
       lateFee: "",
@@ -652,4 +651,3 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
 
   return renderForm();
 }
-
