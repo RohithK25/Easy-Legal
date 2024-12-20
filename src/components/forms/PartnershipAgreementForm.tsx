@@ -7,6 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { z } from "zod";
 
 export const partnershipFormSchema = z.object({
@@ -35,7 +36,8 @@ interface PartnershipAgreementFormProps {
 
 export const PartnershipAgreementForm = ({ form }: PartnershipAgreementFormProps) => {
   return (
-    <div className="space-y-4">
+    <ScrollArea className="h-[60vh] pr-4">
+      <div className="space-y-4">
       <FormField
         control={form.control}
         name="partner1Name"
@@ -231,6 +233,7 @@ export const PartnershipAgreementForm = ({ form }: PartnershipAgreementFormProps
           </FormItem>
         )}
       />
-    </div>
+      </div>
+    </ScrollArea>
   );
 };

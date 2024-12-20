@@ -1,5 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,7 +25,8 @@ interface NonCompeteAgreementFormProps {
 
 export const NonCompeteAgreementForm = ({ form }: NonCompeteAgreementFormProps) => {
   return (
-    <div className="grid gap-4 py-4">
+    <ScrollArea className="h-[60vh] pr-4">
+      <div className="space-y-4">
       <FormField
         control={form.control}
         name="companyName"
@@ -164,6 +166,7 @@ export const NonCompeteAgreementForm = ({ form }: NonCompeteAgreementFormProps) 
           </FormItem>
         )}
       />
-    </div>
+      </div>
+    </ScrollArea>
   );
 };

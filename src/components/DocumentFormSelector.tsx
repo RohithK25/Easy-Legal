@@ -34,6 +34,12 @@ import { ShareholderAgreementForm } from "./forms/shareholder-agreement/Sharehol
 import { shareholderFormSchema, type ShareholderFormData } from "./forms/shareholder-agreement/types";
 import { OperatingAgreementForm } from "./forms/operating-agreement/OperatingAgreementForm";
 import { operatingFormSchema, type OperatingFormData } from "./forms/operating-agreement/types";
+import { StockOptionAgreementForm } from "./forms/StockOptionAgreementForm";
+import { stockOptionFormSchema, type StockOptionFormData } from "./forms/StockOptionAgreementForm";
+import { NonCompeteAgreementForm } from "./forms/NonCompeteAgreementForm";
+import { nonCompeteFormSchema, type NonCompeteFormData } from "./forms/NonCompeteAgreementForm";
+import { IndependentContractorAgreementForm } from "./forms/IndependentContractorAgreementForm";
+import { contractorFormSchema, type ContractorFormData } from "./forms/IndependentContractorAgreementForm";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -55,6 +61,9 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
   const isInvestmentAgreement = templateTitle === "Investment Agreement";
   const isShareholderAgreement = templateTitle === "Shareholder Agreement";
   const isOperatingAgreement = templateTitle === "Operating Agreement";
+  const isStockOptionAgreement = templateTitle === "Stock Option Agreement";
+  const isNonCompeteAgreement = templateTitle === "Non-Compete Agreement";
+  const isIndependentContractorAgreement = templateTitle === "Independent Contractor Agreement";
 
   const salesForm = useForm<SalesFormData>({
     resolver: zodResolver(salesFormSchema),
@@ -349,6 +358,58 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const stockOptionForm = useForm<StockOptionFormData>({
+    resolver: zodResolver(stockOptionFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      optionHolderName: "",
+      optionHolderAddress: "",
+      effectiveDate: "",
+      numberOfShares: "",
+      exercisePrice: "",
+      vestingSchedule: "",
+      optionTerm: "",
+      expirationDate: "",
+      terminationPeriod: "",
+      paymentMethod: "",
+      state: "",
+    }
+  });
+
+  const nonCompeteForm = useForm<NonCompeteFormData>({
+    resolver: zodResolver(nonCompeteFormSchema),
+    defaultValues: {
+      companyName: "",
+      companyAddress: "",
+      employeeName: "",
+      employeeAddress: "",
+      effectiveDate: "",
+      nonCompetePeriod: "",
+      geographicArea: "",
+      industry: "",
+      nonSolicitPeriod: "",
+      state: "",
+    }
+  });
+
+  const contractorForm = useForm<ContractorFormData>({
+    resolver: zodResolver(contractorFormSchema),
+    defaultValues: {
+      contractorName: "",
+      contractorAddress: "",
+      companyName: "",
+      companyAddress: "",
+      startDate: "",
+      endDate: "",
+      services: "",
+      compensation: "",
+      paymentSchedule: "",
+      terminationNotice: "",
+      state: "",
+    }
+  });
+
   if (isSalesAgreement) {
     return (
       <Form {...salesForm}>
@@ -536,6 +597,45 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...operatingForm}>
         <form onSubmit={operatingForm.handleSubmit(onSubmit)} className="space-y-4">
           <OperatingAgreementForm form={operatingForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isStockOptionAgreement) {
+    return (
+      <Form {...stockOptionForm}>
+        <form onSubmit={stockOptionForm.handleSubmit(onSubmit)} className="space-y-4">
+          <StockOptionAgreementForm form={stockOptionForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isNonCompeteAgreement) {
+    return (
+      <Form {...nonCompeteForm}>
+        <form onSubmit={nonCompeteForm.handleSubmit(onSubmit)} className="space-y-4">
+          <NonCompeteAgreementForm form={nonCompeteForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isIndependentContractorAgreement) {
+    return (
+      <Form {...contractorForm}>
+        <form onSubmit={contractorForm.handleSubmit(onSubmit)} className="space-y-4">
+          <IndependentContractorAgreementForm form={contractorForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
