@@ -29,7 +29,6 @@ export const EmploymentFormFields = ({ form }: EmploymentFormFieldsProps) => {
           </FormItem>
         )}
       />
-
       <FormField
         control={form.control}
         name="employerAddress"
@@ -43,7 +42,6 @@ export const EmploymentFormFields = ({ form }: EmploymentFormFieldsProps) => {
           </FormItem>
         )}
       />
-
       <FormField
         control={form.control}
         name="employeeName"
@@ -57,7 +55,6 @@ export const EmploymentFormFields = ({ form }: EmploymentFormFieldsProps) => {
           </FormItem>
         )}
       />
-
       <FormField
         control={form.control}
         name="employeeAddress"
@@ -71,7 +68,19 @@ export const EmploymentFormFields = ({ form }: EmploymentFormFieldsProps) => {
           </FormItem>
         )}
       />
-
+      <FormField
+        control={form.control}
+        name="position"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Position</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter position" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={form.control}
         name="startDate"
@@ -85,58 +94,45 @@ export const EmploymentFormFields = ({ form }: EmploymentFormFieldsProps) => {
           </FormItem>
         )}
       />
-
-      <FormField
-        control={form.control}
-        name="jobTitle"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Job Title</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter job title" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
       <FormField
         control={form.control}
         name="salary"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Salary Amount</FormLabel>
+            <FormLabel>Salary</FormLabel>
             <FormControl>
-              <Input placeholder="Enter salary amount" {...field} />
+              <Input placeholder="Enter salary" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-
       <FormField
         control={form.control}
-        name="salaryPeriod"
+        name="paymentFrequency"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Salary Period</FormLabel>
+            <FormLabel>Payment Frequency</FormLabel>
             <FormControl>
-              <select
-                {...field}
-                className="w-full border border-gray-300 rounded-md p-2"
-              >
-                <option value="">Select period</option>
-                <option value="hour">Per Hour</option>
-                <option value="week">Per Week</option>
-                <option value="month">Per Month</option>
-                <option value="year">Per Year</option>
-              </select>
+              <Input placeholder="Enter payment frequency" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-
+      <FormField
+        control={form.control}
+        name="workHours"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Work Hours</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter work hours" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={form.control}
         name="state"

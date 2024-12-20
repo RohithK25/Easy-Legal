@@ -8,6 +8,8 @@ import { NdaForm } from "./forms/nda/NdaForm";
 import { ndaFormSchema, type NdaFormData } from "./forms/nda/types";
 import { PartnershipAgreementForm } from "./forms/partnership/PartnershipAgreementForm";
 import { partnershipFormSchema, type PartnershipFormData } from "./forms/partnership/types";
+import { EmploymentAgreementForm } from "./forms/employment-agreement/EmploymentAgreementForm";
+import { employmentFormSchema, type EmploymentFormData } from "./forms/employment-agreement/types";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -16,6 +18,7 @@ interface DocumentFormSelectorProps extends DocumentFormProps {
 export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSelectorProps) {
   const isNda = templateTitle === "Non-Disclosure Agreement (NDA)";
   const isPartnershipAgreement = templateTitle === "Partnership Agreement";
+  const isEmploymentAgreement = templateTitle === "Employment Agreement";
 
   const ndaForm = useForm<NdaFormData>({
     resolver: zodResolver(ndaFormSchema),
@@ -52,6 +55,22 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
     }
   });
 
+  const employmentForm = useForm<EmploymentFormData>({
+    resolver: zodResolver(employmentFormSchema),
+    defaultValues: {
+      employerName: "",
+      employerAddress: "",
+      employeeName: "",
+      employeeAddress: "",
+      position: "",
+      startDate: "",
+      salary: "",
+      paymentFrequency: "",
+      workHours: "",
+      state: "",
+    }
+  });
+
   if (isNda) {
     return (
       <Form {...ndaForm}>
@@ -70,6 +89,19 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
       <Form {...partnershipForm}>
         <form onSubmit={partnershipForm.handleSubmit(onSubmit)} className="space-y-4">
           <PartnershipAgreementForm form={partnershipForm} />
+          <DialogFooter>
+            <Button type="submit">Generate Document</Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  }
+
+  if (isEmploymentAgreement) {
+    return (
+      <Form {...employmentForm}>
+        <form onSubmit={employmentForm.handleSubmit(onSubmit)} className="space-y-4">
+          <EmploymentAgreementForm form={employmentForm} />
           <DialogFooter>
             <Button type="submit">Generate Document</Button>
           </DialogFooter>
