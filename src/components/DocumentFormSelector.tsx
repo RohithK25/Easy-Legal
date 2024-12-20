@@ -40,8 +40,8 @@ import { NonCompeteAgreementForm } from "./forms/NonCompeteAgreementForm";
 import { nonCompeteFormSchema, type NonCompeteFormData } from "./forms/NonCompeteAgreementForm";
 import { IndependentContractorAgreementForm } from "./forms/IndependentContractorAgreementForm";
 import { contractorFormSchema, type ContractorFormData } from "./forms/IndependentContractorAgreementForm";
-import { EmploymentAgreementForm } from "./forms/EmploymentAgreementForm";
-import { employmentFormSchema, type EmploymentFormData } from "./forms/types";
+import { employmentFormSchema, type EmploymentFormData } from "./forms/employment-agreement/types";
+import { EmploymentAgreementForm } from "./forms/employment-agreement/EmploymentAgreementForm";
 
 interface DocumentFormSelectorProps extends DocumentFormProps {
   onSubmit: (data: any) => void;
@@ -681,3 +681,4 @@ export function DocumentFormSelector({ templateTitle, onSubmit }: DocumentFormSe
 
   return null;
 }
+
